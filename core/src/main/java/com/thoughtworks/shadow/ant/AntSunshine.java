@@ -1,0 +1,97 @@
+package com.thoughtworks.shadow.ant;
+
+import com.thoughtworks.shadow.Sunshine;
+import com.thoughtworks.shadow.Utils;
+import com.thoughtworks.shadow.junit.ErrorTestCase;
+import com.thoughtworks.shadow.junit.LogThrowable;
+import com.thoughtworks.shadow.junit.ProtectableFactory;
+import junit.framework.Protectable;
+import junit.framework.Test;
+import org.apache.tools.ant.BuildListener;
+
+import java.io.File;
+import java.net.URL;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AntSunshine implements Sunshine {
+    private final List listeners = new ArrayList();
+    private final URL[] classpaths;
+    private final String encoding;
+    private final File baseDir;
+    private final String jvm;
+    private final String jvmVersion;
+    private final String maxMemory;
+
+    public AntSunshine(URL[] classpaths) {
+        this(classpaths, null, null, null, null, null);
+    }
+
+    public AntSunshine(URL[] classpaths, String encoding, File baseDir, String jvm, String jvmVersion, String maxMemory) {
+        this.classpaths = classpaths;
+        this.encoding = encoding;
+        this.baseDir = baseDir;
+        this.jvm = jvm;
+        this.jvmVersion = jvmVersion;
+        this.maxMemory = maxMemory;
+    }
+
+    public Test shine(String testClassName) {
+        Class testClass;
+        try {
+            testClass = Utils.load(classpaths, testClassName);
+        } catch (ClassNotFoundException e) {
+            return toTestCase(testClassName, e);
+        }
+
+        AntProjectInfoLogger logger = new AntProjectInfoLogger(testClass);
+        antJavaTask(testClassName, logger).execute();
+        return logger.toTestCase();
+    }
+
+    private Test toTestCase(String testClassName, ClassNotFoundException e) {
+        String msg = MessageFormat.format("Can''t load test class \"{0}\" from classpaths \"{1}\"",
+                new Object[]{testClassName, Utils.toClasspathStr(classpaths)});
+        LogThrowable throwable = new LogThrowable(e.getMessage(), msg);
+        Protectable protectable = ProtectableFactory.protectable(throwable);
+        return new ErrorTestCase(testClassName, protectable);
+    }
+
+    public void addBuildListener(BuildListener listener) {
+        listeners.add(listener);
+    }
+
+    private AntJavaTaskAdapter antJavaTask(String testClassName, AntProjectInfoLogger logger) {
+        AntJavaTaskAdapter task = new AntJavaTaskAdapter(testClassName);
+        task.addBuildListener(logger);
+        addBuildListeners(task);
+        setAttributes(task);
+        return task;
+    }
+
+    private void setAttributes(AntJavaTaskAdapter task) {
+        task.appendClasspaths(classpaths);
+        if (encoding != null) {
+            task.setFileEncodeing(encoding);
+        }
+        if (baseDir != null) {
+            task.setBaseDir(baseDir);
+        }
+        if (jvm != null) {
+            task.setJvm(jvm);
+        }
+        if (jvmVersion != null) {
+            task.setJvmVersion(jvmVersion);
+        }
+        if (maxMemory != null) {
+            task.setMaxMemory(maxMemory);
+        }
+    }
+
+    private void addBuildListeners(AntJavaTaskAdapter task) {
+        for (int i = 0; i < listeners.size(); i++) {
+            task.addBuildListener((BuildListener) listeners.get(i));
+        }
+    }
+}
