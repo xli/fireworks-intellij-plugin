@@ -1,0 +1,50 @@
+
+* random error, when remove tree node at time of running all tests:
+        java.lang.ArrayIndexOutOfBoundsException: 6 >= 6
+            at java.util.Vector.elementAt(Vector.java:432)
+            at javax.swing.tree.DefaultMutableTreeNode.getChildAt(DefaultMutableTreeNode.java:230)
+
+? create action listener adapter, TestResultFactory should be there not in the ShadowCabinetController
+? Shadow failed times:
+    ? run all tests
+    ? rename test
+? log system output
+
+* site for fireworks
+
+? rename IntellijShadowCabinetTest&IntellijShadowCabinet
+? should not fire action when cabinet is empty
+
+? remember selected tab
+? remove TestTreeNode(What to do?).
+? remove failure msg in the table after test case was deleted
+
+
+! close trace log window when it is lose focus
+! status bar should show test result summary after run all tests
+! AllTestShadowCabinetTest
+! select a tree node after run tests.(select root tree node)
+! auto run test list.
+    ! sometime document changed event is fired, but not by developer.
+! enable/disable auto run test list.(by setting delay time to zero or less than zero value)
+! organize test result as a table.
+    ! failures table
+    ! click row to jump to source
+    ! click trace log to show all log
+    ! use diff color as background color of row
+! bug: When there are max size Shadow, TestTree will not remove the ShadowTreeNode
+        which is removed by Cabinet before add new Shadow.
+! should remove test from list when delete the test file
+! should rename test in the list when rename the test file
+
+! run all tests
+
+! icon of run all tests button
+! if there are tests failed after run all tests, fireworks test result panel should show it.
+    ! status bar
+    ! action panel
+    ! tree
+! show all test run status and result in the status bar.
+! should stop run test list action after run all tests action fired
+! ConsoleViewAdapter#release
+! log

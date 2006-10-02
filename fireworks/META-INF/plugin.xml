@@ -1,0 +1,106 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+    <name>fireworks</name>
+    <description>
+<![CDATA[
+<b>Fireworks</b> helps TDDers to run junit tests.
+<br>
+<ul><u><b>Version 1.0 features</b></u>
+    <li>Add the Fireworks tool window when openning a java Module.</li>
+    <li>There is a tests list organized as a tree and named "recent test list" in the Fireworks tool window.</li>
+    <li>Enable/disable running tests in the "recent test list" automatically.
+        <ul>
+        <li>To enable it, you should set value of "Delay time(millisecond)" in the Fireworks configuration form larger than zero.</li>
+        <li>To disable it, you should set value of "Delay time(millisecond)" to less than 1.</li>
+        </ul>
+    </li>
+    <li>The test result is organized by a table which will pick out the key summary of the test result. The table will only display failed tests result.</li>
+    <li>Add TestCase which is openning or editing into "recent test list".</li>
+    <li>Set up filter regex for filtering name of TestCase which can be added into "recent test list".</li>
+    <li>Press hot key and button to run all tests of the project, which are found by "test class name regex" in the test source folder of the module.</li>
+    <li>Press hot key and button to run tests in the "recent test list".</li>
+    <li>The state of every test in the "recent test list" is showed by icon.</li>
+    <li>The icon of Fireworks tool window will show whether there are tests failed in the "recent test list".</li>
+    <li>Disable/enable Fireworks, Fireworks tool window will be removed and hot key of running tests will be disabled.</li>
+    <li>If there is no test in the "recent test list", Fireworks will be failure state.</li>
+    <li>The result of running tests(all/recent test list) will be displayed in the status bar.</li>
+</ul>
+
+<ul><u><b>Fireworks Configuration</b></u>
+    <li>Enable fireworks
+        <ul>
+        <li>default value:  checked</li>
+        <li>description:    disable/enable Fireworks</li>
+        </ul>
+    </li>
+    <li>Run tests max memory
+        <ul>
+        <li>default value:  empty, default of jvm</li>
+        <li>description:    Set max memory of running tests(all/recent test list). See property "maxmemory" of ant task "java".</li>
+        </ul>
+    </li>
+    <li>Test class name regex(jdk1.4)
+        <ul>
+        <li>default value:  .*Test</li>
+        <li>description:    Is regex of Java1.4 version. Any test name of which matches this regex will can be added into "recent test list" and will be run as JUnit Test.</li>
+        </ul>
+    </li>
+    <li>Max size of recent test list
+        <ul>
+        <li>default value:  5</li>
+        <li>description:    Max size of "recent test list". When a new test will be added into "recent test list" and the size of list is equal with max size, Fireworks will remove a test, failed times of which is lest if there is no test success or success times of which is largest.</li>
+        </ul>
+    </li>
+    <li>Delay time(millisecond)
+        <ul>
+        <li>default value:  -1</li>
+        <li>description:    Set value to -1 to disable running tests in the "recent test list" automatically. Otherwise, the value will be period time in milliseconds between running tests in the "recent test list" automatically.</li>
+        </ul>
+    </li>
+</ul>
+
+<ul><u><b>Hot keys</b></u>
+    <li>shift alt K:
+        <ul>
+        <li>action: Run Recent Test List</li>
+        <li>menu: Run-Run Recent Test List</li>
+        <li>keymap: default</li>
+        </ul>
+    </li>
+    <li>shift alt L
+        <ul>
+        <li>action: Run all tests matched with test class name regex and in the test source folders</li>
+        <li>menu: Run-Run All Tests</li>
+        <li>keymap: default</li>
+        </ul>
+    </li>
+</ul>
+]]>
+    </description>
+    <version>1.0</version>
+    <vendor email="swing1979@gmail.com">LiXiao</vendor>
+    <idea-version since-build="3000"/>
+    <project-components>
+        <component>
+            <implementation-class>com.thoughtworks.fireworks.plugin.FireworksProject</implementation-class>
+        </component>
+    </project-components>
+    <actions>
+        <action
+                id="FireworksRunTestList"
+                class="com.thoughtworks.fireworks.plugin.FireworksRunTestListAction"
+                text="Run Recent Test List"
+                description="Run Recent Test List">
+            <keyboard-shortcut keymap="$default" first-keystroke="shift alt K"/>
+            <add-to-group group-id="RunMenu" anchor="last" relative-to-action="RunnerActions"/>
+        </action>
+        <action
+                id="FireworksRunAllTests"
+                class="com.thoughtworks.fireworks.plugin.FireworksRunAllTestsAction"
+                text="Run All Tests"
+                description="Run all tests descripted by regex and in the test source folders">
+            <keyboard-shortcut keymap="$default" first-keystroke="shift alt L"/>
+            <add-to-group group-id="RunMenu" anchor="last" relative-to-action="RunnerActions"/>
+        </action>
+    </actions>
+</idea-plugin>

@@ -1,0 +1,103 @@
+package com.thoughtworks.fireworks.ui.toolwindow;
+
+import com.thoughtworks.fireworks.adapters.ProjectAdapter;
+import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
+import com.thoughtworks.fireworks.core.Utils;
+import com.thoughtworks.shadow.ComparableTestShadow;
+import com.thoughtworks.shadow.ShadowCabinetListener;
+import org.apache.tools.ant.BuildEvent;
+import org.apache.tools.ant.BuildListener;
+import org.apache.tools.ant.Project;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Date;
+
+public class TestLogPanel extends JPanel implements BuildListener, ShadowCabinetListener {
+    private ConsoleViewAdaptee console;
+    private long time;
+
+    public TestLogPanel(ProjectAdapter projectAdapter) {
+        super(new BorderLayout());
+        console = projectAdapter.createTextConsoleBuilder();
+        add(console.getComponent(), BorderLayout.CENTER);
+        projectAdapter.addBuildListener(this);
+    }
+
+    public void buildStarted(BuildEvent event) {
+    }
+
+    public void buildFinished(BuildEvent event) {
+    }
+
+    public void targetStarted(BuildEvent event) {
+    }
+
+    public void targetFinished(BuildEvent event) {
+    }
+
+    public void taskStarted(BuildEvent event) {
+    }
+
+    public void taskFinished(BuildEvent event) {
+    }
+
+    public void messageLogged(BuildEvent event) {
+        if (event.getPriority() == Project.MSG_DEBUG) {
+            return;
+        }
+        if (event.getPriority() > Project.MSG_INFO) {
+            console.printlnSystemOutput(message(event));
+        } else {
+            console.printlnErrorOutput(message(event));
+        }
+        if (event.getException() != null) {
+            console.printlnErrorOutput("==================unexpected exception========================");
+            console.printlnErrorOutput(Utils.toString(event.getException()));
+            console.printlnErrorOutput(null);
+        }
+    }
+
+    private String message(BuildEvent event) {
+        return getMessagePrefix(event.getPriority()) + " " + event.getMessage();
+    }
+
+    private String getMessagePrefix(int priority) {
+        switch (priority) {
+            case Project.MSG_DEBUG:
+                return "[debug]";
+            case Project.MSG_VERBOSE:
+                return "[verbose]";
+            case Project.MSG_INFO:
+                return "[info]";
+            case Project.MSG_WARN:
+                return "[warn]";
+            case Project.MSG_ERR:
+                return "[err]";
+        }
+        return "[unexpected]";
+    }
+
+    public void afterAddTest(ComparableTestShadow test) {
+    }
+
+    public void afterRemoveTest(ComparableTestShadow test) {
+    }
+
+    public void endAction() {
+        console.printlnSystemOutput("***************************************************");
+        console.printlnSystemOutput("* end action at: " + new Date(System.currentTimeMillis()));
+        console.printlnSystemOutput("* time: " + (System.currentTimeMillis() - time) + " millisecond");
+        console.printlnSystemOutput("***************************************************");
+        console.printlnSystemOutput(null);
+        console.printlnSystemOutput(null);
+    }
+
+    public void startAction() {
+        time = System.currentTimeMillis();
+        console.printlnSystemOutput("***************************************************");
+        console.printlnSystemOutput("* start action at: " + new Date(time));
+        console.printlnSystemOutput("***************************************************");
+    }
+
+}

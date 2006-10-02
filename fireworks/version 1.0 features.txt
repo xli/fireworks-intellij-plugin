@@ -1,0 +1,39 @@
+
+@ Add the Fireworks tool window when openning a java Module.
+@ There is a tests list organized as a tree and named "recent test list" in the Fireworks tool window.
+@ Enable/disable running tests in the "recent test list" automatically.
+    To enable it, you should set value of "Delay time(millisecond)" in the Fireworks configuration form larger than zero.
+    To disable it, you should set value of "Delay time(millisecond)" to less than 1.
+
+@ The test result is organized by a table which will pick out the key summary of the test result. The table will only display failed tests result.
+@ Add TestCase which is openning or editing into "recent test list".
+@ Set up filter regex for filtering name of TestCase which can be added into "recent test list".
+@ Press hot key and button to run all tests of the project, which are found by "test class name regex" in the test source folder of the module.
+@ Press hot key and button to run tests in the "recent test list".
+@ The state of every test in the "recent test list" is showed by icon.
+@ The icon of Fireworks tool window will show whether there are tests failed in the "recent test list".
+@ Disable/enable Fireworks, Fireworks tool window will be removed and hot key of running tests will be disabled.
+@ If there is no test in the "recent test list", Fireworks will be failure state.
+@ The result of running tests(all/recent test list) will be displayed in the status bar.
+
+Fireworks Configuration:
+	name				default value				description
+	Enable fireworks			checked					disable/enable Fireworks
+	Run tests max memory		empty					set max memory of running tests(all/recent test list).
+										see property "maxmemory" of ant task "java"
+	Test class name regex(jdk1.4)		.*Test					value is regex of Java1.4 version. any test name of which
+										matches this regex will can
+										be added into "recent test list" and will be run as JUnit Test.
+	Max size of recent test list		5					max size of "recent test list".
+										when a new test will be added into "recent test list" and the
+										size of list is equal	with max size,
+										Fireworks will remove a test, failed times of which is lest if
+										there is no test success or success times of which is largest.
+	Delay time(millisecond)		-1					set value to -1 to disable running tests in the "recent test list"
+										automatically.
+										otherwise, the value will be period time in milliseconds
+										between running tests in the "recent test list" automatically.
+Hot keys:
+	Action							Keystroke		Menu			Keymap
+	Run Recent Test List						shift alt K		Run Recent Test List		default
+	Run all tests descripted by regex and in the test source folders		shift alt L		Run-Run All Tests		default
