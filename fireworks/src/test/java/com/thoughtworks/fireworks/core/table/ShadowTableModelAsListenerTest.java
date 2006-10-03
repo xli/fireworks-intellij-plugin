@@ -54,7 +54,7 @@ public class ShadowTableModelAsListenerTest extends TestCase {
         assertEquals(TEST_METHOD_NAME, model.getValueAt(0, ShadowTableModel.TEST_METHOD).toString());
         assertEquals(TEST_CLASS_NAME, model.getValueAt(0, ShadowTableModel.TEST_CLASS).toString());
         assertEquals(FAILURE_MESSAGE, model.getValueAt(0, ShadowTableModel.MESSAGE).toString());
-        String expected = "(ShadowTableModelAsListenerTest.java:28)com.thoughtworks.fireworks.core.table.ShadowTableModelAsListenerTest$1.protect";
+        String expected = "(ShadowTableModelAsListenerTest.java:43)com.thoughtworks.fireworks.core.table.ShadowTableModelAsListenerTest$1.protect";
         assertEquals(expected, model.getValueAt(0, ShadowTableModel.TRACE_LOG).toString());
     }
 

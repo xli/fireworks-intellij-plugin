@@ -2,6 +2,8 @@
 * there is unexpected info in the ant executing log:
     [verbose] dropping C:\C from path as it doesn't exist
 
+* support junit 4
+
 ! bug: sometimes, test shadow will be removed when db-click a tree node.
   fixed: need more test.
 
