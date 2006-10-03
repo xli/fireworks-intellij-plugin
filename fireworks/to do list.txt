@@ -1,4 +1,10 @@
 
+* there is unexpected info in the ant executing log:
+    [verbose] dropping C:\C from path as it doesn't exist
+
+! bug: sometimes, test shadow will be removed when db-click a tree node.
+  fixed: need more test.
+
 * random error, when remove tree node at time of running all tests:
         java.lang.ArrayIndexOutOfBoundsException: 6 >= 6
             at java.util.Vector.elementAt(Vector.java:432)
@@ -20,6 +26,8 @@
 ? remove failure msg in the table after test case was deleted
 
 
+
+==============================2006.10.2===================================================
 ! close trace log window when it is lose focus
 ! status bar should show test result summary after run all tests
 ! AllTestShadowCabinetTest

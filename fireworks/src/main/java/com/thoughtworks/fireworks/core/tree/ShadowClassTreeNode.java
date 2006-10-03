@@ -3,6 +3,7 @@ package com.thoughtworks.fireworks.core.tree;
 import com.thoughtworks.shadow.ComparableTestShadow;
 
 public class ShadowClassTreeNode extends BaseShadowTreeNode {
+
     private final ComparableTestShadow shadow;
     private String className;
     private String packageName;
