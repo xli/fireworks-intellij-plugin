@@ -14,7 +14,6 @@ public class ShadowCabinet implements Cabinet {
         if (maxSize == 0) {
             return;
         }
-        removeMaxPassTimesTests(maxSize - 1);
         addIntoSet(testShadow);
     }
 
@@ -65,6 +64,9 @@ public class ShadowCabinet implements Cabinet {
     private void addIntoSet(ComparableTestShadow testShadow) {
         if (shadows.contains(testShadow)) {
             return;
+        }
+        if (size() >= maxSize) {
+            removeMaxPassTimesTests(maxSize - 1);
         }
         testShadow.setContainer(this);
         shadows.add(testShadow);

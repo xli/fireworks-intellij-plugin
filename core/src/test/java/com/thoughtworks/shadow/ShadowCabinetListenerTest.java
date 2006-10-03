@@ -19,6 +19,13 @@ public class ShadowCabinetListenerTest extends TestCase {
         testShadow = new ComparableTestShadow(new Success());
     }
 
+    public void testShouldNotRemoveTestThenAddContainedTestShadow() throws Exception {
+        cabinet.setMaxSize(1);
+        cabinet.add(testShadow);
+        cabinet.add(testShadow);
+        listener.assertNotDid("afterRemoveTest");
+    }
+
     public void testRemoveListener() throws Exception {
         cabinet.removeListener((ShadowCabinetListener) listener.mockTarget());
         cabinet.add(testShadow);
