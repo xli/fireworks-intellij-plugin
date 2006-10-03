@@ -2,11 +2,15 @@
 <idea-plugin>
     <name>fireworks</name>
     <description>
-<![CDATA[
-<b>Fireworks</b> helps TDDers to run junit tests.
+        <![CDATA[
+<b>Fireworks</b> helps TDDers to run JUnit TestCases(3.8.2) which are edited recently.
 <br>
-<ul><u><b>Version 1.0 features</b></u>
-    <li>Add the Fireworks tool window when openning a java Module.</li>
+<ul><u><b>Version 1.01 changes</b></u>
+    <li>fix bug: Remove a test when open a JUnit TestCase and the size of recent test list is full.</li>
+    <li>fix bug: Inner class of JUnit TestCase would be as JUnit TestCase when run all tests.</li>
+</ul>
+<ul><u><b>Version 1.00 features</b></u>
+    <li>Add the Fireworks tool window when opening a java Module.</li>
     <li>There is a tests list organized as a tree and named "recent test list" in the Fireworks tool window.</li>
     <li>Enable/disable running tests in the "recent test list" automatically.
         <ul>
@@ -77,7 +81,7 @@
 </ul>
 ]]>
     </description>
-    <version>1.0</version>
+    <version>1.01</version>
     <vendor email="swing1979@gmail.com">LiXiao</vendor>
     <idea-version since-build="3000"/>
     <project-components>
