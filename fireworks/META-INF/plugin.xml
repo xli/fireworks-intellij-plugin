@@ -83,7 +83,7 @@
 ]]>
     </description>
     <version>1.01</version>
-    <vendor email="swing1979@gmail.com">LiXiao</vendor>
+    <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/" logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000"/>
     <project-components>
         <component>
