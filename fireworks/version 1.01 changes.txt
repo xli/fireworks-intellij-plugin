@@ -1,0 +1,3 @@
+Version 1.01 changes:
+    fix bug: Remove a test when open a JUnit TestCase and the size of recent test list is full.
+    fix bug: Inner class of JUnit TestCase would be as JUnit TestCase when run all tests.
