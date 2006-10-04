@@ -27,7 +27,7 @@ import java.net.URL;
 
 public class AntJavaTaskAdapter {
     private Project project;
-    private Java java;
+    private Java javaTask;
 
     public AntJavaTaskAdapter(String testClassName) {
         project = new Project();
@@ -48,7 +48,7 @@ public class AntJavaTaskAdapter {
     }
 
     public void appendClasspaths(URL[] classpaths) {
-        java.createClasspath().append(AntUtils.toPath(project, classpaths));
+        javaTask.createClasspath().append(AntUtils.toPath(project, classpaths));
     }
 
     private Target target(String testClassName) {
@@ -59,17 +59,17 @@ public class AntJavaTaskAdapter {
     }
 
     private Java javaTask(String testClassName) {
-        java = (Java) project.createTask("java");
-        java.setFork(true);
-        java.setNewenvironment(true);
-        java.setClassname(TestRunner.class.getName());
-        java.setFailonerror(true);
-        java.createArg().setValue(testClassName);
-        return java;
+        javaTask = (Java) project.createTask("java");
+        javaTask.setFork(true);
+        javaTask.setNewenvironment(true);
+        javaTask.setClassname(TestRunner.class.getName());
+        javaTask.setFailonerror(true);
+        javaTask.createArg().setValue(testClassName);
+        return javaTask;
     }
 
     public void setFileEncodeing(String encoding) {
-        java.createJvmarg().setValue("-Dfile.encoding=" + encoding);
+        javaTask.createJvmarg().setValue("-Dfile.encoding=" + encoding);
     }
 
     public void setBaseDir(File baseDir) {
@@ -77,14 +77,14 @@ public class AntJavaTaskAdapter {
     }
 
     public void setJvm(String jvm) {
-        java.setJvm(jvm);
+        javaTask.setJvm(jvm);
     }
 
     public void setJvmVersion(String jvmVersion) {
-        java.setJVMVersion(jvmVersion);
+        javaTask.setJVMVersion(jvmVersion);
     }
 
     public void setMaxMemory(String maxMemory) {
-        java.setMaxmemory(maxMemory);
+        javaTask.setMaxmemory(maxMemory);
     }
 }

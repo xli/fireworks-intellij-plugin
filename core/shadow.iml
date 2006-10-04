@@ -26,22 +26,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Documents and Settings/xli/.m2/repository/junit/junit/3.8.2/junit-3.8.2.jar!/" />
+          <root url="jar://C:/Documents and Settings/xli/.m2/repository/ant/ant/1.6.5/ant-1.6.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://C:/Documents and Settings/xli/My Documents/Downloads/java/junit3.8.1/junit3.8.1/src" />
+          <root url="jar://C:/Documents and Settings/xli/.m2/repository/ant/ant/1.6.5/ant-1.6.5-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Documents and Settings/xli/.m2/repository/ant/ant/1.6.5/ant-1.6.5.jar!/" />
+          <root url="jar://C:/Documents and Settings/xli/.m2/repository/junit/junit/4.1/junit-4.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://C:/Documents and Settings/xli/.m2/repository/ant/ant/1.6.5/ant-1.6.5-sources.jar!/" />
+          <root url="jar://C:/Documents and Settings/xli/.m2/repository/junit/junit/4.1/junit-4.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
