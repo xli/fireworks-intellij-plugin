@@ -37,6 +37,10 @@ public class JunitAssertionMessageFilterTest extends TestCase {
         assertEquals(msg, filter.doFilter(AssertionFailedError.class.getName() + msg));
     }
 
+    public void testShouldFilterAssertionError() throws Exception {
+        assertEquals(msg, filter.doFilter(AssertionError.class.getName() + msg));
+    }
+
     public void testShouldFilterJunit() throws Exception {
         assertEquals(msg, filter.doFilter(ComparisonFailure.class.getName() + msg));
     }

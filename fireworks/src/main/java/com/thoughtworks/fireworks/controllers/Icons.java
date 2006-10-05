@@ -62,6 +62,7 @@ public class Icons {
 
     private static ImageIcon successIcon = createSmallImageIcon("/green.png");
     private static ImageIcon failedIcon = createSmallImageIcon("/red.png");
+    private static ImageIcon ignoredIcon = createSmallImageIcon("/ignored.png");
     private static ImageIcon compileFailedIcon = createSmallImageIcon("/compile_fialed.png");
     private static ImageIcon pending = createSmallImageIcon("/pending.png");
     private static ImageIcon actionPending = createSmallImageIcon("/action_pending.png");
@@ -80,6 +81,10 @@ public class Icons {
 
     public static Icon successIcon() {
         return successIcon;
+    }
+
+    public static Icon ignoredIcon() {
+        return ignoredIcon;
     }
 
     public static Icon failureIcon() {

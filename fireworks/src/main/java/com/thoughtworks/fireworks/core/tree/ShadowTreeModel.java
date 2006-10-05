@@ -16,10 +16,7 @@
 package com.thoughtworks.fireworks.core.tree;
 
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
-import com.thoughtworks.shadow.ComparableTestShadow;
-import com.thoughtworks.shadow.Shadow;
-import com.thoughtworks.shadow.ShadowCabinetListener;
-import com.thoughtworks.shadow.TestStateListener;
+import com.thoughtworks.shadow.*;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestListener;
@@ -31,7 +28,7 @@ import javax.swing.tree.TreePath;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShadowTreeModel implements TreeModel, TestListener, ShadowCabinetListener, Log {
+public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCabinetListener, Log {
     private final List<TreeModelListener> listeners = new ArrayList();
 
     private final TreeNodesMap treeNodes;
@@ -90,6 +87,10 @@ public class ShadowTreeModel implements TreeModel, TestListener, ShadowCabinetLi
 
     public void startTest(Test test) {
         tests.add(test);
+    }
+
+    public void testIgnored(TestShadow testShadow) {
+        tests.add(testShadow);
     }
 
     public void afterAddTest(ComparableTestShadow test) {

@@ -28,8 +28,8 @@ public class StatusBarAdapter implements TestCounterListener, ShadowCabinetListe
         this.project = project;
     }
 
-    public void testResult(int runCount, int failureCount, int errorCount) {
-        status = new TestResultStatus(runCount, failureCount, errorCount);
+    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
+        status = new TestResultStatus(runCount, failureCount, errorCount, ignoreCount);
         project.setStatusBarInfo(status.summary());
     }
 
@@ -46,7 +46,7 @@ public class StatusBarAdapter implements TestCounterListener, ShadowCabinetListe
     }
 
     public void startAction() {
-        status = new TestResultStatus(0, 0, 0);
+        status = new TestResultStatus(0, 0, 0, 0);
         project.setStatusBarInfo("Bang went the fireworks.");
     }
 }

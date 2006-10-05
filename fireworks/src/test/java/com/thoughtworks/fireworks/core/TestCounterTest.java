@@ -15,31 +15,36 @@
  */
 package com.thoughtworks.fireworks.core;
 
+import com.thoughtworks.shadow.ShadowVisitor;
+import com.thoughtworks.shadow.TestShadow;
+import com.thoughtworks.shadow.TestShadowResult;
 import junit.framework.TestCase;
-import junit.framework.TestResult;
 
-public class TestCounterTest extends TestCase implements TestCounterListener {
+public class TestCounterTest extends TestCase implements TestCounterListener, TestShadow {
     private int runCount;
-    private int failureCount;
-    private int errorCount;
+    private int failuresCount;
+    private int errorsCount;
+    private int ignoreCount;
     private TestCounter counter;
-    private TestResult result;
+    private TestShadowResult result;
 
     protected void setUp() throws Exception {
         runCount = -1;
-        failureCount = -1;
-        errorCount = -1;
+        failuresCount = -1;
+        errorsCount = -1;
+        ignoreCount = -1;
         counter = new TestCounter();
         counter.addListener(this);
-        result = new TestResult();
+        result = new TestShadowResult();
         result.addListener(counter);
     }
 
     public void testShouldFireAsCabinetListener() throws Exception {
         counter.start();
         assertEquals(0, runCount);
-        assertEquals(0, failureCount);
-        assertEquals(0, errorCount);
+        assertEquals(0, failuresCount);
+        assertEquals(0, errorsCount);
+        assertEquals(0, ignoreCount);
     }
 
     public void testShouldFireListenerWithTestResult() throws Exception {
@@ -54,14 +59,23 @@ public class TestCounterTest extends TestCase implements TestCounterListener {
         result.addFailure(this, null);
         result.endTest(this);
 
+        result.startTest(this);
+        result.testIgnored(this);
+        result.endTest(this);
+
         assertEquals(runCount, result.runCount());
-        assertEquals(failureCount, result.failureCount());
-        assertEquals(errorCount, result.errorCount());
+        assertEquals(failuresCount, result.failureCount());
+        assertEquals(errorsCount, result.errorCount());
+        assertEquals(ignoreCount, result.ignoreCount());
     }
 
-    public void testResult(int runCount, int failureCount, int errorCount) {
+    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
         this.runCount = runCount;
-        this.failureCount = failureCount;
-        this.errorCount = errorCount;
+        this.failuresCount = failureCount;
+        this.errorsCount = errorCount;
+        this.ignoreCount = ignoreCount;
+    }
+
+    public void accept(ShadowVisitor visitor) {
     }
 }

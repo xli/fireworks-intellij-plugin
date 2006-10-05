@@ -17,23 +17,20 @@ package com.thoughtworks.fireworks.controllers;
 
 import com.thoughtworks.fireworks.core.tree.ShadowTreeNode;
 import com.thoughtworks.fireworks.core.tree.TestStatusSummaryListener;
-import com.thoughtworks.shadow.ComparableTestShadow;
-import com.thoughtworks.shadow.ShadowCabinetListener;
-import com.thoughtworks.shadow.TestStateListener;
+import com.thoughtworks.shadow.*;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
-import junit.framework.TestListener;
 
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestShadowsStatus implements ShadowCabinetListener, TestListener, TestStateListener {
+public class TestShadowsStatus implements ShadowCabinetListener, RunListenerAdaptee, TestStateListener {
     private Map<Object, Icon> testIcons = new HashMap();
     private final ShadowTreeNode rootKey;
     private final TestStatusSummaryListener[] listens;
     private boolean wasSuccessful;
-    private boolean testStatus;
+    private boolean testWasSuccessful;
     private int testCount;
 
     public TestShadowsStatus(ShadowTreeNode rootKey, TestStatusSummaryListener[] listens) {
@@ -52,7 +49,7 @@ public class TestShadowsStatus implements ShadowCabinetListener, TestListener, T
     }
 
     public void endAction() {
-        this.wasSuccessful = wasSuccessful & testCount > 0;
+        this.wasSuccessful = wasSuccessful && testCount > 0;
         changeStatus(rootKey, wasSuccessful);
     }
 
@@ -62,7 +59,7 @@ public class TestShadowsStatus implements ShadowCabinetListener, TestListener, T
     }
 
     public void addError(Test test, Throwable t) {
-        testStatus = false;
+        testWasSuccessful = false;
         wasSuccessful = false;
     }
 
@@ -70,12 +67,16 @@ public class TestShadowsStatus implements ShadowCabinetListener, TestListener, T
         addError(test, t);
     }
 
+    public void testIgnored(TestShadow testShadow) {
+        put(testShadow, Icons.ignoredIcon());
+    }
+
     public void endTest(Test test) {
-        changeStatus(test, testStatus);
+        changeStatus(test, testWasSuccessful);
     }
 
     public void startTest(Test test) {
-        testStatus = true;
+        testWasSuccessful = true;
         testCount++;
     }
 
@@ -114,4 +115,5 @@ public class TestShadowsStatus implements ShadowCabinetListener, TestListener, T
             listener.summaryStatusChanged(status);
         }
     }
+
 }

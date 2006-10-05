@@ -19,15 +19,14 @@ import com.thoughtworks.fireworks.core.TestCounterListener;
 import com.thoughtworks.shadow.*;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
-import junit.framework.TestListener;
 
-public class TestsRunningProgressIndicatorAdapter implements TestCounterListener, ShadowCabinetListener, TestListener, ShadowVisitor {
+public class TestsRunningProgressIndicatorAdapter implements TestCounterListener, ShadowCabinetListener, RunListenerAdaptee, ShadowVisitor {
     private TestResultStatus status;
     private String testClassName;
     private String testMethodName;
 
-    public void testResult(int runCount, int failureCount, int errorCount) {
-        status = new TestResultStatus(runCount, failureCount, errorCount);
+    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
+        status = new TestResultStatus(runCount, failureCount, errorCount, ignoreCount);
         displaySummaryAsText();
     }
 
@@ -42,7 +41,7 @@ public class TestsRunningProgressIndicatorAdapter implements TestCounterListener
     }
 
     public void startAction() {
-        status = new TestResultStatus(0, 0, 0);
+        status = new TestResultStatus(0, 0, 0, 0);
         displaySummaryAsText();
     }
 
@@ -52,6 +51,10 @@ public class TestsRunningProgressIndicatorAdapter implements TestCounterListener
 
     public void addFailure(Test test, AssertionFailedError t) {
         ProgressIndicatorUtils.displayAsText2("failure: " + t.getMessage());
+    }
+
+    public void testIgnored(TestShadow testShadow) {
+        ProgressIndicatorUtils.displayAsText2("ignored");
     }
 
     public void endTest(Test test) {

@@ -1,8 +1,14 @@
 * Listeners
 * there is unexpected info in the ant executing log:
     [verbose] dropping C:\C from path as it doesn't exist
+* test junit4.0
+* bug: should remove node which is removed log in the parent node log.
+* bug: sometimes, the text of treenode will not be displayed correctlly.
 
-* support junit 4
+! should clear selection of tree node first before select a tree node to show log
+! bug: Test does not run correctly after Module setting changed.
+! support junit 4
+    ! filter message: org.junit.Assert
 
 ! bug: sometimes, test shadow will be removed when db-click a tree node.
   fixed: need more test.

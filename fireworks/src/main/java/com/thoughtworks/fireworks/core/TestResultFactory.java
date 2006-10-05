@@ -15,6 +15,7 @@
  */
 package com.thoughtworks.fireworks.core;
 
+import com.thoughtworks.shadow.TestShadowResult;
 import junit.framework.TestListener;
 import junit.framework.TestResult;
 
@@ -28,7 +29,7 @@ public class TestResultFactory {
     }
 
     public TestResult createTestResult() {
-        TestResult result = new TestResult();
+        TestResult result = new TestShadowResult();
         result.addListener(getTestCounter());
         for (int i = 0; i < testListeners.length; i++) {
             result.addListener(testListeners[i]);

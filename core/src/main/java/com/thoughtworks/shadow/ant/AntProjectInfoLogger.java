@@ -16,20 +16,22 @@
 package com.thoughtworks.shadow.ant;
 
 import com.thoughtworks.shadow.Utils;
-import com.thoughtworks.shadow.junit.*;
-import junit.framework.Protectable;
+import com.thoughtworks.shadow.junit.JUnitAdapter;
+import com.thoughtworks.shadow.junit.LogThrowable;
+import com.thoughtworks.shadow.junit.TestRunnerError;
+import com.thoughtworks.shadow.junit.TextTestRunnerOutputTestCase;
 import junit.framework.Test;
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
 
 public class AntProjectInfoLogger implements BuildListener {
-    private StringBuffer log = new StringBuffer();
-    private StringBuffer allLevelLog = new StringBuffer();
-    private final Class testClass;
+    private final StringBuffer log = new StringBuffer();
+    private final StringBuffer allLevelLog = new StringBuffer();
+    private final JUnitAdapter junitAdapter;
 
     public AntProjectInfoLogger(Class testClass) {
-        this.testClass = testClass;
+        junitAdapter = new JUnitAdapter(testClass);
     }
 
     public void messageLogged(BuildEvent event) {
@@ -41,16 +43,11 @@ public class AntProjectInfoLogger implements BuildListener {
 
     public Test toTestCase() {
         try {
-            return new TextTestRunnerOutputTestCase(testClass, log.toString());
+            return new TextTestRunnerOutputTestCase(junitAdapter, log.toString());
         } catch (TestRunnerError error) {
-            return toTestCase(error);
+            LogThrowable throwable = new LogThrowable(error.getMessage(), allLevelLog.toString());
+            return junitAdapter.toTestCase(throwable);
         }
-    }
-
-    private Test toTestCase(TestRunnerError error) {
-        LogThrowable throwable = new LogThrowable(error.getMessage(), allLevelLog.toString());
-        Protectable protectable = ProtectableFactory.protectable(throwable);
-        return new ErrorTestCase(testClass.getName(), protectable);
     }
 
     public void buildStarted(BuildEvent event) {
@@ -69,5 +66,9 @@ public class AntProjectInfoLogger implements BuildListener {
     }
 
     public void taskFinished(BuildEvent event) {
+    }
+
+    public String getRunnerClassName() {
+        return junitAdapter.runnerClass().getName();
     }
 }

@@ -19,17 +19,18 @@ import junit.framework.Test;
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
-import java.lang.reflect.Method;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class LogTestSuite implements Test {
     private Map tests;
 
-    public LogTestSuite(Class testClass) {
+    public LogTestSuite(JUnitAdapter testClass) {
         tests = new HashMap();
-        String[] testMethods = getTestMethods(testClass);
-        for (int i = 0; i < testMethods.length; i++) {
-            add(new SuccessfulTestCase(testClass.getName(), testMethods[i]));
+        Test[] tests = testClass.createTests();
+        for (int i = 0; i < tests.length; i++) {
+            add(tests[i]);
         }
     }
 
@@ -57,17 +58,5 @@ public class LogTestSuite implements Test {
 
     private void add(Test test) {
         tests.put(test, test);
-    }
-
-    private String[] getTestMethods(Class clazz) {
-        Method[] methods = clazz.getMethods();
-        Set testMethods = new HashSet();
-        for (int i = 0; i < methods.length; i++) {
-            String methodName = methods[i].getName();
-            if (methodName.startsWith("test")) {
-                testMethods.add(methodName);
-            }
-        }
-        return (String[]) testMethods.toArray(new String[testMethods.size()]);
     }
 }

@@ -28,13 +28,31 @@ public abstract class TestTraceLog {
     public TestTraceLog(String log) {
         int testNameEndIndex = log.indexOf(")", 2) + 1;
 
-        msg = log.substring(testNameEndIndex, log.indexOf(Utils.LINE_SEP));
-
         String testNameInfo = log.substring(0, testNameEndIndex).trim();
         testClassName = testNameInfo.substring(testNameInfo.indexOf("(") + 1, testNameInfo.indexOf(")"));
         testMethodName = testNameInfo.substring(0, testNameInfo.indexOf("("));
 
-        trace = log.substring(testNameEndIndex);
+        trace = log.substring(testNameEndIndex).trim();
+
+        msg = getMessage(log, testNameEndIndex);
+    }
+
+    private String getMessage(String log, int testNameEndIndex) {
+        int firstLineEndIndex = log.indexOf(Utils.LINE_SEP);
+        if (testNameEndIndex < firstLineEndIndex) {
+            return log.substring(testNameEndIndex, firstLineEndIndex);
+        } else {
+            return getMessageFromTrace();
+        }
+    }
+
+    private String getMessageFromTrace() {
+        String splitStr = ": ";
+        int index = trace.indexOf(splitStr);
+        if (index < 0) {
+            return trace.substring(0, trace.indexOf(Utils.LINE_SEP));
+        }
+        return trace.substring(index + splitStr.length(), trace.indexOf(Utils.LINE_SEP));
     }
 
     public Test testCase() {

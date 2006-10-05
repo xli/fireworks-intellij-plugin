@@ -17,31 +17,44 @@ package com.thoughtworks.shadow;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
-import junit.framework.TestResult;
 
 public class TestResultStatusTest extends TestCase {
     public void testShouldBeFailureStatusIfThereAreErrorsOrFailures() throws Exception {
-        assertFalse(new TestResultStatus(1, 0, 1).wasSuccessful());
-        assertFalse(new TestResultStatus(2, 1, 1).wasSuccessful());
-        assertFalse(new TestResultStatus(2, 1, 0).wasSuccessful());
+        assertFalse(new TestResultStatus(1, 0, 1, 0).wasSuccessful());
+        assertFalse(new TestResultStatus(2, 1, 1, 0).wasSuccessful());
+        assertFalse(new TestResultStatus(2, 1, 0, 0).wasSuccessful());
+    }
+
+    public void testShouldBeFailureStatusIfAllTestIgnored() throws Exception {
+        assertFalse(new TestResultStatus(2, 0, 0, 2).wasSuccessful());
+    }
+
+    public void testShouldBeSuccessfulStatusIfSomeTestsAreSuccessfulAndOthersAreIgnored() throws Exception {
+        assertTrue(new TestResultStatus(4, 0, 0, 2).wasSuccessful());
+    }
+
+    public void testShouldBeFailureStatusIfSomeTestsAreFailureAndOthersAreIgnored() throws Exception {
+        assertFalse(new TestResultStatus(4, 1, 0, 2).wasSuccessful());
+        assertFalse(new TestResultStatus(4, 0, 1, 2).wasSuccessful());
+        assertFalse(new TestResultStatus(4, 1, 1, 2).wasSuccessful());
     }
 
     public void testShouldBeFailureStatusIfRunCountIsZero() throws Exception {
-        assertFalse(new TestResultStatus(0, 0, 0).wasSuccessful());
+        assertFalse(new TestResultStatus(0, 0, 0, 0).wasSuccessful());
     }
 
     public void testShouldBeNoTestIfRunCountIsZero() throws Exception {
-        assertTrue(new TestResultStatus(0, 0, 0).isNoTest());
-        assertFalse(new TestResultStatus(1, 0, 0).isNoTest());
+        assertTrue(new TestResultStatus(0, 0, 0, 0).isNoTest());
+        assertFalse(new TestResultStatus(1, 0, 0, 0).isNoTest());
     }
 
     public void testShouldBeSuccessfulIfHasTestRanAndThereAreNotErrorsOrFailures() throws Exception {
-        assertTrue(new TestResultStatus(2, 0, 0).wasSuccessful());
-        assertTrue(new TestResultStatus(1, 0, 0).wasSuccessful());
+        assertTrue(new TestResultStatus(2, 0, 0, 0).wasSuccessful());
+        assertTrue(new TestResultStatus(1, 0, 0, 0).wasSuccessful());
     }
 
     public void testInitByATestResult() throws Exception {
-        TestResult testResult = new TestResult();
+        TestShadowResult testResult = new TestShadowResult();
         assertFalse(new TestResultStatus(testResult).wasSuccessful());
         assertTrue(new TestResultStatus(testResult).isNoTest());
 
@@ -53,7 +66,7 @@ public class TestResultStatusTest extends TestCase {
         assertFalse(new TestResultStatus(testResult).wasSuccessful());
         assertFalse(new TestResultStatus(testResult).isNoTest());
 
-        testResult = new TestResult();
+        testResult = new TestShadowResult();
         testResult.startTest(this);
         testResult.addError(this, new AssertionFailedError());
         assertFalse(new TestResultStatus(testResult).wasSuccessful());
@@ -61,6 +74,6 @@ public class TestResultStatusTest extends TestCase {
     }
 
     public void testSummary() throws Exception {
-        assertEquals("Tests run: 1, Failures: 0, Errors: 0", new TestResultStatus(1, 0, 0).summary());
+        assertEquals("Tests run: 1, Failures: 0, Errors: 0, Ignored: 0", new TestResultStatus(1, 0, 0, 0).summary());
     }
 }

@@ -15,6 +15,7 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
+import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -24,6 +25,7 @@ import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 import com.thoughtworks.fireworks.core.FireworksConfig;
 import com.thoughtworks.shadow.Sunshine;
 import com.thoughtworks.shadow.Utils;
+import junit.framework.Test;
 import junit.framework.TestCase;
 
 import java.io.FileNotFoundException;
@@ -73,7 +75,23 @@ public class DocumentAdapter implements DocumentAdaptee {
         if (!psiClass.getQualifiedName().matches(config.expectedTestCaseNameRegex())) {
             return false;
         }
+
+        return isTest(psiClass);
+    }
+
+    private boolean isTest(PsiClass psiClass) {
+        PsiMethod[] methods = psiClass.getMethods();
+        for (int i = 0; i < methods.length; i++) {
+            if (hasAnnotationOfOrgJunitTest(methods[i])) {
+                return true;
+            }
+        }
+
         return psiClass.isInheritor(getTestCasePsiClass(), true);
+    }
+
+    private boolean hasAnnotationOfOrgJunitTest(PsiMethod method) {
+        return AnnotationUtil.isAnnotated(method, org.junit.Test.class.getName(), true);
     }
 
     private PsiClass getTestCasePsiClass() {
@@ -82,11 +100,17 @@ public class DocumentAdapter implements DocumentAdaptee {
     }
 
     public Sunshine getSunshine() {
+        final VirtualFile file;
         try {
-            return project.getSunshine(getFile());
+            file = getFile();
         } catch (FileNotFoundException e) {
             return null;
         }
+        return new Sunshine() {
+            public Test shine(String testClassName) {
+                return project.getSunshine(file).shine(testClassName);
+            }
+        };
     }
 
     public String getJavaFileClassName() {

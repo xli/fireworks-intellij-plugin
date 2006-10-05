@@ -19,6 +19,7 @@ import com.thoughtworks.shadow.ComparableTestShadow;
 import com.thoughtworks.shadow.ShadowCabinet;
 import com.thoughtworks.shadow.TestShadow;
 import com.thoughtworks.shadow.junit.BaseTestCase;
+import com.thoughtworks.shadow.junit.IgnoredTestCase;
 import com.thoughtworks.shadow.junit.SuccessfulTestCase;
 import com.thoughtworks.turtlemock.Mock;
 import com.thoughtworks.turtlemock.Turtle;
@@ -54,8 +55,11 @@ public class ShadowTableModelAsListenerTest extends TestCase {
         assertEquals(TEST_METHOD_NAME, model.getValueAt(0, ShadowTableModel.TEST_METHOD).toString());
         assertEquals(TEST_CLASS_NAME, model.getValueAt(0, ShadowTableModel.TEST_CLASS).toString());
         assertEquals(FAILURE_MESSAGE, model.getValueAt(0, ShadowTableModel.MESSAGE).toString());
-        String expected = "(ShadowTableModelAsListenerTest.java:43)com.thoughtworks.fireworks.core.table.ShadowTableModelAsListenerTest$1.protect";
-        assertEquals(expected, model.getValueAt(0, ShadowTableModel.TRACE_LOG).toString());
+        String expected1 = "(ShadowTableModelAsListenerTest.java:";
+        String expected2 = ")com.thoughtworks.fireworks.core.table.ShadowTableModelAsListenerTest$1.protect";
+        String resultLogMsg = model.getValueAt(0, ShadowTableModel.TRACE_LOG).toString();
+        assertTrue(resultLogMsg.contains(expected1));
+        assertTrue(resultLogMsg.contains(expected2));
     }
 
     public void testShouldThrowIndexOutOfBoundsExceptionWhenGetValueAtAnInvalidColumn() throws Exception {
@@ -70,6 +74,12 @@ public class ShadowTableModelAsListenerTest extends TestCase {
 
     public void testShouldNotCountSuccessfulTestShadow() throws Exception {
         TestShadow successful = new SuccessfulTestCase();
+        successful.run(result);
+        assertEquals(0, model.getRowCount());
+    }
+
+    public void testShouldNotCountIgnoredTestShadow() throws Exception {
+        TestShadow successful = new IgnoredTestCase("", "");
         successful.run(result);
         assertEquals(0, model.getRowCount());
     }

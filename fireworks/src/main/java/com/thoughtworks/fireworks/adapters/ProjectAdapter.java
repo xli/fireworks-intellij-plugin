@@ -178,9 +178,7 @@ public class ProjectAdapter {
     Sunshine getSunshine(VirtualFile file) {
         Module moduleForFile = getFileIndex().getModuleForFile(file);
         AntSunshine sunshine = new ModuleAdapter(moduleForFile, config).antSunshine();
-
         addBuildListeners(sunshine);
-
         return progressIndicator.decorate(sunshine);
     }
 

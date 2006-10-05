@@ -48,4 +48,8 @@ public class Utils {
         t.printStackTrace(new PrintWriter(buffer));
         return buffer.toString();
     }
+
+    public static boolean isEmpty(String str) {
+        return com.thoughtworks.shadow.Utils.isEmpty(str);
+    }
 }

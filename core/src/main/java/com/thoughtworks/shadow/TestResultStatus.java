@@ -15,25 +15,25 @@
  */
 package com.thoughtworks.shadow;
 
-import junit.framework.TestResult;
-
 public class TestResultStatus {
     private final int runCount;
     private final int failureCount;
     private final int errorCount;
+    private final int ignoreCount;
 
-    public TestResultStatus(int runCount, int failureCount, int errorCount) {
+    public TestResultStatus(int runCount, int failureCount, int errorCount, int ignoreCount) {
         this.runCount = runCount;
         this.failureCount = failureCount;
         this.errorCount = errorCount;
+        this.ignoreCount = ignoreCount;
     }
 
-    public TestResultStatus(TestResult testResult) {
-        this(testResult.runCount(), testResult.failureCount(), testResult.errorCount());
+    public TestResultStatus(TestShadowResult testResult) {
+        this(testResult.runCount(), testResult.failureCount(), testResult.errorCount(), testResult.ignoreCount());
     }
 
     public boolean wasSuccessful() {
-        return runCount > 0 && errorCount == 0 && failureCount == 0;
+        return (runCount - ignoreCount) > 0 && errorCount == 0 && failureCount == 0;
     }
 
     public boolean isNoTest() {
@@ -41,6 +41,6 @@ public class TestResultStatus {
     }
 
     public String summary() {
-        return "Tests run: " + runCount + ", Failures: " + failureCount + ", Errors: " + errorCount;
+        return "Tests run: " + runCount + ", Failures: " + failureCount + ", Errors: " + errorCount + ", Ignored: " + ignoreCount;
     }
 }

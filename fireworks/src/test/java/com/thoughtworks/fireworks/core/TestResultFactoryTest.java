@@ -15,16 +15,18 @@
  */
 package com.thoughtworks.fireworks.core;
 
+import com.thoughtworks.shadow.RunListenerAdaptee;
+import com.thoughtworks.shadow.junit.IgnoredTestCase;
+import com.thoughtworks.turtlemock.Mock;
 import com.thoughtworks.turtlemock.Turtle;
-import com.thoughtworks.turtlemock.internal.ProxyTypeMock;
 import junit.framework.TestCase;
 import junit.framework.TestListener;
 import junit.framework.TestResult;
 
 public class TestResultFactoryTest extends TestCase {
     public void testCreateTestResult() throws Exception {
-        ProxyTypeMock testListener = Turtle.mock(TestListener.class);
-        ProxyTypeMock counterListener = Turtle.mock(TestCounterListener.class);
+        Mock testListener = Turtle.mock(TestListener.class);
+        Mock counterListener = Turtle.mock(TestCounterListener.class);
 
         TestListener[] testListeners = new TestListener[]{(TestListener) testListener.mockTarget()};
         TestCounterListener[] counterListeners = new TestCounterListener[]{(TestCounterListener) counterListener.mockTarget()};
@@ -40,6 +42,18 @@ public class TestResultFactoryTest extends TestCase {
         testListener.assertDid("endTest");
 
         counterListener.assertDid("testResult").with(new Integer(1), new Integer(0), new Integer(0));
+    }
+
+    public void testShouldFireTestIgnoredEventWhenRunIgnoreTestCase() throws Exception {
+        Mock testListener = Turtle.mock(RunListenerAdaptee.class);
+        TestListener[] testListeners = new TestListener[]{(RunListenerAdaptee) testListener.mockTarget()};
+        TestResultFactory factory = new TestResultFactory(testListeners, null);
+        TestResult result = factory.createTestResult();
+
+        IgnoredTestCase test = new IgnoredTestCase("", "");
+        test.run(result);
+
+        testListener.assertDid("testIgnored");
     }
 
     public void testShouldIgnoreNullArgs() throws Exception {

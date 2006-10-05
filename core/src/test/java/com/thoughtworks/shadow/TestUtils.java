@@ -40,7 +40,7 @@ public class TestUtils {
     public static URL[] classpaths() {
         URL[] classpaths = new URL[2];
         classpaths[0] = Utils.toURL("target/test-classes");
-        classpaths[1] = Utils.toURL("libs/junit-3.8.2.jar");
+        classpaths[1] = Utils.toURL("libs/junit/junit/4.1/junit-4.1.jar");
         return classpaths;
     }
 

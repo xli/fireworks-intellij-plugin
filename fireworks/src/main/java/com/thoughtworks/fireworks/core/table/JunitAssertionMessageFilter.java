@@ -22,6 +22,7 @@ public class JunitAssertionMessageFilter {
 
     private final static String[] MESSAGES = new String[]{
             AssertionFailedError.class.getName(),
+            AssertionError.class.getName(),
             ComparisonFailure.class.getName()
     };
 

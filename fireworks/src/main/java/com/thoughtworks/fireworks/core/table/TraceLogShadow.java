@@ -41,7 +41,7 @@ public class TraceLogShadow implements Shadow {
     private String getFirstTraceLog() {
         String[] traces = Utils.toString(t).split(Utils.LINE_SEP);
         for (String trace : traces) {
-            if (trace.startsWith(TRACE_PREFIX + "junit.framework") || !trace.startsWith(TRACE_PREFIX)) {
+            if (shouldBeFiltered(trace)) {
                 continue;
             }
             return format(trace);
@@ -49,9 +49,24 @@ public class TraceLogShadow implements Shadow {
         return t.getStackTrace()[0].toString().trim();
     }
 
+    private boolean shouldBeFiltered(String trace) {
+        if (trace == null) {
+            return true;
+        }
+        boolean isJunitFramework = trace.startsWith(TRACE_PREFIX + "junit.framework");
+        boolean isOrgJunit = trace.startsWith(TRACE_PREFIX + "org.junit");
+        return isOrgJunit || isJunitFramework || !trace.startsWith(TRACE_PREFIX);
+    }
+
     private String format(String trace) {
+        if (trace.length() < TRACE_PREFIX.length()) {
+            return "";
+        }
         String temp = trace.substring(TRACE_PREFIX.length()).trim();
         int splitIndex = temp.indexOf("(");
+        if (splitIndex < 0) {
+            return temp;
+        }
         return temp.substring(splitIndex) + temp.substring(0, splitIndex);
     }
 }

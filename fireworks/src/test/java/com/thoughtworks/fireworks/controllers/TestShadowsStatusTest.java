@@ -21,6 +21,8 @@ import com.thoughtworks.fireworks.stubs.FailureTestShadow;
 import com.thoughtworks.fireworks.stubs.SuccessTestShadow;
 import com.thoughtworks.shadow.ComparableTestShadow;
 import com.thoughtworks.shadow.ShadowCabinet;
+import com.thoughtworks.shadow.TestShadowResult;
+import com.thoughtworks.shadow.junit.IgnoredTestCase;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
@@ -44,7 +46,7 @@ public class TestShadowsStatusTest extends TestCase implements TestStatusSummary
         status = new TestShadowsStatus(rootKey, new TestStatusSummaryListener[]{this});
         cabinet = new ShadowCabinet();
         cabinet.addListener(status);
-        result = new TestResult();
+        result = new TestShadowResult();
         result.addListener(status);
         successfulShadow = new ComparableTestShadow(new SuccessTestShadow());
         successfulShadow.addListener(status);
@@ -80,6 +82,18 @@ public class TestShadowsStatusTest extends TestCase implements TestStatusSummary
         cabinet.action(result);
         assertEquals(Icons.successIcon(), getIcon(rootKey));
         assertEquals(Icons.successIcon(), getIcon(successfulShadow));
+        assertSame(summary, getIcon(rootKey));
+    }
+
+    public void testOneIgnoredTest() throws Exception {
+        IgnoredTestCase ignoredTest = new IgnoredTestCase("class", "method");
+        ComparableTestShadow shadow = new ComparableTestShadow(ignoredTest);
+        shadow.addListener(status);
+        cabinet.add(shadow);
+        cabinet.action(result);
+        assertEquals(Icons.failureIcon(), getIcon(rootKey));
+        assertEquals(Icons.successIcon(), getIcon(shadow));
+        assertEquals(Icons.ignoredIcon(), getIcon(ignoredTest));
         assertSame(summary, getIcon(rootKey));
     }
 

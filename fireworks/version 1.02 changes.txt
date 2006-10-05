@@ -1,0 +1,5 @@
+Version 1.02 changes:
+    * new feature: support junit4.1, Fireworks is able to add and run Test of junit4.1.
+    * change: The high of trace log frame is insreased to 600px
+    * fix bug: Test does not run correctly after Module setting changed.
+    * fix bug: When the root tree node is selected, console text will not be updated after run tests

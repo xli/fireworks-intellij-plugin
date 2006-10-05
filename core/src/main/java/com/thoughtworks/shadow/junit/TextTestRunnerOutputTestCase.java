@@ -23,7 +23,7 @@ public class TextTestRunnerOutputTestCase implements Test {
     private final long time;
     private final LogTestSuite details;
 
-    public TextTestRunnerOutputTestCase(Class testClass, String output) {
+    public TextTestRunnerOutputTestCase(JUnitAdapter testClass, String output) {
         OutputReader reader = new OutputReader(testClass, output);
         time = elapsedTimeAsLong(reader.readTime());
         details = reader.readTestDetailLog();

@@ -23,8 +23,8 @@ import junit.framework.TestResult;
 
 public class BaseTestCase implements TestShadow {
     private final Protectable protectable;
-    private final String testClassName;
-    private final String testMethodName;
+    protected final String testClassName;
+    protected final String testMethodName;
 
     public BaseTestCase(String testClassName, String testMethodName, Protectable protectable) {
         this.testClassName = testClassName;

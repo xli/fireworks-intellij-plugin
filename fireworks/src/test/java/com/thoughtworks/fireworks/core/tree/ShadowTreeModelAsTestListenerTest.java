@@ -19,12 +19,13 @@ import com.thoughtworks.fireworks.stubs.SuccessTestShadow;
 import com.thoughtworks.shadow.ComparableTestShadow;
 import com.thoughtworks.shadow.ShadowCabinet;
 import com.thoughtworks.shadow.TestShadow;
+import com.thoughtworks.shadow.TestShadowResult;
+import com.thoughtworks.shadow.junit.IgnoredTestCase;
 import com.thoughtworks.turtlemock.Mock;
 import com.thoughtworks.turtlemock.Turtle;
 import com.thoughtworks.turtlemock.constraint.CheckResult;
 import com.thoughtworks.turtlemock.constraint.Constraint;
 import junit.framework.TestCase;
-import junit.framework.TestResult;
 
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -40,7 +41,7 @@ public class ShadowTreeModelAsTestListenerTest extends TestCase {
     private ShadowMethodTreeNode grandchild;
 
     private ShadowCabinet cabinet;
-    private TestResult result;
+    private TestShadowResult result;
 
     protected void setUp() throws Exception {
         root = new ShadowSummaryTreeNode();
@@ -53,8 +54,20 @@ public class ShadowTreeModelAsTestListenerTest extends TestCase {
 
         cabinet = new ShadowCabinet();
         cabinet.addListener(model);
-        result = new TestResult();
+        result = new TestShadowResult();
         result.addListener(model);
+    }
+
+    public void testShouldAddTestIgnoredAsChildOfTestShadow() throws Exception {
+        grandchildTest = new IgnoredTestCase("", "");
+        shadow = new ComparableTestShadow(grandchildTest);
+        child = new ShadowClassTreeNode(shadow, root);
+        grandchild = new ShadowMethodTreeNode(grandchildTest, child);
+
+        cabinet.add(shadow);
+        cabinet.action(result);
+
+        assertEquals(1, model.getChildCount(child));
     }
 
     public void testShouldAddTestAsChildOfTestShadowWhichIsAddBeforeByAfterAddTestEvent() throws Exception {

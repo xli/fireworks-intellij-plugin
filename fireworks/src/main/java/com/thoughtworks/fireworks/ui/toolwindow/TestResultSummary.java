@@ -24,11 +24,11 @@ import javax.swing.*;
 public class TestResultSummary extends JLabel implements TestCounterListener {
 
     public TestResultSummary() {
-        super(new TestResultStatus(0, 0, 0).summary());
+        super(new TestResultStatus(0, 0, 0, 0).summary());
         setBackground(Utils.TRANSPARENT_WHITE);
     }
 
-    public void testResult(int runCount, int failureCount, int errorCount) {
-        setText(new TestResultStatus(runCount, failureCount, errorCount).summary());
+    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
+        setText(new TestResultStatus(runCount, failureCount, errorCount, ignoreCount).summary());
     }
 }

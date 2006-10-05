@@ -27,7 +27,7 @@ public class TestResultSummaryBgColor implements TestCounterListener {
         this.listeners = listeners;
     }
 
-    public void testResult(int runCount, int failureCount, int errorCount) {
+    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
         fireEvent(getColor(runCount, failureCount + errorCount));
     }
 

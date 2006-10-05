@@ -23,7 +23,7 @@ import java.awt.event.WindowAdapter;
 
 public class TraceLogFrameFactory {
     private static final int WIDTH = 1000;
-    private static final int HEIGHT = 400;
+    private static final int HEIGHT = 600;
 
     private final WindowAdapter listener;
 

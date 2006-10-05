@@ -3,7 +3,14 @@
     <name>fireworks</name>
     <description>
         <![CDATA[
-<b>Fireworks</b> helps TDDers to run JUnit TestCases(3.8.2) which are edited recently.
+<b>Fireworks</b> helps TDDers to run JUnit TestCases which are edited recently.
+<br>
+<ul><u><b>Version 1.02 changes</b></u>
+    <li>new feature: support junit4.1.</li>
+    <li>change: The high of trace log frame is insreased to 600px 
+    <li>fix bug: Test does not run correctly after Module setting changed.</li>
+    <li>fix bug: When the root tree node is selected, console text will not be updated after run tests</li>
+</ul>
 <br>
 <ul><u><b>Version 1.01 changes</b></u>
     <li>fix bug: Remove a test when opening a JUnit TestCase and the size of recent test list is full.</li>
@@ -82,7 +89,7 @@
 </ul>
 ]]>
     </description>
-    <version>1.01</version>
+    <version>1.02</version>
     <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/" logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000"/>
     <project-components>

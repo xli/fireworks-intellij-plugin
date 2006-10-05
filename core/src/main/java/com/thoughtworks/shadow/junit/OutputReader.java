@@ -28,7 +28,7 @@ public class OutputReader {
 
     private final BufferedReader reader;
 
-    public OutputReader(Class testClass, String output) {
+    public OutputReader(JUnitAdapter testClass, String output) {
         details = new LogTestSuite(testClass);
         reader = new BufferedReader(new StringReader(output));
     }

@@ -16,7 +16,6 @@
 
 package com.thoughtworks.shadow.ant;
 
-import junit.textui.TestRunner;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
@@ -29,12 +28,12 @@ public class AntJavaTaskAdapter {
     private Project project;
     private Java javaTask;
 
-    public AntJavaTaskAdapter(String testClassName) {
+    public AntJavaTaskAdapter(String testClassName, String runnerClassName) {
         project = new Project();
         project.setName(testClassName);
         project.init();
 
-        Target target = target(testClassName);
+        Target target = target(testClassName, runnerClassName);
         project.addTarget(target);
         project.setDefault(target.getName());
     }
@@ -51,18 +50,18 @@ public class AntJavaTaskAdapter {
         javaTask.createClasspath().append(AntUtils.toPath(project, classpaths));
     }
 
-    private Target target(String testClassName) {
+    private Target target(String testClassName, String runnerClassName) {
         Target target = new Target();
         target.setName(testClassName);
-        target.addTask(javaTask(testClassName));
+        target.addTask(javaTask(testClassName, runnerClassName));
         return target;
     }
 
-    private Java javaTask(String testClassName) {
+    private Java javaTask(String testClassName, String runnerClassName) {
         javaTask = (Java) project.createTask("java");
         javaTask.setFork(true);
         javaTask.setNewenvironment(true);
-        javaTask.setClassname(TestRunner.class.getName());
+        javaTask.setClassname(runnerClassName);
         javaTask.setFailonerror(true);
         javaTask.createArg().setValue(testClassName);
         return javaTask;

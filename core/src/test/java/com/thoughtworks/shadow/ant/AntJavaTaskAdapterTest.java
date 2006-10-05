@@ -17,6 +17,7 @@ package com.thoughtworks.shadow.ant;
 
 import com.thoughtworks.shadow.TestUtils;
 import junit.framework.TestCase;
+import junit.textui.TestRunner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,7 +28,7 @@ public class AntJavaTaskAdapterTest extends TestCase {
 
     protected void setUp() throws Exception {
         log = new ByteArrayOutputStream();
-        task = new AntJavaTaskAdapter(AntJavaTaskAdapterHelper.class.getName());
+        task = new AntJavaTaskAdapter(AntJavaTaskAdapterHelper.class.getName(), TestRunner.class.getName());
         task.addBuildListener(TestUtils.simpleBuildLogger(log));
         task.appendClasspaths(TestUtils.classpaths());
     }

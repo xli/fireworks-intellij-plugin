@@ -78,7 +78,7 @@ public class AntSunshine implements Sunshine {
     }
 
     private AntJavaTaskAdapter antJavaTask(String testClassName, AntProjectInfoLogger logger) {
-        AntJavaTaskAdapter task = new AntJavaTaskAdapter(testClassName);
+        AntJavaTaskAdapter task = new AntJavaTaskAdapter(testClassName, logger.getRunnerClassName());
         task.addBuildListener(logger);
         addBuildListeners(task);
         setAttributes(task);

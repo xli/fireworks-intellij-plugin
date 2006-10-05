@@ -47,7 +47,7 @@ public class TextTestRunnerOutputTestCaseTest extends TestCase {
 
     public void testShouldThrowIllegalArgumentExceptionIfOutputIsEmpty() throws Exception {
         try {
-            new TextTestRunnerOutputTestCase(Success.class, "");
+            new TextTestRunnerOutputTestCase(new JUnitAdapter(Success.class), "");
             fail();
         } catch (TestRunnerError e) {
             assertNotNull(e.getMessage());
@@ -55,7 +55,7 @@ public class TextTestRunnerOutputTestCaseTest extends TestCase {
     }
 
     public void testParseASuccessfulTestOutput() throws Exception {
-        Test test = new TextTestRunnerOutputTestCase(Success.class, successSummary);
+        Test test = new TextTestRunnerOutputTestCase(new JUnitAdapter(Success.class), successSummary);
         assertEquals(1, test.countTestCases());
         TestResultAssert.verifySuccess(test);
     }
@@ -63,36 +63,36 @@ public class TextTestRunnerOutputTestCaseTest extends TestCase {
     public void testParseTwoSuccessfulTestsOutput() throws Exception {
         int runCount = 2;
         String summary = summary("..", 2, 0, 0);
-        Test test = new TextTestRunnerOutputTestCase(Success2.class, summary);
+        Test test = new TextTestRunnerOutputTestCase(new JUnitAdapter(Success2.class), summary);
         assertEquals(runCount, test.countTestCases());
         TestResultAssert.verifySuccess(test, runCount);
     }
 
     public void testParseAFailureTestOutput() throws Exception {
-        Test test = new TextTestRunnerOutputTestCase(Failure.class, failureSummary);
+        Test test = new TextTestRunnerOutputTestCase(new JUnitAdapter(Failure.class), failureSummary);
         assertEquals(1, test.countTestCases());
         TestResultAssert.verifyFailure(test);
     }
 
     public void testParseAErrorTestOutput() throws Exception {
-        Test test = new TextTestRunnerOutputTestCase(Err.class, errSummary);
+        Test test = new TextTestRunnerOutputTestCase(new JUnitAdapter(Err.class), errSummary);
         assertEquals(1, test.countTestCases());
         TestResultAssert.verifyError(test);
     }
 
     public void testParseTime() throws Exception {
-        TextTestRunnerOutputTestCase test = new TextTestRunnerOutputTestCase(Success.class, successSummary);
+        TextTestRunnerOutputTestCase test = new TextTestRunnerOutputTestCase(new JUnitAdapter(Success.class), successSummary);
         assertEquals(time, test.getTime());
     }
 
     public void testParseFailureInfo() throws Exception {
-        Test test = new TextTestRunnerOutputTestCase(Failure.class, failureSummary);
+        Test test = new TextTestRunnerOutputTestCase(new JUnitAdapter(Failure.class), failureSummary);
         assertFailureTraceLogs(test, new String[]{Failure.getTestName()});
     }
 
 
     public void testParseErrorInfo() throws Exception {
-        Test test = new TextTestRunnerOutputTestCase(Err.class, errSummary);
+        Test test = new TextTestRunnerOutputTestCase(new JUnitAdapter(Err.class), errSummary);
         assertErrorTraceLogs(test, new String[]{Err.getTestName()});
     }
 
@@ -103,7 +103,7 @@ public class TextTestRunnerOutputTestCaseTest extends TestCase {
         String[] errTestNames = new String[]{"test1(" + SixTestMethods.class.getName() + ")", "test2(" + SixTestMethods.class.getName() + ")"};
         String[] failureTestNames = new String[]{"test3(" + SixTestMethods.class.getName() + ")"};
         String summary = summary(header, 6, 1, 2, errTestNames, failureTestNames);
-        Test test = new TextTestRunnerOutputTestCase(SixTestMethods.class, summary);
+        Test test = new TextTestRunnerOutputTestCase(new JUnitAdapter(SixTestMethods.class), summary);
         assertEquals(6, test.countTestCases());
 
         TestResult result = TestResultAssert.run(test);
