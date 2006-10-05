@@ -4,6 +4,7 @@
 * test junit4.0
 * bug: should remove node which is removed log in the parent node log.
 * bug: sometimes, the text of treenode will not be displayed correctlly.
+* new feature: set up VM arguments
 
 ! should clear selection of tree node first before select a tree node to show log
 ! bug: Test does not run correctly after Module setting changed.
