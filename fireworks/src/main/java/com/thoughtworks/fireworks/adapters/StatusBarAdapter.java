@@ -15,12 +15,13 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.thoughtworks.fireworks.core.TestCounterListener;
+import com.thoughtworks.fireworks.core.ResultOfTestEndListener;
 import com.thoughtworks.shadow.ComparableTestShadow;
 import com.thoughtworks.shadow.ShadowCabinetListener;
 import com.thoughtworks.shadow.TestResultStatus;
+import com.thoughtworks.shadow.TestShadowResult;
 
-public class StatusBarAdapter implements TestCounterListener, ShadowCabinetListener {
+public class StatusBarAdapter implements ResultOfTestEndListener, ShadowCabinetListener {
     private final ProjectAdapter project;
     private TestResultStatus status;
 
@@ -28,8 +29,8 @@ public class StatusBarAdapter implements TestCounterListener, ShadowCabinetListe
         this.project = project;
     }
 
-    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
-        status = new TestResultStatus(runCount, failureCount, errorCount, ignoreCount);
+    public void testEnd(TestShadowResult result) {
+        status = new TestResultStatus(result);
         project.setStatusBarInfo(status.summary());
     }
 

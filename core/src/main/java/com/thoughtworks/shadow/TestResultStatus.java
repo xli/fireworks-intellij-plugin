@@ -33,7 +33,7 @@ public class TestResultStatus {
     }
 
     public boolean wasSuccessful() {
-        return (runCount - ignoreCount) > 0 && errorCount == 0 && failureCount == 0;
+        return runCount > 0 && errorCount == 0 && failureCount == 0;
     }
 
     public boolean isNoTest() {

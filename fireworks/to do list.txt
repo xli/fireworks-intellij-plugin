@@ -2,18 +2,11 @@
 * there is unexpected info in the ant executing log:
     [verbose] dropping C:\C from path as it doesn't exist
 * test junit4.0
-* bug: should remove node which is removed log in the parent node log.
-* bug: sometimes, the text of treenode will not be displayed correctlly.
-* new feature: set up VM arguments
+* bug: should remove log of node which is removed in the parent node log.
 
-! should clear selection of tree node first before select a tree node to show log
-! bug: Test does not run correctly after Module setting changed.
-! support junit 4
-    ! filter message: org.junit.Assert
-
-! bug: sometimes, test shadow will be removed when db-click a tree node.
-  fixed: need more test.
-
+! bug: sometimes, the text of treenode will not be displayed correctlly.
+! bug: should be able to be canceled when running tests.
+! new feature: set up VM arguments
 * random error, when remove tree node at time of running all tests:
         java.lang.ArrayIndexOutOfBoundsException: 6 >= 6
             at java.util.Vector.elementAt(Vector.java:432)
@@ -35,7 +28,15 @@
 ? remove failure msg in the table after test case was deleted
 
 
+=========================2006.10.5=====================================================
 
+! should clear selection of tree node first before select a tree node to show log
+! bug: Test does not run correctly after Module setting changed.
+! support junit 4
+    ! filter message: org.junit.Assert
+
+! bug: sometimes, test shadow will be removed when db-click a tree node.
+  fixed: need more test.
 ==============================2006.10.2===================================================
 ! close trace log window when it is lose focus
 ! status bar should show test result summary after run all tests

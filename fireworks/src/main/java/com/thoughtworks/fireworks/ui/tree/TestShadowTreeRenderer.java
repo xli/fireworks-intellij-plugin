@@ -37,14 +37,19 @@ public class TestShadowTreeRenderer implements TreeCellRenderer, TestStatusSumma
                                                   int row, boolean hasFocus) {
         ShadowTreeNode node = ((ShadowTreeNode) value);
 
+        Component mainComp = mainLabel(tree, node, sel, expanded, leaf, row, hasFocus);
+        Component accessoryComp = accessoryLabel(node, tree, sel, row, hasFocus);
+        return panel(mainComp, accessoryComp);
+    }
+
+    private Component mainLabel(JTree tree, ShadowTreeNode node, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
         DefaultTreeCellRenderer mainLabel = new DefaultTreeCellRenderer();
         mainLabel.getTreeCellRendererComponent(tree, node.label(), sel, expanded, leaf, row, hasFocus);
         mainLabel.setIcon(icons.get(node));
-
-        return panel(mainLabel, accessoryLabel(mainLabel, node));
+        return mainLabel;
     }
 
-    private JPanel panel(DefaultTreeCellRenderer mainLabel, JLabel accessoryLabel) {
+    private JPanel panel(Component mainLabel, Component accessoryLabel) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING, 1, 1));
         panel.setBackground(mainLabel.getBackground());
         panel.add(mainLabel);
@@ -52,12 +57,17 @@ public class TestShadowTreeRenderer implements TreeCellRenderer, TestStatusSumma
         return panel;
     }
 
-    private JLabel accessoryLabel(DefaultTreeCellRenderer mainLabel, ShadowTreeNode node) {
-        JLabel accessoryLabel = new JLabel();
-        accessoryLabel.setForeground(Color.GRAY);
-        accessoryLabel.setBackground(mainLabel.getBackground());
-        accessoryLabel.setText(node.accessory());
-        return accessoryLabel;
+    private Component accessoryLabel(ShadowTreeNode node, JTree tree, boolean sel, int row, boolean hasFocus) {
+        DefaultTreeCellRenderer accessoryLabel = new DefaultTreeCellRenderer();
+        accessoryLabel.setBackgroundSelectionColor(accessoryLabel.getBackground());
+        accessoryLabel.setBorderSelectionColor(accessoryLabel.getBackground());
+        accessoryLabel.setTextSelectionColor(Color.GRAY);
+        accessoryLabel.setTextNonSelectionColor(Color.GRAY);
+        accessoryLabel.setLeafIcon(null);
+        accessoryLabel.setClosedIcon(null);
+        accessoryLabel.setOpenIcon(null);
+
+        return accessoryLabel.getTreeCellRendererComponent(tree, node.accessory(), sel, false, false, row, hasFocus);
     }
 
     public void summaryStatusChanged(Icon status) {

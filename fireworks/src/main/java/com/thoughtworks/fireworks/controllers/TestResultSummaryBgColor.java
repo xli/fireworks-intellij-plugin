@@ -15,11 +15,12 @@
  */
 package com.thoughtworks.fireworks.controllers;
 
-import com.thoughtworks.fireworks.core.TestCounterListener;
+import com.thoughtworks.fireworks.core.ResultOfTestEndListener;
+import com.thoughtworks.shadow.TestShadowResult;
 
 import java.awt.*;
 
-public class TestResultSummaryBgColor implements TestCounterListener {
+public class TestResultSummaryBgColor implements ResultOfTestEndListener {
     private final TestResultSummaryBgColorListener[] listeners;
     private final int level = 10;
 
@@ -27,7 +28,11 @@ public class TestResultSummaryBgColor implements TestCounterListener {
         this.listeners = listeners;
     }
 
-    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
+    public void testEnd(TestShadowResult result) {
+        fireEvent(result.runCount(), result.failureCount(), result.errorCount());
+    }
+
+    public void fireEvent(int runCount, int failureCount, int errorCount) {
         fireEvent(getColor(runCount, failureCount + errorCount));
     }
 
@@ -59,4 +64,5 @@ public class TestResultSummaryBgColor implements TestCounterListener {
             listener.setBackground(color);
         }
     }
+
 }

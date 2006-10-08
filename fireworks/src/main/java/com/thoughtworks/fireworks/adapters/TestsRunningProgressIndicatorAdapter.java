@@ -15,19 +15,22 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.thoughtworks.fireworks.core.TestCounterListener;
+import com.thoughtworks.fireworks.core.ResultOfTestEndListener;
 import com.thoughtworks.shadow.*;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 
-public class TestsRunningProgressIndicatorAdapter implements TestCounterListener, ShadowCabinetListener, RunListenerAdaptee, ShadowVisitor {
+public class TestsRunningProgressIndicatorAdapter implements ResultOfTestEndListener, ShadowCabinetListener, RunListenerAdaptee, ShadowVisitor {
     private TestResultStatus status;
     private String testClassName;
     private String testMethodName;
 
-    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
-        status = new TestResultStatus(runCount, failureCount, errorCount, ignoreCount);
+    public void testEnd(TestShadowResult result) {
+        status = new TestResultStatus(result);
         displaySummaryAsText();
+        if (ProgressIndicatorUtils.isCanceled()) {
+            result.stop();
+        }
     }
 
     public void afterAddTest(ComparableTestShadow test) {

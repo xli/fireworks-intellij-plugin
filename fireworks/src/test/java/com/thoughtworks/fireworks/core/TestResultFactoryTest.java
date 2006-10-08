@@ -26,14 +26,14 @@ import junit.framework.TestResult;
 public class TestResultFactoryTest extends TestCase {
     public void testCreateTestResult() throws Exception {
         Mock testListener = Turtle.mock(TestListener.class);
-        Mock counterListener = Turtle.mock(TestCounterListener.class);
+        Mock resultOfTestEndListener = Turtle.mock(ResultOfTestEndListener.class);
 
         TestListener[] testListeners = new TestListener[]{(TestListener) testListener.mockTarget()};
-        TestCounterListener[] counterListeners = new TestCounterListener[]{(TestCounterListener) counterListener.mockTarget()};
+        ResultOfTestEndListener[] counterListeners = new ResultOfTestEndListener[]{(ResultOfTestEndListener) resultOfTestEndListener.mockTarget()};
 
         TestResultFactory factory = new TestResultFactory(testListeners, counterListeners);
         TestResult result = factory.createTestResult();
-        counterListener.assertDid("testResult").with(new Integer(0), new Integer(0), new Integer(0));
+        resultOfTestEndListener.assertDid("testEnd").with(result);
 
         result.startTest(this);
         result.endTest(this);
@@ -41,7 +41,8 @@ public class TestResultFactoryTest extends TestCase {
         testListener.assertDid("startTest");
         testListener.assertDid("endTest");
 
-        counterListener.assertDid("testResult").with(new Integer(1), new Integer(0), new Integer(0));
+        resultOfTestEndListener.assertDid("testEnd").with(result);
+        assertEquals(1, result.runCount());
     }
 
     public void testShouldFireTestIgnoredEventWhenRunIgnoreTestCase() throws Exception {

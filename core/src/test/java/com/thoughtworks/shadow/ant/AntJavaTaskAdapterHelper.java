@@ -22,5 +22,7 @@ import java.io.File;
 public class AntJavaTaskAdapterHelper extends TestCase {
     public void testPrintBaseDir() throws Exception {
         System.out.println(new File(".").getAbsolutePath());
+        System.out.println(System.getProperty("key1"));
+        System.out.println(System.getProperty("key2"));
     }
 }

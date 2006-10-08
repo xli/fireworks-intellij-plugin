@@ -27,6 +27,10 @@ public class Utils {
         return str == null || "".equals(str);
     }
 
+    public static boolean isNotEmpty(String str) {
+        return !isEmpty(str);
+    }
+
     public static Class load(URL[] classpaths, String className) throws ClassNotFoundException {
         if (className == null) {
             throw new NullPointerException("className should not be null!");

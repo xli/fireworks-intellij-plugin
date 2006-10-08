@@ -23,23 +23,51 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class AntSunshineTest extends TestCase {
-    private ByteArrayOutputStream log = new ByteArrayOutputStream();
-    private DefaultLogger buildListener = TestUtils.simpleBuildLogger(log);
-    private String encoding = "UTF-8";
-    private String jvm = "java.exe";
-    private String jvmVersion = "1.4";
-    private String maxMemory = "2M";
-    private File baseDir = new File(".").getAbsoluteFile().getParentFile();
+    private final String encoding = "UTF-8";
+    private final String jvm = "java.exe";
+    private final String jvmVersion = "1.4";
+    private final String maxMemory = "2M";
+    private final File baseDir = new File(".").getAbsoluteFile().getParentFile();
+
+    private ByteArrayOutputStream log;
+    private DefaultLogger buildListener;
+    private AntSunshine sunshine;
+
+    protected void setUp() throws Exception {
+        log = new ByteArrayOutputStream();
+        buildListener = TestUtils.simpleBuildLogger(log);
+        sunshine = new AntSunshine(TestUtils.classpaths(), encoding, baseDir, jvm, jvmVersion, maxMemory);
+        sunshine.addBuildListener(buildListener);
+    }
 
     public void testShine() throws Exception {
-        AntSunshine sunshine = new AntSunshine(TestUtils.classpaths(), encoding, baseDir, jvm, jvmVersion, maxMemory);
-        sunshine.addBuildListener(buildListener);
-
         sunshine.shine(AntJavaTaskAdapterHelper.class.getName());
 
         TestUtils.assertContain(log, "-Dfile.encoding=" + encoding);
         TestUtils.assertContain(log, baseDir.getAbsolutePath());
         TestUtils.assertContain(log, "Executing '" + jvm + "' with arguments:");
         TestUtils.assertContain(log, "'-Xmx" + maxMemory + "'");
+    }
+
+    public void testAddJvmArgs() throws Exception {
+        String arg1 = "-Dkey1=jvmArg1Value";
+        String arg2 = "-Dkey2=jvmArg2Value";
+        sunshine.addJvmArgs(arg1 + " " + arg2);
+        sunshine.shine(AntJavaTaskAdapterHelper.class.getName());
+
+        TestUtils.assertContain(log, "jvmArg1Value");
+        TestUtils.assertContain(log, "jvmArg2Value");
+        TestUtils.assertContain(log, arg1);
+        TestUtils.assertContain(log, arg2);
+
+        TestUtils.assertContain(log, "-Dfile.encoding=" + encoding);
+    }
+
+    public void testShouldIgnoreNullAndEmptyArgsWhenAddJvmArgs() throws Exception {
+        sunshine.addJvmArgs(null);
+        sunshine.addJvmArgs("");
+
+        sunshine.shine(AntJavaTaskAdapterHelper.class.getName());
+        TestUtils.assertContain(log, "-Dfile.encoding=" + encoding);
     }
 }

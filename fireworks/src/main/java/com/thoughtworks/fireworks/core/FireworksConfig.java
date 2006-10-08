@@ -24,5 +24,7 @@ public interface FireworksConfig {
 
     int autoRunTestsDelayTime();
 
+    String jvmArgs();
+
     void setMaxSize(int maxSize);
 }

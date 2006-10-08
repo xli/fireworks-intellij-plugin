@@ -68,7 +68,12 @@ public class AntJavaTaskAdapter {
     }
 
     public void setFileEncodeing(String encoding) {
-        javaTask.createJvmarg().setValue("-Dfile.encoding=" + encoding);
+        String encodingArg = "-Dfile.encoding=" + encoding;
+        addJvmArgs(encodingArg);
+    }
+
+    public void addJvmArgs(String args) {
+        javaTask.createJvmarg().setLine(args);
     }
 
     public void setBaseDir(File baseDir) {

@@ -26,11 +26,12 @@ public class TestResultStatusTest extends TestCase {
     }
 
     public void testShouldBeFailureStatusIfAllTestIgnored() throws Exception {
-        assertFalse(new TestResultStatus(2, 0, 0, 2).wasSuccessful());
+        assertFalse(new TestResultStatus(0, 0, 0, 2).wasSuccessful());
     }
 
     public void testShouldBeSuccessfulStatusIfSomeTestsAreSuccessfulAndOthersAreIgnored() throws Exception {
         assertTrue(new TestResultStatus(4, 0, 0, 2).wasSuccessful());
+        assertTrue(new TestResultStatus(2, 0, 0, 2).wasSuccessful());
     }
 
     public void testShouldBeFailureStatusIfSomeTestsAreFailureAndOthersAreIgnored() throws Exception {

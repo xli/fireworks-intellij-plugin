@@ -38,6 +38,7 @@ public class AntSunshine implements Sunshine {
     private final String jvm;
     private final String jvmVersion;
     private final String maxMemory;
+    private String jvmArgs;
 
     public AntSunshine(URL[] classpaths) {
         this(classpaths, null, null, null, null, null);
@@ -87,20 +88,23 @@ public class AntSunshine implements Sunshine {
 
     private void setAttributes(AntJavaTaskAdapter task) {
         task.appendClasspaths(classpaths);
-        if (encoding != null) {
+        if (Utils.isNotEmpty(encoding)) {
             task.setFileEncodeing(encoding);
         }
         if (baseDir != null) {
             task.setBaseDir(baseDir);
         }
-        if (jvm != null) {
+        if (Utils.isNotEmpty(jvm)) {
             task.setJvm(jvm);
         }
-        if (jvmVersion != null) {
+        if (Utils.isNotEmpty(jvmVersion)) {
             task.setJvmVersion(jvmVersion);
         }
-        if (maxMemory != null) {
+        if (Utils.isNotEmpty(maxMemory)) {
             task.setMaxMemory(maxMemory);
+        }
+        if (Utils.isNotEmpty(jvmArgs)) {
+            task.addJvmArgs(jvmArgs);
         }
     }
 
@@ -108,5 +112,9 @@ public class AntSunshine implements Sunshine {
         for (int i = 0; i < listeners.size(); i++) {
             task.addBuildListener((BuildListener) listeners.get(i));
         }
+    }
+
+    public void addJvmArgs(String jvmArgs) {
+        this.jvmArgs = jvmArgs;
     }
 }

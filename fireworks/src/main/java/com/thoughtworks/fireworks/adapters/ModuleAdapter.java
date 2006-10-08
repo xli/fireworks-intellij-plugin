@@ -41,7 +41,9 @@ public class ModuleAdapter {
     }
 
     AntSunshine antSunshine() {
-        return new AntSunshine(classpaths(), encoding(), baseDir(), jvm(), jvmVersion(), config.maxMemory());
+        AntSunshine antSunshine = new AntSunshine(classpaths(), encoding(), baseDir(), jvm(), jvmVersion(), config.maxMemory());
+        antSunshine.addJvmArgs(config.jvmArgs());
+        return antSunshine;
     }
 
     private String jvmVersion() {

@@ -21,28 +21,28 @@ import junit.framework.TestResult;
 
 public class TestResultFactory {
     private final TestListener[] testListeners;
-    private final TestCounterListener[] counterListeners;
+    private final ResultOfTestEndListener[] counterListeners;
 
-    public TestResultFactory(TestListener[] testListeners, TestCounterListener[] counterListeners) {
+    public TestResultFactory(TestListener[] testListeners, ResultOfTestEndListener[] counterListeners) {
         this.testListeners = testListeners == null ? new TestListener[0] : testListeners;
-        this.counterListeners = counterListeners == null ? new TestCounterListener[0] : counterListeners;
+        this.counterListeners = counterListeners == null ? new ResultOfTestEndListener[0] : counterListeners;
     }
 
     public TestResult createTestResult() {
-        TestResult result = new TestShadowResult();
-        result.addListener(getTestCounter());
+        TestShadowResult result = new TestShadowResult();
+        result.addListener(getTestCounter(result));
         for (int i = 0; i < testListeners.length; i++) {
             result.addListener(testListeners[i]);
         }
         return result;
     }
 
-    private TestCounter getTestCounter() {
-        TestCounter counter = new TestCounter();
+    private TestResultMonitor getTestCounter(TestShadowResult result) {
+        TestResultMonitor resultMonitor = new TestResultMonitor(result);
         for (int i = 0; i < counterListeners.length; i++) {
-            counter.addListener(counterListeners[i]);
+            resultMonitor.addListener(counterListeners[i]);
         }
-        counter.start();
-        return counter;
+        resultMonitor.start();
+        return resultMonitor;
     }
 }

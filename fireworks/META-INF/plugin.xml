@@ -5,9 +5,15 @@
         <![CDATA[
 <b>Fireworks</b> helps TDDers to run JUnit TestCases which are edited recently.
 <br>
+<ul><u><b>Version 1.03 changes</b></u>
+    <li>new feature: set up JVM arguments for the tests by Fireworks Configuration</li>
+    <li>fix bug: can not cancel process of running tests by Fireworks</li>
+    <li>fix bug: tree node does not display full text info of test added in the "recent test list"</li>
+</ul>
+<br>
 <ul><u><b>Version 1.02 changes</b></u>
     <li>new feature: support junit4.1.</li>
-    <li>change: The high of trace log frame is insreased to 600px 
+    <li>change: The high of trace log frame is insreased to 600px</li>
     <li>fix bug: Test does not run correctly after Module setting changed.</li>
     <li>fix bug: When the root tree node is selected, console text will not be updated after run tests</li>
 </ul>
@@ -29,8 +35,8 @@
     <li>The test result is organized by a table which will pick out the key summary of the test result. The table will only display failed tests result.</li>
     <li>Add TestCase which is openning or editing into "recent test list".</li>
     <li>Set up filter regex for filtering name of TestCase which can be added into "recent test list".</li>
-    <li>Press hot key and button to run all tests of the project, which are found by "test class name regex" in the test source folder of the module.</li>
-    <li>Press hot key and button to run tests in the "recent test list".</li>
+    <li>Press hot key or button to run all tests of the project, which are found by "test class name regex" in the test source folder of the module.</li>
+    <li>Press hot key or button to run tests in the "recent test list".</li>
     <li>The state of every test in the "recent test list" is showed by icon.</li>
     <li>The icon of Fireworks tool window will show whether there are tests failed in the "recent test list".</li>
     <li>Disable/enable Fireworks, Fireworks tool window will be removed and hot key of running tests will be disabled.</li>
@@ -69,6 +75,12 @@
         <li>description:    Set value to -1 to disable running tests in the "recent test list" automatically. Otherwise, the value will be period time in milliseconds between running tests in the "recent test list" automatically.</li>
         </ul>
     </li>
+    <li>JVM arguments for the tests
+        <ul>
+        <li>default value:  empty</li>
+        <li>description:    Set up JVM arguments for the tests that will be ran by Fireworks, for example: "-Dkey1=value1 -Dkey2=value2"</li>
+        </ul>
+    </li>
 </ul>
 <br>
 <ul><u><b>Hot keys</b></u>
@@ -90,7 +102,8 @@
 ]]>
     </description>
     <version>1.02</version>
-    <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/" logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
+    <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/"
+            logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000"/>
     <project-components>
         <component>

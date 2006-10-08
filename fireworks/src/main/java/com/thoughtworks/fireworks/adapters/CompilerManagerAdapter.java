@@ -15,6 +15,7 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.compiler.CompileStatusNotification;
 import com.thoughtworks.fireworks.core.CompilerManagerAdaptee;
 
@@ -44,7 +45,11 @@ public class CompilerManagerAdapter implements CompilerManagerAdaptee {
         };
     }
 
-    private void run(Runnable process) {
-        project.runProcessWithProgressSynchronously(process, "Running Tests...", true);
+    private void run(final Runnable process) {
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+            public void run() {
+                project.runProcessWithProgressSynchronously(process, "Running Tests...", true);
+            }
+        });
     }
 }

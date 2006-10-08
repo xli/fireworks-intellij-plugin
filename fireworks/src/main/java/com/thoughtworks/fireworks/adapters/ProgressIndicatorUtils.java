@@ -32,4 +32,12 @@ public class ProgressIndicatorUtils {
             progressIndicator.setText(text);
         }
     }
+
+    public static boolean isCanceled() {
+        ProgressIndicator progressIndicator = ProgressManager.getInstance().getProgressIndicator();
+        if (progressIndicator != null && progressIndicator.isRunning()) {
+            return progressIndicator.isCanceled();
+        }
+        return false;
+    }
 }

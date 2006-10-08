@@ -15,20 +15,21 @@
  */
 package com.thoughtworks.fireworks.ui.toolwindow;
 
-import com.thoughtworks.fireworks.core.TestCounterListener;
+import com.thoughtworks.fireworks.core.ResultOfTestEndListener;
 import com.thoughtworks.fireworks.core.Utils;
 import com.thoughtworks.shadow.TestResultStatus;
+import com.thoughtworks.shadow.TestShadowResult;
 
 import javax.swing.*;
 
-public class TestResultSummary extends JLabel implements TestCounterListener {
+public class TestResultSummary extends JLabel implements ResultOfTestEndListener {
 
     public TestResultSummary() {
         super(new TestResultStatus(0, 0, 0, 0).summary());
         setBackground(Utils.TRANSPARENT_WHITE);
     }
 
-    public void testResult(int runCount, int failureCount, int errorCount, int ignoreCount) {
-        setText(new TestResultStatus(runCount, failureCount, errorCount, ignoreCount).summary());
+    public void testEnd(TestShadowResult result) {
+        setText(new TestResultStatus(result).summary());
     }
 }

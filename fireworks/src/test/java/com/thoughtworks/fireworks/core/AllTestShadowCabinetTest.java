@@ -113,6 +113,10 @@ public class AllTestShadowCabinetTest extends TestCase implements TestStateListe
         return 0;
     }
 
+    public String jvmArgs() {
+        return null;
+    }
+
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
         icabinet.setMaxSize(maxSize);

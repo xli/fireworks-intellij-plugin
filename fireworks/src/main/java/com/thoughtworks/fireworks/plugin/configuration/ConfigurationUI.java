@@ -25,6 +25,7 @@ public class ConfigurationUI {
     private JTextField expectedTestCaseNameRegex;
     private JTextField maxSize;
     private JTextField autoRunTestsDelayTime;
+    private JTextField jvmArgs;
 
     private JPanel pane;
 
@@ -34,8 +35,9 @@ public class ConfigurationUI {
         expectedTestCaseNameRegex = new JTextField();
         maxSize = new JTextField();
         autoRunTestsDelayTime = new JTextField();
+        jvmArgs = new JTextField();
 
-        pane = new JPanel(new GridLayout(5, 2));
+        pane = new JPanel(new GridLayout(6, 2));
         pane.add(new Label("Enable fireworks: "));
         pane.add(enable);
         pane.add(new Label("Run tests max memory: "));
@@ -46,6 +48,8 @@ public class ConfigurationUI {
         pane.add(maxSize);
         pane.add(new Label("Delay time(millisecond): "));
         pane.add(autoRunTestsDelayTime);
+        pane.add(new Label("JVM arguments for the tests: "));
+        pane.add(jvmArgs);
     }
 
     public JComponent getRootComponent() {
@@ -100,5 +104,13 @@ public class ConfigurationUI {
             JOptionPane.showMessageDialog(null, message);
             return 0;
         }
+    }
+
+    public String jvmArgs() {
+        return jvmArgs.getText();
+    }
+
+    public void setJvmArgs(String jvmArgs) {
+        this.jvmArgs.setText(jvmArgs);
     }
 }

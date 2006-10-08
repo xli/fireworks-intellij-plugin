@@ -35,6 +35,7 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
 
     private Project project;
     private FireworksContainer container;
+    private String jvmArgs;
 
     public FireworksProject(Project project) {
         this.project = project;
@@ -90,6 +91,10 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
         return autoRunTestsDelayTime;
     }
 
+    public String jvmArgs() {
+        return jvmArgs;
+    }
+
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
         getCabinet().setMaxSize(maxSize);
@@ -110,6 +115,7 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
         expectedTestCaseNameRegex = getConfigurationUI().expectedTestCaseNameRegex();
         setMaxSize(getConfigurationUI().maxSize());
         autoRunTestsDelayTime = getConfigurationUI().autoRunTestsDelayTime();
+        jvmArgs = getConfigurationUI().jvmArgs();
     }
 
     public void reset() {
@@ -118,6 +124,7 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
         getConfigurationUI().setExpectedTestCaseNameRegex(expectedTestCaseNameRegex);
         getConfigurationUI().setMaxSize(maxSize);
         getConfigurationUI().setAutoRunTestsDelayTime(autoRunTestsDelayTime);
+        getConfigurationUI().setJvmArgs(jvmArgs);
     }
 
     public IntellijShadowCabinet getCabinet() {
