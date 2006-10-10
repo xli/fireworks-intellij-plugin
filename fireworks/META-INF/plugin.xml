@@ -22,6 +22,8 @@ We all know about the following steps :
     <li>Refactor to remove duplication.</li>
     <li>Take a drink of coffee and IDE tells me there is no broken test.</li>
 </ul></b>
+<br/>
+
 <p>It's great that we have time to run all tests continuously. But more tests we wrote, more time costs.
 It will be to much cost for us to run all tests in almost every real project.
 So it's better that I just run tests about which are cared recently continuously and run all tests
@@ -55,6 +57,7 @@ and finding better way to trigger task of running tests in the "recent test list
 Contract me:) swing1979@gmail.com</p></b>
 
 <hr>
+<br>
 <ul><u><b>Version 1.05 changes</b></u>
     <li>new feature: provide supporting IntelliJIDEA 6.0, tested on IntelliJIDEA build 5766</li>
     <li>change: event of cell(jumping to source and open a frame to show trace log) in the table of test result
