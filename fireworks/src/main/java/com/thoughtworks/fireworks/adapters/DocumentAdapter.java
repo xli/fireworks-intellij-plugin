@@ -137,9 +137,11 @@ public class DocumentAdapter implements DocumentAdaptee {
     }
 
     private PsiClass getTestCasePsiClassFromPackage(PsiPackage testCasePackage) {
-        for (final PsiClass clazz : testCasePackage.getClasses()) {
-            if (TestCase.class.getName().equals(clazz.getQualifiedName())) {
-                return clazz;
+        if (testCasePackage != null) {
+            for (final PsiClass clazz : testCasePackage.getClasses()) {
+                if (TestCase.class.getName().equals(clazz.getQualifiedName())) {
+                    return clazz;
+                }
             }
         }
         String errorMsg = "Can't find junit class \"" + TestCase.class + "\".";

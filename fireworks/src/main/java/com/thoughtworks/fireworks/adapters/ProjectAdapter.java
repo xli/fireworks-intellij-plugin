@@ -17,7 +17,6 @@ package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.execution.filters.OpenFileHyperlinkInfo;
 import com.intellij.execution.filters.TextConsoleBuidlerFactory;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.compiler.CompileStatusNotification;
 import com.intellij.openapi.compiler.CompilerManager;
 import com.intellij.openapi.editor.Document;
@@ -34,6 +33,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.refactoring.listeners.RefactoringListenerManager;
+import com.thoughtworks.fireworks.adapters.compatibility.RunProcessWithProgressSyn;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
 import com.thoughtworks.fireworks.core.FireworksConfig;
@@ -189,7 +189,7 @@ public class ProjectAdapter {
     }
 
     public void runProcessWithProgressSynchronously(Runnable process, String title, boolean canBeCanceled) {
-        ApplicationManager.getApplication().runProcessWithProgressSynchronously(process, title, canBeCanceled, project);
+        new RunProcessWithProgressSyn(process, title, canBeCanceled, project).execute();
     }
 
     public void make(CompileStatusNotification compileStatusNotification) {

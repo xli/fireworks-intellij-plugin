@@ -43,8 +43,8 @@ And there is a regex of test class name for helping us to filter test we don't w
 If there is a test failed after we run all tests by press hot key, it will be added into "recent test list" too.
 </p>
 
-<p><b>Fireworks</b> is developed in IntelliJ 5.1 build#4155, and it provides supporting both JUnit3.8 and JUnit4.1
-which are used widely (I don't test it in other version of JUnit :p ).
+<p><b>Fireworks</b> is developed in IntelliJ 5.1 build#4155 and has been tested on IntelliJ 6.0 build#5766,
+and it provides supporting both JUnit3.8 and JUnit4.1 which are used widely (I don't test it in other version of JUnit :p ).
 So if you still use IntelliJ 5, <b>Fireworks</b> will be a good tool to run Test of JUnit4.1 directly in IntelliJ 5.
 </p>
 
@@ -54,6 +54,12 @@ and finding better way to trigger task of running tests in the "recent test list
 <b><p>So any suggestions or feedback from you who like the idea above will be great for me.
 Contract me:) swing1979@gmail.com</p></b>
 
+<hr>
+<ul><u><b>Version 1.05 changes</b></u>
+    <li>new feature: provide supporting IntelliJIDEA 6.0, tested on IntelliJIDEA build 5766</li>
+    <li>change: event of cell(jumping to source and open a frame to show trace log) in the table of test result
+            will be triggered by mouse clicking or pressing "enter" key.</li>
+</ul>
 <br>
 <ul><u><b>Version 1.04 changes</b></u>
     <li>new feature: mouse event will reschedule the task of running "recent test list"</li>
@@ -159,10 +165,10 @@ Contract me:) swing1979@gmail.com</p></b>
 </ul>
 ]]>
     </description>
-    <version>1.04</version>
+    <version>1.05</version>
     <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
-    <idea-version since-build="3000"/>
+    <idea-version since-build="3000" until-build="5766"/>
     <project-components>
         <component>
             <implementation-class>com.thoughtworks.fireworks.plugin.FireworksProject</implementation-class>

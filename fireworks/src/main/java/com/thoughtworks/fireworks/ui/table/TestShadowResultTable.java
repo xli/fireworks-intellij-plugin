@@ -20,9 +20,11 @@ import com.thoughtworks.fireworks.core.table.ShadowTableModel;
 import com.thoughtworks.shadow.Shadow;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TestShadowResultTable extends JTable {
     private static final int FONT_SIZE = 12;
@@ -59,9 +61,15 @@ public class TestShadowResultTable extends JTable {
         this.setRowSelectionAllowed(false);
         this.setCellSelectionEnabled(true);
 
-        this.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
+        this.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                selectCell();
+            }
+        });
+
+        this.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     selectCell();
                 }
             }

@@ -16,7 +16,8 @@
 package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.compiler.CompileStatusNotification;
+import com.thoughtworks.fireworks.adapters.compatibility.CompileStatusNotificationAdapter;
+import com.thoughtworks.fireworks.core.CompileStatusNotificationAdaptee;
 import com.thoughtworks.fireworks.core.CompilerManagerAdaptee;
 
 public class CompilerManagerAdapter implements CompilerManagerAdaptee {
@@ -26,18 +27,19 @@ public class CompilerManagerAdapter implements CompilerManagerAdaptee {
         this.project = project;
     }
 
-    public void compile(final CompileStatusNotification compileStatusNotification) {
-        project.make(new CompileStatusNotification() {
+    public void compile(final CompileStatusNotificationAdaptee compileStatusNotification) {
+        CompileStatusNotificationAdaptee notification = new CompileStatusNotificationAdaptee() {
             public void finished(boolean aborted, int errors, int warnings) {
                 run(process(aborted, errors, warnings, compileStatusNotification));
             }
-        });
+        };
+        project.make(new CompileStatusNotificationAdapter(notification));
     }
 
     private Runnable process(final boolean aborted,
                              final int errors,
                              final int warnings,
-                             final CompileStatusNotification compileStatusNotification) {
+                             final CompileStatusNotificationAdaptee compileStatusNotification) {
         return new Runnable() {
             public void run() {
                 compileStatusNotification.finished(aborted, errors, warnings);
