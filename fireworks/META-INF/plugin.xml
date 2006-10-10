@@ -20,7 +20,7 @@ We all know about the following steps :
     <li>Take a break or review the code.</li>
     <li>IDE tells me all tests succeed.</li>
     <li>Refactor to remove duplication.</li>
-    <li>Drink a cup of coffee and IDE tells me there is no broken test.</li>
+    <li>Take a drink of coffee and IDE tells me there is no broken test.</li>
 </ul></b>
 <p>It's great that we have time to run all tests continuously. But more tests we wrote, more time costs.
 It will be to much cost for us to run all tests in almost every real project.
