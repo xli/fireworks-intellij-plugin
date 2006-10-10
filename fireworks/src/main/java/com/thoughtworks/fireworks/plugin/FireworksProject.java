@@ -31,7 +31,7 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
     public String maxMemory = null;
     public int maxSize = 5;
     public boolean enable = true;
-    public int autoRunTestsDelayTime = -1;
+    public int autoRunTestsDelayTime = 4000;
 
     private Project project;
     private FireworksContainer container;

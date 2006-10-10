@@ -1,12 +1,6 @@
-* Listeners
 * there is unexpected info in the ant executing log:
     [verbose] dropping C:\C from path as it doesn't exist
 * test junit4.0
-* bug: should remove log of node which is removed in the parent node log.
-
-! bug: sometimes, the text of treenode will not be displayed correctlly.
-! bug: should be able to be canceled when running tests.
-! new feature: set up VM arguments
 * random error, when remove tree node at time of running all tests:
         java.lang.ArrayIndexOutOfBoundsException: 6 >= 6
             at java.util.Vector.elementAt(Vector.java:432)
@@ -22,12 +16,16 @@
 
 ? rename IntellijShadowCabinetTest&IntellijShadowCabinet
 ? should not fire action when cabinet is empty
-
 ? remember selected tab
 ? remove TestTreeNode(What to do?).
 ? remove failure msg in the table after test case was deleted
 
-
+=========================2006.10.10==================================================
+! Listeners
+! bug: should remove log of node which is removed in the parent node log.
+! bug: sometimes, the text of treenode will not be displayed correctlly.
+! bug: should be able to be canceled when running tests.
+! new feature: set up VM arguments
 =========================2006.10.5=====================================================
 
 ! should clear selection of tree node first before select a tree node to show log

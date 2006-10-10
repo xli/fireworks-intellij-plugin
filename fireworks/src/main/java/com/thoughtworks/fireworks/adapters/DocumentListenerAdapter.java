@@ -73,8 +73,8 @@ public class DocumentListenerAdapter implements DocumentListener, AWTEventListen
             return;
         }
 
-        LOG.info("schedule a new task...");
         cancelTimer();
+        LOG.info("schedule a new task...");
         autoRunTaskIsScheduled = true;
         timer = new Timer();
         timer.schedule(new AutoRunTestsTimerTask(this), config.autoRunTestsDelayTime());
@@ -86,6 +86,7 @@ public class DocumentListenerAdapter implements DocumentListener, AWTEventListen
             timer.cancel();
             timer = null;
             autoRunTaskIsScheduled = false;
+            isFiringCabinetActionByMyself = false;
         }
     }
 
@@ -110,14 +111,12 @@ public class DocumentListenerAdapter implements DocumentListener, AWTEventListen
     }
 
     private boolean isNotEnabled() {
-        boolean isNotEnabled = config.autoRunTestsDelayTime() <= 0;
-        return isNotEnabled;
+        return config.autoRunTestsDelayTime() <= 0;
     }
 
     private boolean isTooFrequent() {
         long timePassedAfterLastTimeOfFiringCabinetAction = System.currentTimeMillis() - lastTimeOfFiringCabinetAcion;
-        boolean isTooFrequent = timePassedAfterLastTimeOfFiringCabinetAction < config.autoRunTestsDelayTime();
-        return isTooFrequent;
+        return timePassedAfterLastTimeOfFiringCabinetAction < config.autoRunTestsDelayTime();
     }
 
     private boolean isNonViewerWritableDoc(Document doc) {

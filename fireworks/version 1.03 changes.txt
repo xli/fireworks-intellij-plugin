@@ -1,5 +1,0 @@
-Version 1.03 changes
-    new feature: set up JVM arguments for the tests by Fireworks Configuration
-    fix bug: can not cancel process of running tests by Fireworks
-    fix bug: tree node does not display full text info of test added in the "recent test list"
-

@@ -29,6 +29,7 @@ public class RemoveTreeNodeActionListener implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         selectionNode().removeSelf();
+        tree.reSelectRootNode();
     }
 
     private RemovableSource selectionNode() {

@@ -46,6 +46,33 @@ public class TestFailures {
         return failures;
     }
 
+    public void remove(ShadowTreeNode node) {
+        removeLogFromNode(testFailures.remove(node), node.parent());
+        removeChildren(node);
+    }
+
+    private void removeLogFromNode(List<Throwable> failures, ShadowTreeNode node) {
+        if (failures == null || failures.isEmpty()) {
+            return;
+        }
+        for (int i = 0; i < failures.size(); i++) {
+            getFailures(node).remove(failures.get(i));
+        }
+    }
+
+    private void removeChildren(ShadowTreeNode node) {
+        Set<ShadowTreeNode> shouldBeRemovedChildren = new HashSet<ShadowTreeNode>();
+        for (ShadowTreeNode child : testFailures.keySet()) {
+            if (child.parent() != null && child.parent().equals(node)) {
+                shouldBeRemovedChildren.add(child);
+            }
+        }
+
+        for (ShadowTreeNode shouldBeRemovedNode : shouldBeRemovedChildren) {
+            testFailures.remove(shouldBeRemovedNode);
+        }
+    }
+
     public void output(ShadowTreeNode node, ConsoleViewAdaptee consoleView) {
         List<Throwable> failures = getFailures(node);
         StringBuffer buffer = new StringBuffer();

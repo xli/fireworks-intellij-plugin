@@ -19,7 +19,6 @@ import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
 import com.thoughtworks.shadow.*;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
-import junit.framework.TestListener;
 
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -132,6 +131,7 @@ public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCab
     private void removeNode(ShadowTreeNode child) {
         TreeModelEvent event = createTreeModelEvent(child);
         treeNodes.remove(child);
+        testFailures.remove(child);
         fireTreeNodeRemovedEvent(event);
     }
 

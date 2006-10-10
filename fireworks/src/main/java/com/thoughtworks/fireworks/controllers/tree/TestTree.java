@@ -22,6 +22,8 @@ public interface TestTree {
 
     void jumpToSourceOfNode(TreePath path);
 
+    void reSelectRootNode();
+
     TreePath getPathForLocation(int x, int y);
 
     void setSelectionPath(TreePath path);

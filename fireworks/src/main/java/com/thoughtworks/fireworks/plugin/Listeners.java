@@ -53,10 +53,9 @@ public class Listeners implements Startable {
         fileDocumentManager().addFileDocumentManagerListener(fileDocumentManagerListener);
 
         Toolkit.getDefaultToolkit().addAWTEventListener(awtListener, AWTEvent.KEY_EVENT_MASK);
-//        Toolkit.getDefaultToolkit().addAWTEventListener(documentListener, AWTEvent.MOUSE_EVENT_MASK);
+        Toolkit.getDefaultToolkit().addAWTEventListener(awtListener, AWTEvent.MOUSE_EVENT_MASK);
 
         EditorFactory.getInstance().getEventMulticaster().addDocumentListener(documentListener);
-
         VirtualFileManager.getInstance().addVirtualFileListener(deleteTestShadowListener);
     }
 
@@ -67,32 +66,7 @@ public class Listeners implements Startable {
         Toolkit.getDefaultToolkit().removeAWTEventListener(awtListener);
 
         EditorFactory.getInstance().getEventMulticaster().removeDocumentListener(documentListener);
-//        ApplicationManager.getApplication().invokeLater(removeDocumentListenerFromEditors());
-
         VirtualFileManager.getInstance().removeVirtualFileListener(deleteTestShadowListener);
-    }
-
-    /*
-     * 为什么以前需要这个方法？现在却发现不需要removeDocumentListener，而且如果重复添加相同的documentListener会有Logger#assert fail
-     */
-    private Runnable removeDocumentListenerFromEditors() {
-        return new Runnable() {
-            public void run() {
-                Editor[] allEditors = EditorFactory.getInstance().getAllEditors();
-                for (int i = 0; i < allEditors.length; i++) {
-                    System.out.println("editor: " + allEditors[i].getDocument().getText());
-                    boolean isNonDisposedDocEditor = !allEditors[i].isViewer() && !allEditors[i].isDisposed();
-                    if (isNonDisposedDocEditor && allEditors[i].getDocument().isWritable()) {
-                        System.out.println("remove doc listener");
-                        try {
-                            allEditors[i].getDocument().removeDocumentListener(documentListener);
-                        } catch (Throwable e) {
-                            System.out.println("xx: " + e);
-                        }
-                    }
-                }
-            }
-        };
     }
 
     private FileDocumentManager fileDocumentManager() {

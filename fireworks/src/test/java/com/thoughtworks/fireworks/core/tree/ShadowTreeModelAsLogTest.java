@@ -105,4 +105,13 @@ public class ShadowTreeModelAsLogTest extends TestCase {
         model.output(root, new ConsoleViewBuffer(buffer));
         assertEquals("", buffer.toString().trim());
     }
+
+    public void testShouldRemoveFailureLogAfterNodeRemoved() throws Exception {
+        cabinet.add(failureShadow);
+        cabinet.action(result);
+
+        failureShadow.removeSelfFromContainer();
+        model.output(root, new ConsoleViewBuffer(buffer));
+        assertEquals("", buffer.toString().trim());
+    }
 }
