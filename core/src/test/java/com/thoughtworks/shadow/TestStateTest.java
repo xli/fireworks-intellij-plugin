@@ -113,23 +113,20 @@ public class TestStateTest extends TestCase {
     }
 
     public void testShouldFireEndTestEvent() throws Exception {
-        Integer once = new Integer(1);
-        Integer twice = new Integer(2);
-
         ProxyTypeMock stateListener = Turtle.mock(TestStateListener.class);
         first.addListener((TestStateListener) stateListener.mockTarget());
 
         runTestSuccessfully(first);
-        stateListener.assertDid("endTestShadow").with(aShadow, Boolean.TRUE, once);
+        stateListener.assertDid("endTestShadow").with(aShadow, Boolean.TRUE);
 
         runTestSuccessfully(first);
-        stateListener.assertDid("endTestShadow").with(aShadow, Boolean.TRUE, twice);
+        stateListener.assertDid("endTestShadow").with(aShadow, Boolean.TRUE);
 
         runTestFailure(first);
-        stateListener.assertDid("endTestShadow").with(aShadow, Boolean.FALSE, once);
+        stateListener.assertDid("endTestShadow").with(aShadow, Boolean.FALSE);
 
         runTestFailure(first);
-        stateListener.assertDid("endTestShadow").with(aShadow, Boolean.FALSE, twice);
+        stateListener.assertDid("endTestShadow").with(aShadow, Boolean.FALSE);
     }
 
     public void testShouldNotFireEndTestEventIfTheTestIsNotTargetTest() throws Exception {

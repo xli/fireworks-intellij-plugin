@@ -20,117 +20,44 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
-import com.thoughtworks.fireworks.controllers.CabinetController;
-import com.thoughtworks.fireworks.controllers.ShadowCabinetControllerListener;
 import com.thoughtworks.fireworks.core.FireworksConfig;
-import org.apache.log4j.Logger;
 
 import java.awt.*;
 import java.awt.event.AWTEventListener;
-import java.util.Timer;
 
-public class DocumentListenerAdapter implements DocumentListener, AWTEventListener, ShadowCabinetControllerListener {
-
-    private static final Logger LOG = Logger.getLogger(DocumentListenerAdapter.class);
-
-    private final CabinetController controller;
+public class DocumentListenerAdapter implements DocumentListener, AWTEventListener {
+    private final AutoRunTaskTimer timer;
     private final FireworksConfig config;
-    private Timer timer;
-    private boolean isFiringCabinetActionByMyself;
-    private boolean autoRunTaskIsScheduled;
-    private long lastTimeOfFiringCabinetAcion;
+    private final ProjectAdapter project;
 
-    public DocumentListenerAdapter(CabinetController controller, FireworksConfig config) {
-        this.controller = controller;
+    public DocumentListenerAdapter(FireworksConfig config, ProjectAdapter project, AutoRunTaskTimer timer) {
         this.config = config;
-        this.controller.addListener(this);
-    }
-
-    public void actionWasFired() {
-        if (isFiringCabinetActionByMyself) {
-            return;
-        }
-        cancelTimer();
+        this.project = project;
+        this.timer = timer;
     }
 
     public void documentChanged(DocumentEvent event) {
-        if (isNonViewerWritableDoc(event.getDocument())) {
-            LOG.info("isNonViewerWritableDoc Changed");
-            scheduleAutoRunTestsTask();
+        final Document document = event.getDocument();
+        boolean inputLetters = event.getNewFragment().toString().trim().length() > 0;
+        if (inputLetters && project.createDocumentAdaptee(document).isInSourceOrTestContent()) {
+            if (hasWritableAndValidDocInEditors(document)) {
+                timer.schedule(config.autoRunTestsDelayTime());
+            }
         }
     }
 
-    synchronized public void eventDispatched(AWTEvent event) {
-        LOG.info("eventDispatched: " + status());
-        if (autoRunTaskIsScheduled) {
-            scheduleAutoRunTestsTask();
-        }
+    private boolean hasWritableAndValidDocInEditors(Document document) {
+        return new EditorsAdapter(docEditors(document)).hasWritableAndValidDoc();
     }
 
-    synchronized private void scheduleAutoRunTestsTask() {
-        LOG.info("scheduleAutoRunTestsTask: " + status());
-        if (isNotEnabled() || isFiringCabinetActionByMyself || isTooFrequent()) {
-            return;
-        }
-
-        cancelTimer();
-        LOG.info("schedule a new task...");
-        autoRunTaskIsScheduled = true;
-        timer = new Timer();
-        timer.schedule(new AutoRunTestsTimerTask(this), config.autoRunTestsDelayTime());
+    private Editor[] docEditors(Document document) {
+        return EditorFactory.getInstance().getEditors(document);
     }
 
-    synchronized private void cancelTimer() {
-        if (timer != null) {
-            LOG.info("cancel timer");
-            timer.cancel();
-            timer = null;
-            autoRunTaskIsScheduled = false;
-            isFiringCabinetActionByMyself = false;
-        }
-    }
-
-    synchronized void fireCabinetActionEvent() {
-        isFiringCabinetActionByMyself = true;
-        controller.fireRunTestListActionEvent();
-        isFiringCabinetActionByMyself = false;
-        lastTimeOfFiringCabinetAcion = System.currentTimeMillis();
-        autoRunTaskIsScheduled = false;
+    public void eventDispatched(AWTEvent event) {
+        timer.reSchedule();
     }
 
     public void beforeDocumentChange(DocumentEvent event) {
     }
-
-    private String status() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("[auto run tests delay time: " + config.autoRunTestsDelayTime() + "]");
-        builder.append("[fireInControl: " + isFiringCabinetActionByMyself + "]");
-        builder.append("[lastFireTime: " + lastTimeOfFiringCabinetAcion + "]");
-        builder.append("[scheduled: " + autoRunTaskIsScheduled + "]");
-        return builder.toString();
-    }
-
-    private boolean isNotEnabled() {
-        return config.autoRunTestsDelayTime() <= 0;
-    }
-
-    private boolean isTooFrequent() {
-        long timePassedAfterLastTimeOfFiringCabinetAction = System.currentTimeMillis() - lastTimeOfFiringCabinetAcion;
-        return timePassedAfterLastTimeOfFiringCabinetAction < config.autoRunTestsDelayTime();
-    }
-
-    private boolean isNonViewerWritableDoc(Document doc) {
-        if (!doc.isWritable()) {
-            return false;
-        }
-        Editor[] editors = EditorFactory.getInstance().getEditors(doc);
-        for (int i = 0; i < editors.length; i++) {
-            if (editors[i].isViewer()) {
-                continue;
-            }
-            return true;
-        }
-        return false;
-    }
-
 }

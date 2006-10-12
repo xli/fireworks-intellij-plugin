@@ -94,7 +94,7 @@ public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCab
 
     public void afterAddTest(ComparableTestShadow test) {
         test.addListener(new TestStateListener() {
-            public void endTestShadow(ComparableTestShadow shadow, boolean wasSuccessful, int times) {
+            public void endTestShadow(ComparableTestShadow shadow, boolean wasSuccessful) {
                 ShadowClassTreeNode parent = toShadowClassTreeNode(shadow);
                 testFailures.commitBuffer(parent);
                 for (Test test : tests) {

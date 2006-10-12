@@ -20,7 +20,7 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.thoughtworks.fireworks.controllers.CabinetController;
 import com.thoughtworks.fireworks.core.FireworksConfig;
-import com.thoughtworks.fireworks.core.IntellijShadowCabinet;
+import com.thoughtworks.fireworks.core.TestShadowMap;
 import com.thoughtworks.shadow.Utils;
 
 public class FireworksProject extends FireworksConfiguration implements ProjectComponent, FireworksConfig {
@@ -97,7 +97,7 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
 
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
-        getCabinet().setMaxSize(maxSize);
+        getTestShadowMap().setMaxSize(maxSize);
     }
 
     public String getDisplayName() {
@@ -127,8 +127,8 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
         getConfigurationUI().setJvmArgs(jvmArgs);
     }
 
-    public IntellijShadowCabinet getCabinet() {
-        return container.getCabinet();
+    public TestShadowMap getTestShadowMap() {
+        return container.getTestShadowMap();
     }
 
     public boolean isEnable() {

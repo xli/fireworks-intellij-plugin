@@ -20,6 +20,8 @@ import com.thoughtworks.shadow.ComparableTestShadow;
 import com.thoughtworks.shadow.ShadowCabinetListener;
 import com.thoughtworks.shadow.Sunshine;
 import com.thoughtworks.shadow.TestStateListener;
+import com.thoughtworks.turtlemock.Mock;
+import com.thoughtworks.turtlemock.Turtle;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
@@ -42,6 +44,16 @@ public class IntellijShadowCabinetTest extends TestCase implements ShadowCabinet
         cabinet = new IntellijShadowCabinet(listeners, compilerManager, this);
         sunshine = TestUtils.sunshine();
         cabinet.addTestShadow(sunshine, Success.class.getName());
+    }
+
+    public void testShouldNotFireActionAgainIfSizeOfTestIsZero() throws Exception {
+        Mock adaptee = Turtle.mock(CompilerManagerAdaptee.class);
+
+        cabinet = new IntellijShadowCabinet(listeners, (CompilerManagerAdaptee) adaptee.mockTarget(), this);
+        cabinet.action(new TestResult());
+        adaptee.assertDid("compile");
+        cabinet.action(new TestResult());
+        adaptee.assertNotDid("compile");
     }
 
     public void testShouldAddTestStateListenerIntoShadow() throws Exception {
@@ -90,7 +102,7 @@ public class IntellijShadowCabinetTest extends TestCase implements ShadowCabinet
     public void startAction() {
     }
 
-    public void endTestShadow(ComparableTestShadow shadow, boolean wasSuccessful, int times) {
+    public void endTestShadow(ComparableTestShadow shadow, boolean wasSuccessful) {
         endTestShadowEventShadow = shadow;
     }
 }

@@ -80,7 +80,7 @@ public class TestShadowsStatus implements ShadowCabinetListener, RunListenerAdap
         testCount++;
     }
 
-    public void endTestShadow(ComparableTestShadow shadow, boolean wasSuccessful, int times) {
+    public void endTestShadow(ComparableTestShadow shadow, boolean wasSuccessful) {
         changeStatus(shadow, wasSuccessful);
     }
 

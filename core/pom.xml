@@ -19,7 +19,7 @@
     <groupId>dontmakemetest</groupId>
     <artifactId>shadow</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Shadow</name>
     <url>http://code.google.com/p/dontmakemetest/</url>
     <licenses>

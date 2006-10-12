@@ -60,7 +60,7 @@ public class TestState implements Comparable, TestListener {
     private void fireEndTestEvent() {
         for (int i = 0; i < listeners.size(); i++) {
             TestStateListener listener = (TestStateListener) listeners.get(i);
-            listener.endTestShadow(shadow, wasSuccessful, Math.abs(passTimes));
+            listener.endTestShadow(shadow, wasSuccessful);
         }
     }
 

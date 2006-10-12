@@ -42,6 +42,7 @@ import com.thoughtworks.shadow.ant.AntSunshine;
 import org.apache.tools.ant.BuildListener;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,5 +202,9 @@ public class ProjectAdapter {
             ConsoleViewAdapter consoleViewAdapter = consoles.get(i);
             consoleViewAdapter.dispose();
         }
+    }
+
+    public Window getSuggesttedParentWindow() {
+        return WindowManager.getInstance().suggestParentWindow(project);
     }
 }

@@ -30,6 +30,8 @@ public interface DocumentAdaptee {
 
     boolean isExpectedJUnitTestCase(PsiClass psiClass);
 
+    boolean isInSourceOrTestContent();
+
     Sunshine getSunshine();
 
     String getJavaFileClassName();

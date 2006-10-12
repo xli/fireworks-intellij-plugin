@@ -33,12 +33,12 @@ public class RemoveSelfIfSuccessTestStateListenerTest extends TestCase {
     }
 
     public void testShouldRemoveSelfFromCabinetIfTestIsSuccessfully() throws Exception {
-        listener.endTestShadow(shadow, true, 1);
+        listener.endTestShadow(shadow, true);
         assertEquals(0, cabinet.size());
     }
 
     public void testShouldNotRemoveSelfIfTestIsFailure() throws Exception {
-        listener.endTestShadow(shadow, false, 1);
+        listener.endTestShadow(shadow, false);
         assertEquals(1, cabinet.size());
     }
 }

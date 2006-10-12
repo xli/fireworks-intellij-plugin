@@ -1,3 +1,7 @@
+* check JUnit, if there is no JUnit exist, disable fireworks
+* ant build.xml for fireworks and shadow
+* there is no requirement of ShadowCabinetControllerListener
+
 * there is unexpected info in the ant executing log:
     [verbose] dropping C:\C from path as it doesn't exist
 * test junit4.0
@@ -15,11 +19,18 @@
 * site for fireworks
 
 ? rename IntellijShadowCabinetTest&IntellijShadowCabinet
-? should not fire action when cabinet is empty
 ? remember selected tab
 ? remove TestTreeNode(What to do?).
 ? remove failure msg in the table after test case was deleted
 
+============================2006.10.12================================================
+! Fireworks will not trigger task of running tests when code completion is working.
+! Fireworks will not trigger task of running tests when editing a file not in source content and test content.
+! Fireworks will not trigger task of running tests when there is document has error marked.
+! Fireworks will not trigger task of running tests when developer try to select a menu.
+! Fireworks will not trigger task of running tests twice in 10 seconds period.
+! Fireworks will not fire action twice when cabinet is empty.
+! I think we do not need test failed times now.
 =========================2006.10.10==================================================
 ! Listeners
 ! bug: should remove log of node which is removed in the parent node log.
@@ -27,7 +38,6 @@
 ! bug: should be able to be canceled when running tests.
 ! new feature: set up VM arguments
 =========================2006.10.5=====================================================
-
 ! should clear selection of tree node first before select a tree node to show log
 ! bug: Test does not run correctly after Module setting changed.
 ! support junit 4

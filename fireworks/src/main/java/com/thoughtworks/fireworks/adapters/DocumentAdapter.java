@@ -132,6 +132,16 @@ public class DocumentAdapter implements DocumentAdaptee {
         return getPsiClass(getFile());
     }
 
+    public boolean isInSourceOrTestContent() {
+        VirtualFile file;
+        try {
+            file = getFile();
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+        return getFileIndex().isInSourceContent(file) || getFileIndex().isInTestSourceContent(file);
+    }
+
     private PsiManager getPsiManager() {
         return project.getPsiManager();
     }

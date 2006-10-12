@@ -57,60 +57,7 @@ Contract me:) swing1979@gmail.com</p></b>
 
 <br>
 <br>
-<ul><u><b>Version 1.05 changes</b></u>
-    <li>new feature: provide supporting <b>IntelliJIDEA 6.0</b>, tested on <b>IntelliJIDEA build 5766</b></li>
-    <li>change: event of cell(jumping to source and open a frame to show trace log) in the table of test result
-            will be triggered by mouse clicking or pressing "enter" key.</li>
-</ul>
-<br>
-<ul><u><b>Version 1.04 changes</b></u>
-    <li>new feature: mouse event will reschedule the task of running "recent test list"</li>
-    <li>change: set default value of Delay time to 4000 millisecond</li>
-    <li>change: the description of plugin</li>
-    <li>change: reselect summary node of tests tree after remove a test class from tests tree</li>
-    <li>fix bug: log of test node which is removed is still in the log of its parent.</li>
-</ul>
-<br>
-<ul><u><b>Version 1.03 changes</b></u>
-    <li>new feature: set up JVM arguments for the tests by Fireworks Configuration</li>
-    <li>fix bug: can not cancel process of running tests by <b>Fireworks</b></li>
-    <li>fix bug: tree node does not display full text info of test added in the "recent test list"</li>
-</ul>
-<br>
-<ul><u><b>Version 1.02 changes</b></u>
-    <li>new feature: provides supporting junit4.1.</li>
-    <li>change: The high of trace log frame is increased to 600px</li>
-    <li>fix bug: Test does not run correctly after Module setting changed.</li>
-    <li>fix bug: When the root tree node is selected, console text will not be updated after run tests</li>
-</ul>
-<br>
-<ul><u><b>Version 1.01 changes</b></u>
-    <li>fix bug: Remove a test when opening a JUnit TestCase and the size of recent test list is full.</li>
-    <li>fix bug: Inner class of JUnit TestCase would be as JUnit TestCase when running all tests.</li>
-</ul>
-<br>
-<ul><u><b>Version 1.00 features</b></u>
-    <li>Add the Fireworks tool window when opening a Project.</li>
-    <li>There is a tests list organized as a tree and named "recent test list" in the Fireworks tool window.</li>
-    <li>Enable/disable running tests in the "recent test list" automatically.
-        <ul>
-        <li>To enable it, you should set value of "Delay time(millisecond)" in the Fireworks configuration form larger than zero.</li>
-        <li>To disable it, you should set value of "Delay time(millisecond)" to less than 1.</li>
-        </ul>
-    </li>
-    <li>The test result is organized by a table which will pick out the key summary of the test result.
-    The table will only display failed tests result.</li>
-    <li>Add TestCase which is opening or editing into "recent test list".</li>
-    <li>Set up filter regex for filtering TestCase by name, which can be added into "recent test list".</li>
-    <li>Press hot key or button to run all tests of the project, which are found by "test class name regex" in the test source folder of the module.</li>
-    <li>Press hot key or button to run tests in the "recent test list".</li>
-    <li>The state of every test in the "recent test list" is showed by icon.</li>
-    <li>The icon of Fireworks tool window will show whether there are tests failed in the "recent test list".</li>
-    <li>Disable/enable Fireworks, Fireworks tool window will be removed and hot key of running tests will be disabled.</li>
-    <li>If there is no test in the "recent test list", Fireworks will be failure state.</li>
-    <li>The result of running tests(all/recent test list) will be displayed in the status bar.</li>
-</ul>
-<br>
+
 <ul><u><b>Fireworks Configuration</b></u>
     <li>Enable fireworks
         <ul>
@@ -168,15 +115,87 @@ Contract me:) swing1979@gmail.com</p></b>
 </ul>
 ]]>
     </description>
-    <version>1.05</version>
+    <change-notes>
+        <![CDATA[
+        <ul><u><b>Version 1.06 changes</b></u>
+            <li>power up: fireworks will not trigger task of running tests when:
+                <ul>
+                    <li>code completion is working.</li>
+                    <li>the document changed is not in source folders and test source folders.</li>
+                    <li>there is a document has error marked.</li>
+                    <li>developer is selecting a menu.</li>
+                    <li>trigger again during 10 seconds.</li>
+                </ul>
+            </li>
+            <li>change: Fireworks will not trigger task of running tests twice when "recent test list" is empty.</li>
+        </ul>
+        <br>
+        <ul><u><b>Version 1.05 changes</b></u>
+            <li>new feature: provide supporting <b>IntelliJIDEA 6.0</b>, tested on <b>IntelliJIDEA build 5766</b></li>
+            <li>change: event of cell(jumping to source and open a frame to show trace log) in the table of test result
+                    will be triggered by mouse clicking or pressing "enter" key.</li>
+        </ul>
+        <br>
+        <ul><u><b>Version 1.04 changes</b></u>
+            <li>new feature: mouse event will reschedule the task of running "recent test list"</li>
+            <li>change: set default value of Delay time to 4000 millisecond</li>
+            <li>change: the description of plugin</li>
+            <li>change: reselect summary node of tests tree after remove a test class from tests tree</li>
+            <li>fix bug: log of test node which is removed is still in the log of its parent.</li>
+        </ul>
+        <br>
+        <ul><u><b>Version 1.03 changes</b></u>
+            <li>new feature: set up JVM arguments for the tests by Fireworks Configuration</li>
+            <li>fix bug: can not cancel process of running tests by <b>Fireworks</b></li>
+            <li>fix bug: tree node does not display full text info of test added in the "recent test list"</li>
+        </ul>
+        <br>
+        <ul><u><b>Version 1.02 changes</b></u>
+            <li>new feature: provides supporting junit4.1.</li>
+            <li>change: The high of trace log frame is increased to 600px</li>
+            <li>fix bug: Test does not run correctly after Module setting changed.</li>
+            <li>fix bug: When the root tree node is selected, console text will not be updated after run tests</li>
+        </ul>
+        <br>
+        <ul><u><b>Version 1.01 changes</b></u>
+            <li>fix bug: Remove a test when opening a JUnit TestCase and the size of recent test list is full.</li>
+            <li>fix bug: Inner class of JUnit TestCase would be as JUnit TestCase when running all tests.</li>
+        </ul>
+        <br>
+        <ul><u><b>Version 1.00 features</b></u>
+            <li>Add the Fireworks tool window when opening a Project.</li>
+            <li>There is a tests list organized as a tree and named "recent test list" in the Fireworks tool window.</li>
+            <li>Enable/disable running tests in the "recent test list" automatically.
+                <ul>
+                <li>To enable it, you should set value of "Delay time(millisecond)" in the Fireworks configuration form larger than zero.</li>
+                <li>To disable it, you should set value of "Delay time(millisecond)" to less than 1.</li>
+                </ul>
+            </li>
+            <li>The test result is organized by a table which will pick out the key summary of the test result.
+            The table will only display failed tests result.</li>
+            <li>Add TestCase which is opening or editing into "recent test list".</li>
+            <li>Set up filter regex for filtering TestCase by name, which can be added into "recent test list".</li>
+            <li>Press hot key or button to run all tests of the project, which are found by "test class name regex" in the test source folder of the module.</li>
+            <li>Press hot key or button to run tests in the "recent test list".</li>
+            <li>The state of every test in the "recent test list" is showed by icon.</li>
+            <li>The icon of Fireworks tool window will show whether there are tests failed in the "recent test list".</li>
+            <li>Disable/enable Fireworks, Fireworks tool window will be removed and hot key of running tests will be disabled.</li>
+            <li>If there is no test in the "recent test list", Fireworks will be failure state.</li>
+            <li>The result of running tests(all/recent test list) will be displayed in the status bar.</li>
+        </ul>
+        ]]>
+    </change-notes>
+    <version>1.06</version>
     <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000" until-build="5766"/>
+
     <project-components>
         <component>
             <implementation-class>com.thoughtworks.fireworks.plugin.FireworksProject</implementation-class>
         </component>
     </project-components>
+
     <actions>
         <action
                 id="FireworksRunTestList"

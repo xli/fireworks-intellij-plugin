@@ -17,11 +17,14 @@ package com.thoughtworks.fireworks.core;
 
 import junit.framework.TestCase;
 
+import java.util.Date;
+
 public class UtilsTest extends TestCase {
 
     public void testGetJavaVersion() throws Exception {
         assertEquals("1.4", Utils.getJavaVersion("JDK1.4.2._08"));
         assertEquals("1.3", Utils.getJavaVersion("1.3"));
+
         try {
             Utils.getJavaVersion("");
             fail();

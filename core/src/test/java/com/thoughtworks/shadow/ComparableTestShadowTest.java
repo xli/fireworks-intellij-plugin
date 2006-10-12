@@ -102,12 +102,11 @@ public class ComparableTestShadowTest extends TestCase {
     }
 
     public void testShouldFireEndTestEvent() throws Exception {
-        Integer once = new Integer(1);
         ProxyTypeMock stateListener = Turtle.mock(TestStateListener.class);
         success.addListener((TestStateListener) stateListener.mockTarget());
 
         success.run(new TestResult());
-        stateListener.assertDid("endTestShadow").with(success, Boolean.TRUE, once);
+        stateListener.assertDid("endTestShadow").with(success, Boolean.TRUE);
     }
 
     private List testList() {

@@ -15,13 +15,14 @@
  */
 package com.thoughtworks.fireworks.plugin;
 
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.openapi.editor.event.EditorFactoryListener;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileDocumentManagerListener;
 import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ApplicationListener;
 import com.thoughtworks.fireworks.adapters.DeleteTestShadowListener;
 import org.picocontainer.Startable;
 

@@ -19,7 +19,7 @@ import com.thoughtworks.shadow.ComparableTestShadow;
 import com.thoughtworks.shadow.TestStateListener;
 
 public class RemoveSelfIfSuccessTestStateListener implements TestStateListener {
-    public void endTestShadow(ComparableTestShadow shadow, boolean wasSuccessful, int times) {
+    public void endTestShadow(ComparableTestShadow shadow, boolean wasSuccessful) {
         if (wasSuccessful) {
             shadow.removeSelfFromContainer();
         }

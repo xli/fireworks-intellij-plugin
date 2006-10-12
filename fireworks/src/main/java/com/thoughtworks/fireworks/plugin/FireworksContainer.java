@@ -21,6 +21,7 @@ import com.thoughtworks.fireworks.controllers.*;
 import com.thoughtworks.fireworks.core.AllTestShadowCabinet;
 import com.thoughtworks.fireworks.core.IntellijShadowCabinet;
 import com.thoughtworks.fireworks.core.TestResultFactory;
+import com.thoughtworks.fireworks.core.TestShadowMap;
 import com.thoughtworks.fireworks.core.table.ShadowTableModel;
 import com.thoughtworks.fireworks.core.tree.ShadowSummaryTreeNode;
 import com.thoughtworks.fireworks.core.tree.ShadowTreeModel;
@@ -50,6 +51,9 @@ public class FireworksContainer {
 
         container.registerComponentImplementation(CompilerManagerAdapter.class);
         container.registerComponentImplementation(RefactoringTestShadowListenerProvider.class);
+        
+        container.registerComponentImplementation(CodeCompletionAdapter.class);
+        container.registerComponentImplementation(AutoRunTaskTimer.class);
 
         container.registerComponentImplementation(AllTestShadowCabinet.class);
         container.registerComponentImplementation(RunAllTestsTask.class);
@@ -84,6 +88,7 @@ public class FireworksContainer {
         container.registerComponentImplementation(TestResultSummaryBgColor.class);
 
         container.registerComponentImplementation(TestResultFactory.class);
+
         container.registerComponentImplementation(IntellijShadowCabinet.class);
         container.registerComponentImplementation(ShadowCabinetController.class);
     }
@@ -106,8 +111,8 @@ public class FireworksContainer {
         return ((CabinetController) getInstance(CabinetController.class));
     }
 
-    public IntellijShadowCabinet getCabinet() {
-        return (IntellijShadowCabinet) getInstance(IntellijShadowCabinet.class);
+    public TestShadowMap getTestShadowMap() {
+        return (TestShadowMap) getInstance(TestShadowMap.class);
     }
 
     private Object getInstance(Class type) {
