@@ -37,4 +37,10 @@ public interface DocumentAdaptee {
     String getJavaFileClassName();
 
     PsiElement getPsiClass() throws FileNotFoundException;
+
+    boolean hasErrors();
+
+    boolean isNotXml();
+
+    boolean isNotDtd();
 }

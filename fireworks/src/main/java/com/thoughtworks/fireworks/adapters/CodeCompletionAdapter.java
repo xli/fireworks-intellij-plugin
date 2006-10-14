@@ -15,18 +15,18 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
+import com.thoughtworks.fireworks.core.timer.CodeCompletionAdaptee;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class CodeCompletionAdapter {
+public class CodeCompletionAdapter implements CodeCompletionAdaptee {
     private final static Logger LOG = Logger.getLogger(CodeCompletionAdapter.class);
     public static final String CODE_COMPLETION_LIST_CELL_RENDERER = "com.intellij.codeInsight.lookup.impl.LookupCellRenderer";
 
     private static void log(String str) {
         LOG.info(str);
-//        System.out.println("--" + str);
     }
 
     private final ProjectAdapter project;

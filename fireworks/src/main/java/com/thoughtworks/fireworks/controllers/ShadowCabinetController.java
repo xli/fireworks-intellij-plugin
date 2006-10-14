@@ -15,30 +15,25 @@
  */
 package com.thoughtworks.fireworks.controllers;
 
-import com.thoughtworks.fireworks.core.TestResultFactory;
-import com.thoughtworks.shadow.Cabinet;
 import org.picocontainer.Startable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShadowCabinetController implements Startable, CabinetController {
     private final ShadowCabinetView view;
-    private final TestResultFactory factory;
-    private final Cabinet shadowCabinet;
-    private final RunAllTestsActionListener runAllTests;
-    private final List listeners = new ArrayList();
+    private final AllTestsRunner runAllTests;
+    private final RecentTestListRunner recentTestListRunner;
+    private final ShadowCabinetControllerListener[] listeners;
 
-    public ShadowCabinetController(ShadowCabinetView view,
-                                   TestResultFactory factory,
-                                   Cabinet shadowCabinet,
-                                   RunAllTestsActionListener runAllTests) {
+    public ShadowCabinetController(ShadowCabinetControllerListener[] listeners,
+                                   ShadowCabinetView view,
+                                   AllTestsRunner runAllTests,
+                                   RecentTestListRunner recentTestListRunner) {
+        this.listeners = listeners;
         this.view = view;
-        this.factory = factory;
-        this.shadowCabinet = shadowCabinet;
         this.runAllTests = runAllTests;
+        this.recentTestListRunner = recentTestListRunner;
     }
 
     public void start() {
@@ -60,23 +55,29 @@ public class ShadowCabinetController implements Startable, CabinetController {
         view.removeAllActionListeners();
     }
 
-    public void addListener(ShadowCabinetControllerListener listener) {
-        listeners.add(listener);
-    }
-
     public void fireRunAllTestsActionEvent() {
-        fireActionWasFiredEvent();
-        runAllTests.actionPerformed(factory.createTestResult());
+        fireActionStartedEvent();
+        runAllTests.run();
+        fireActionFinishedEvent();
     }
 
     public void fireRunTestListActionEvent() {
-        fireActionWasFiredEvent();
-        shadowCabinet.action(factory.createTestResult());
+        fireActionStartedEvent();
+        recentTestListRunner.run();
+        fireActionFinishedEvent();
     }
 
-    private void fireActionWasFiredEvent() {
-        for (int i = 0; i < listeners.size(); i++) {
-            ((ShadowCabinetControllerListener) listeners.get(i)).actionWasFired();
+    private void fireActionStartedEvent() {
+        for (int i = 0; i < listeners.length; i++) {
+            ShadowCabinetControllerListener listener = listeners[i];
+            listener.actionStarted();
+        }
+    }
+
+    private void fireActionFinishedEvent() {
+        for (int i = 0; i < listeners.length; i++) {
+            ShadowCabinetControllerListener listener = listeners[i];
+            listener.actionFinished();
         }
     }
 }

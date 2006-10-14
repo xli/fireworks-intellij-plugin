@@ -31,6 +31,7 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
     public String maxMemory = null;
     public int maxSize = 5;
     public boolean enable = true;
+    public boolean enableAutoTask = true;
     public int autoRunTestsDelayTime = 4000;
 
     private Project project;
@@ -55,14 +56,14 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
     }
 
     public void projectOpened() {
-        if (enable) {
-            setMaxSize(maxSize);
-            container.start();
-        }
+        setMaxSize(maxSize);
+        resetEnableFireworks();
+        resetAutoTaskEnabled();
     }
 
     public void projectClosed() {
         container.stop();
+        getListenersForAutoRunTask().disableListenersForAutoRunTask();
     }
 
     public CabinetController getCabinetController() {
@@ -106,11 +107,11 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
 
     public void apply() throws ConfigurationException {
         enable = getConfigurationUI().isEnable();
-        if (enable) {
-            container.start();
-        } else {
-            container.stop();
-        }
+        resetEnableFireworks();
+
+        enableAutoTask = getConfigurationUI().isAutoTaskEnabled();
+        resetAutoTaskEnabled();
+
         maxMemory = getConfigurationUI().maxMemory();
         expectedTestCaseNameRegex = getConfigurationUI().expectedTestCaseNameRegex();
         setMaxSize(getConfigurationUI().maxSize());
@@ -120,6 +121,7 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
 
     public void reset() {
         getConfigurationUI().setEnable(enable);
+        getConfigurationUI().setAutoTaskEnabled(enableAutoTask);
         getConfigurationUI().setMaxMemory(maxMemory);
         getConfigurationUI().setExpectedTestCaseNameRegex(expectedTestCaseNameRegex);
         getConfigurationUI().setMaxSize(maxSize);
@@ -134,4 +136,34 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
     public boolean isEnable() {
         return enable;
     }
+
+    public boolean isAutoTaskEnabled() {
+        return enableAutoTask;
+    }
+
+    public void changeAutoTaskEnabled() {
+        enableAutoTask = !enableAutoTask;
+        resetAutoTaskEnabled();
+    }
+
+    private void resetEnableFireworks() {
+        if (enable) {
+            container.start();
+        } else {
+            container.stop();
+        }
+    }
+
+    private void resetAutoTaskEnabled() {
+        if (enable && enableAutoTask) {
+            getListenersForAutoRunTask().enableListenersForAutoRunTask();
+        } else {
+            getListenersForAutoRunTask().disableListenersForAutoRunTask();
+        }
+    }
+
+    private AutoRunTaskListeners getListenersForAutoRunTask() {
+        return container.getListeners();
+    }
+
 }

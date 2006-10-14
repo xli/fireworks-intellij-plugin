@@ -15,8 +15,19 @@
  */
 package com.thoughtworks.fireworks.controllers;
 
-public interface CabinetController {
-    void fireRunTestListActionEvent();
+import com.thoughtworks.fireworks.core.TestResultFactory;
+import com.thoughtworks.shadow.Cabinet;
 
-    void fireRunAllTestsActionEvent();
+public class RecentTestListRunnerAdapter implements RecentTestListRunner {
+    private final Cabinet cabinet;
+    private final TestResultFactory factory;
+
+    public RecentTestListRunnerAdapter(Cabinet cabinet, TestResultFactory factory) {
+        this.cabinet = cabinet;
+        this.factory = factory;
+    }
+
+    public void run() {
+        cabinet.action(factory.createTestResult());
+    }
 }

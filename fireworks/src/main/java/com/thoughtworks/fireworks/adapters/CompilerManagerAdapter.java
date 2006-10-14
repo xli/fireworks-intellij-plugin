@@ -15,15 +15,17 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.intellij.openapi.application.ApplicationManager;
 import com.thoughtworks.fireworks.adapters.compatibility.CompileStatusNotificationAdapter;
+import com.thoughtworks.fireworks.core.ApplicationAdaptee;
 import com.thoughtworks.fireworks.core.CompileStatusNotificationAdaptee;
 import com.thoughtworks.fireworks.core.CompilerManagerAdaptee;
 
 public class CompilerManagerAdapter implements CompilerManagerAdaptee {
+    private final ApplicationAdaptee application;
     private final ProjectAdapter project;
 
-    public CompilerManagerAdapter(ProjectAdapter project) {
+    public CompilerManagerAdapter(ApplicationAdaptee application, ProjectAdapter project) {
+        this.application = application;
         this.project = project;
     }
 
@@ -48,7 +50,7 @@ public class CompilerManagerAdapter implements CompilerManagerAdaptee {
     }
 
     private void run(final Runnable process) {
-        ApplicationManager.getApplication().invokeLater(new Runnable() {
+        application.invokeLater(new Runnable() {
             public void run() {
                 project.runProcessWithProgressSynchronously(process, "Running Tests...", true);
             }

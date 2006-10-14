@@ -13,10 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.controllers;
+package com.thoughtworks.fireworks.core.timer;
 
-public interface CabinetController {
-    void fireRunTestListActionEvent();
+public class Chronograph {
 
-    void fireRunAllTestsActionEvent();
+    private long startTime;
+
+    synchronized public void restart() {
+        startTime = System.currentTimeMillis();
+    }
+
+    synchronized public long measurement() {
+        long stopTime = System.currentTimeMillis();
+        return stopTime - startTime;
+    }
+
 }

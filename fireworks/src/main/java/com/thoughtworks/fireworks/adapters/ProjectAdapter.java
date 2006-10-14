@@ -31,9 +31,11 @@ import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.search.PsiSearchHelper;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.refactoring.listeners.RefactoringListenerManager;
 import com.thoughtworks.fireworks.adapters.compatibility.RunProcessWithProgressSyn;
+import com.thoughtworks.fireworks.adapters.document.MarkupAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
 import com.thoughtworks.fireworks.core.FireworksConfig;
@@ -45,7 +47,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
+//todo: refactor
 public class ProjectAdapter {
     private final List buildListeners = new ArrayList();
 
@@ -119,7 +121,7 @@ public class ProjectAdapter {
         return getPsiManager().findClass(testClassName, GlobalSearchScope.allScope(project));
     }
 
-    PsiManager getPsiManager() {
+    public PsiManager getPsiManager() {
         return PsiManager.getInstance(project);
     }
 
@@ -164,7 +166,7 @@ public class ProjectAdapter {
         return ProjectRootManager.getInstance(project).getFileIndex();
     }
 
-    PsiDocumentManager getPsiDocumentManager() {
+    public PsiDocumentManager getPsiDocumentManager() {
         return PsiDocumentManager.getInstance(project);
     }
 
@@ -206,5 +208,13 @@ public class ProjectAdapter {
 
     public Window getSuggesttedParentWindow() {
         return WindowManager.getInstance().suggestParentWindow(project);
+    }
+
+    public MarkupAdapter createMarkupAdapter(Document document) {
+        return new MarkupAdapter(document, project);
+    }
+
+    public PsiSearchHelper getSearchHelper() {
+        return getPsiManager().getSearchHelper();
     }
 }

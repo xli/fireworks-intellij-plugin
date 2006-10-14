@@ -20,7 +20,7 @@ import com.thoughtworks.shadow.ShadowCabinetListener;
 import com.thoughtworks.shadow.Sunshine;
 import junit.framework.TestResult;
 
-public class AllTestShadowCabinet {
+public class AllTestShadowCabinet implements TestCollection {
     private final ShadowCabinetListener listener = new RemoveSuccessfulTestShadow();
     private final IntellijShadowCabinet cabinet;
     private final FireworksConfig config;
@@ -36,7 +36,7 @@ public class AllTestShadowCabinet {
         cabinet.addListener(listener);
     }
 
-    public void addTestShadow(Sunshine sunshine, String testClassName) {
+    public void add(Sunshine sunshine, String testClassName) {
         if (cabinet.size() == config.maxSize()) {
             config.setMaxSize(config.maxSize() + 1);
         }

@@ -13,34 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.adapters;
+package com.thoughtworks.fireworks.adapters.search;
 
 import com.intellij.psi.search.PsiSearchHelper;
-import com.thoughtworks.fireworks.controllers.RunAllTestsActionListener;
-import com.thoughtworks.fireworks.core.AllTestShadowCabinet;
-import junit.framework.TestResult;
+import com.thoughtworks.fireworks.adapters.ProjectAdapter;
+import com.thoughtworks.fireworks.core.TestCollection;
 
-public class RunAllTestsTask implements RunAllTestsActionListener {
+public class TestCaseSearcher {
     private final ProjectAdapter project;
-    private final AllTestShadowCabinet cabinet;
 
-    public RunAllTestsTask(ProjectAdapter project, AllTestShadowCabinet cabinet) {
+    public TestCaseSearcher(ProjectAdapter project) {
         this.project = project;
-        this.cabinet = cabinet;
     }
 
-    public void actionPerformed(final TestResult result) {
-        cabinet.init();
-        searchTestCases();
-        cabinet.action(result);
-    }
-
-    private void searchTestCases() {
+    public void action(final TestCollection collection) {
         project.runProcessWithProgressSynchronously(new Runnable() {
             public void run() {
-                PsiSearchHelper searchHelper = project.getPsiManager().getSearchHelper();
-                SearchTestClassProcessor processor = new SearchTestClassProcessor(project, cabinet);
-
+                PsiSearchHelper searchHelper = project.getSearchHelper();
+                SearchTestClassProcessor processor = new SearchTestClassProcessor(project, collection);
                 searchHelper.processAllClasses(processor, project.getProjectTestJavaFileScope());
             }
         }, "Searching test class...", true);

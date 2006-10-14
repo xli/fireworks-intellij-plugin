@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.controllers;
+package com.thoughtworks.fireworks.core.timer;
 
-public interface CabinetController {
-    void fireRunTestListActionEvent();
+public interface ReschedulableTask {
+    void reschedule();
 
-    void fireRunAllTestsActionEvent();
+    void run();
 }

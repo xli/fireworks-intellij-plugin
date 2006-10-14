@@ -15,8 +15,8 @@
  */
 package com.thoughtworks.fireworks.ui.tree;
 
-import com.intellij.openapi.application.ApplicationManager;
 import com.thoughtworks.fireworks.controllers.tree.*;
+import com.thoughtworks.fireworks.core.ApplicationAdaptee;
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
 import com.thoughtworks.fireworks.core.tree.RemovableSource;
 import com.thoughtworks.fireworks.core.tree.ShadowTreeModel;
@@ -31,12 +31,14 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 public class TestShadowListTree extends JTree implements Log, TestTree, ShadowCabinetListener {
+    private final ApplicationAdaptee application;
     private final JumpToSourceAdaptee jumpToSourceAdapter;
     private final ShadowTreeModel treeModel;
     private final TestTreePopupMenu menu;
 
-    public TestShadowListTree(JumpToSourceAdaptee jumpToSourceAdapter, ShadowTreeModel treeModel, TreeCellRenderer renderer) {
+    public TestShadowListTree(ApplicationAdaptee application, JumpToSourceAdaptee jumpToSourceAdapter, ShadowTreeModel treeModel, TreeCellRenderer renderer) {
         super(treeModel);
+        this.application = application;
         this.jumpToSourceAdapter = jumpToSourceAdapter;
         this.treeModel = treeModel;
         this.menu = new TestTreePopupMenu(this);
@@ -69,7 +71,7 @@ public class TestShadowListTree extends JTree implements Log, TestTree, ShadowCa
     }
 
     public void endAction() {
-        ApplicationManager.getApplication().invokeLater(new Runnable() {
+        application.invokeLater(new Runnable() {
             public void run() {
                 reSelectRootNode();
             }

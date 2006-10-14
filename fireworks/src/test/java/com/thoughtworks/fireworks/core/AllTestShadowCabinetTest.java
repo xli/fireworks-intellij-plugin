@@ -50,29 +50,29 @@ public class AllTestShadowCabinetTest extends TestCase {
 
     public void testTestShadowShouldRemoveSelfFromCabinetAfterRunSuccessfully() throws Exception {
         allTestShadowCabinet.init();
-        allTestShadowCabinet.addTestShadow(sunshine, Success.class.getName());
+        allTestShadowCabinet.add(sunshine, Success.class.getName());
         allTestShadowCabinet.action(result);
         TestUtils.assertTestResultRunOnceSuccessfully(result);
         assertEquals(0, icabinet.size());
     }
 
     public void testShouldIncreaseMaxSizeIfTheNumOfTestsAfterAddIsMoreThanCabinetMaxSize() throws Exception {
-        allTestShadowCabinet.addTestShadow(sunshine, Success.class.getName());
-        allTestShadowCabinet.addTestShadow(sunshine, Failure.class.getName());
+        allTestShadowCabinet.add(sunshine, Success.class.getName());
+        allTestShadowCabinet.add(sunshine, Failure.class.getName());
         config.assertDid("setMaxSize").with(new Integer(2));
     }
 
     public void testShouldSetMaxSizeAsSizeOfFailedTestsAndTestsAddedBefore() throws Exception {
         icabinet.addTestShadow(sunshine, Success.class.getName());
         allTestShadowCabinet.init();
-        allTestShadowCabinet.addTestShadow(sunshine, Failure.class.getName());
+        allTestShadowCabinet.add(sunshine, Failure.class.getName());
         allTestShadowCabinet.action(result);
         config.assertDid("setMaxSize").with(new Integer(1 + 1));
     }
 
     public void testMaxSizeShouldNotLessThanSizeBeforeAction() throws Exception {
         allTestShadowCabinet.init();
-        allTestShadowCabinet.addTestShadow(sunshine, Success.class.getName());
+        allTestShadowCabinet.add(sunshine, Success.class.getName());
         allTestShadowCabinet.action(result);
         config.assertDid("setMaxSize").with(new Integer(1));
     }
@@ -80,7 +80,7 @@ public class AllTestShadowCabinetTest extends TestCase {
     public void testMaxSizeShouldNotLargerThanSizeBeforeActionIfThereIsNoTestAddedByCabinetFailed() throws Exception {
         icabinet.addTestShadow(sunshine, Failure.class.getName());
         allTestShadowCabinet.init();
-        allTestShadowCabinet.addTestShadow(sunshine, Success.class.getName());
+        allTestShadowCabinet.add(sunshine, Success.class.getName());
         allTestShadowCabinet.action(result);
         config.assertDid("setMaxSize").with(new Integer(2));
         config.assertDid("setMaxSize").with(new Integer(1));
@@ -88,7 +88,7 @@ public class AllTestShadowCabinetTest extends TestCase {
 
     public void testTestAddedAfterActionShouldNotRemoveSelfFromCabinet() throws Exception {
         allTestShadowCabinet.init();
-        allTestShadowCabinet.addTestShadow(sunshine, Success.class.getName());
+        allTestShadowCabinet.add(sunshine, Success.class.getName());
         allTestShadowCabinet.action(result);
 
         icabinet.addTestShadow(sunshine, Success.class.getName());

@@ -13,10 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.controllers;
+package com.thoughtworks.fireworks.core.timer;
 
-import junit.framework.TestResult;
+class TimeoutableTask implements Runnable {
+    private final ReschedulableTask task;
+    private final Chronograph chronograph;
+    private static final int TIME_OUT = 100;
 
-public interface RunAllTestsActionListener {
-    void actionPerformed(TestResult result);
+    TimeoutableTask(ReschedulableTask task) {
+        this.task = task;
+        this.chronograph = new Chronograph();
+        chronograph.restart();
+    }
+
+    public void run() {
+        if (timeout()) {
+            task.reschedule();
+        } else {
+            task.run();
+        }
+    }
+
+    private boolean timeout() {
+        return chronograph.measurement() > TIME_OUT;
+    }
 }

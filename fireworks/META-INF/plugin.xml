@@ -36,7 +36,8 @@ The configuration of "Delay time" is key of when to schedule task of running tes
 after document changed and no error.
 It's a normal way to trigger a task after a delay time when there is no action performed by keyboard
 or mouse and all documents have no error marked during period of delay time.
-Yes, it's not good enough.
+Yes, it's not good enough. I am still working on powup it. Yuo can read the changes of version to find
+what have been improved.
 </p>
 
 <p>There is a "recent test list" for collecting test about which are cared. JUnit TestCase will be added into "recent test list"
@@ -63,6 +64,12 @@ Contract me:) swing1979@gmail.com</p></b>
         <ul>
         <li>default value:  checked</li>
         <li>description:    disable/enable Fireworks</li>
+        </ul>
+    </li>
+    <li>Enable auto run fireworks task
+        <ul>
+        <li>default value:  checked</li>
+        <li>description:    disable/enable Fireworks task of running recent test list automatically</li>
         </ul>
     </li>
     <li>Run tests max memory
@@ -112,11 +119,34 @@ Contract me:) swing1979@gmail.com</p></b>
         <li>keymap: default</li>
         </ul>
     </li>
+    <li>shift alt A
+        <ul>
+        <li>action: disable/enable task of running recent test list automatically</li>
+        <li>menu: Run-Enable/disable auto run fireworks task</li>
+        <li>keymap: default</li>
+        </ul>
+    </li>
 </ul>
 ]]>
     </description>
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.07 changes</b></u>
+            <li>new feature: new configuration "Enable auto run fireworks task"
+            <li>new feature: new hot key "shift alt A", enable/disable task of running recent test list automatically.
+            <li>power up: fireworks will cancel task of running recent test list when document in editor opened has errors, except:
+                <ul>
+                    <li>document is not in source or test folder.</li>
+                    <li>language of document is xml or dtd.</li>
+                </ul>
+            <li>power up: fireworks will not cancel task of running recent test list, when:
+                <ul>
+                    <li>text inputed is comment of Language or Java Doc</li>
+                    <li>IntelliJ execute "Run" action.</li>
+                    <li>IntelliJ is waiting for typing in name of class/file which is developer want to find.</li>
+                </ul>
+            </li>
+        </ul>
         <ul><u><b>Version 1.06 changes</b></u>
             <li>power up: fireworks will not trigger task of running tests when:
                 <ul>
@@ -185,7 +215,7 @@ Contract me:) swing1979@gmail.com</p></b>
         </ul>
         ]]>
     </change-notes>
-    <version>1.06</version>
+    <version>1.07</version>
     <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000" until-build="5766"/>
@@ -212,6 +242,12 @@ Contract me:) swing1979@gmail.com</p></b>
                 description="Run all tests descripted by regex and in the test source folders">
             <keyboard-shortcut keymap="$default" first-keystroke="shift alt L"/>
             <add-to-group group-id="RunMenu" anchor="last" relative-to-action="RunnerActions"/>
+        </action>
+        <action id="ConfigAutoRunTaskAction" class="com.thoughtworks.fireworks.plugin.ConfigAutoRunTaskAction"
+                text="Enable/disable auto run fireworks task"
+                description="Enable/disable auto run fireworks task">
+            <keyboard-shortcut keymap="$default" first-keystroke="shift alt A"/>
+            <add-to-group group-id="RunMenu" anchor="last"/>
         </action>
     </actions>
 </idea-plugin>

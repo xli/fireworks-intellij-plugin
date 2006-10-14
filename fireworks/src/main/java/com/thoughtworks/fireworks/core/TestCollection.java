@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.controllers;
+package com.thoughtworks.fireworks.core;
 
-public interface CabinetController {
-    void fireRunTestListActionEvent();
+import com.thoughtworks.shadow.Sunshine;
 
-    void fireRunAllTestsActionEvent();
+public interface TestCollection {
+    void add(Sunshine sunshine, String name);
 }

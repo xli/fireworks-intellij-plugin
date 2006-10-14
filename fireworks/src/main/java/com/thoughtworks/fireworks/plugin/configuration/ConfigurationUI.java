@@ -21,6 +21,7 @@ import java.text.MessageFormat;
 
 public class ConfigurationUI {
     private Checkbox enable;
+    private Checkbox enableAutoTask;
     private JTextField maxMemory;
     private JTextField expectedTestCaseNameRegex;
     private JTextField maxSize;
@@ -31,15 +32,18 @@ public class ConfigurationUI {
 
     public ConfigurationUI() {
         enable = new Checkbox();
+        enableAutoTask = new Checkbox();
         maxMemory = new JTextField();
         expectedTestCaseNameRegex = new JTextField();
         maxSize = new JTextField();
         autoRunTestsDelayTime = new JTextField();
         jvmArgs = new JTextField();
 
-        pane = new JPanel(new GridLayout(6, 2));
+        pane = new JPanel(new GridLayout(7, 2));
         pane.add(new Label("Enable fireworks: "));
         pane.add(enable);
+        pane.add(new Label("Enable auto run task: "));
+        pane.add(enableAutoTask);
         pane.add(new Label("Run tests max memory: "));
         pane.add(maxMemory);
         pane.add(new Label("Test class name regex(jdk1.4): "));
@@ -112,5 +116,13 @@ public class ConfigurationUI {
 
     public void setJvmArgs(String jvmArgs) {
         this.jvmArgs.setText(jvmArgs);
+    }
+
+    public boolean isAutoTaskEnabled() {
+        return enableAutoTask.getState();
+    }
+
+    public void setAutoTaskEnabled(boolean enableAutoTask) {
+        this.enableAutoTask.setState(enableAutoTask);
     }
 }

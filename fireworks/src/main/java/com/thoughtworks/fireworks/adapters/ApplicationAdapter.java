@@ -15,23 +15,12 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.EditorFactory;
-import com.thoughtworks.fireworks.controllers.CabinetController;
+import com.intellij.openapi.application.ApplicationManager;
+import com.thoughtworks.fireworks.core.ApplicationAdaptee;
 
-class AutoRunTestsTimerTask {
-    private final CabinetController controller;
+public class ApplicationAdapter implements ApplicationAdaptee {
 
-    AutoRunTestsTimerTask(CabinetController controller) {
-        this.controller = controller;
+    public void invokeLater(Runnable runnable) {
+        ApplicationManager.getApplication().invokeLater(runnable);
     }
-
-    public void run() {
-        final Editor[] editors = EditorFactory.getInstance().getAllEditors();
-        final EditorsAdapter adapter = new EditorsAdapter(editors);
-        if (adapter.hasWritableAndValidDoc()) {
-            controller.fireRunTestListActionEvent();
-        }
-    }
-
 }

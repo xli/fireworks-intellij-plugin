@@ -72,7 +72,7 @@ public class DocumentAdapter implements DocumentAdaptee {
     }
 
     public boolean isExpectedJUnitTestCase(PsiClass psiClass) {
-        if (!psiClass.getQualifiedName().matches(config.expectedTestCaseNameRegex())) {
+        if (psiClass == null || !psiClass.getQualifiedName().matches(config.expectedTestCaseNameRegex())) {
             return false;
         }
 
@@ -132,6 +132,26 @@ public class DocumentAdapter implements DocumentAdaptee {
         return getPsiClass(getFile());
     }
 
+    public boolean hasErrors() {
+        return project.createMarkupAdapter(document).hasErrors();
+    }
+
+    public boolean isNotXml() {
+        return !"XML".equalsIgnoreCase(getLanguageId());
+    }
+
+    public boolean isNotDtd() {
+        return !"DTD".equalsIgnoreCase(getLanguageId());
+    }
+
+    private String getLanguageId() {
+        return getPsiFile().getLanguage().getID();
+    }
+
+    private PsiFile getPsiFile() {
+        return project.getPsiDocumentManager().getPsiFile(document);
+    }
+
     public boolean isInSourceOrTestContent() {
         VirtualFile file;
         try {
@@ -166,8 +186,7 @@ public class DocumentAdapter implements DocumentAdaptee {
                 return aClass;
             }
         }
-        String errorMsg = "VirtualFile is not a Java file or has no public class: " + file.getPresentableUrl();
-        throw new IllegalStateException(errorMsg);
+        return null;
     }
 
     private PsiJavaFile getPsiJavaFile(VirtualFile file) {

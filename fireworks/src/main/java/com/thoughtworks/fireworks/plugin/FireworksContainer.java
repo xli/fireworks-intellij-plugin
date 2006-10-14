@@ -17,12 +17,15 @@ package com.thoughtworks.fireworks.plugin;
 
 import com.intellij.openapi.project.Project;
 import com.thoughtworks.fireworks.adapters.*;
+import com.thoughtworks.fireworks.adapters.document.AllEditorsOpenedAdapter;
+import com.thoughtworks.fireworks.adapters.search.TestCaseSearcher;
 import com.thoughtworks.fireworks.controllers.*;
 import com.thoughtworks.fireworks.core.AllTestShadowCabinet;
 import com.thoughtworks.fireworks.core.IntellijShadowCabinet;
 import com.thoughtworks.fireworks.core.TestResultFactory;
 import com.thoughtworks.fireworks.core.TestShadowMap;
 import com.thoughtworks.fireworks.core.table.ShadowTableModel;
+import com.thoughtworks.fireworks.core.timer.*;
 import com.thoughtworks.fireworks.core.tree.ShadowSummaryTreeNode;
 import com.thoughtworks.fireworks.core.tree.ShadowTreeModel;
 import com.thoughtworks.fireworks.ui.table.DialogTraceLogViewer;
@@ -49,14 +52,23 @@ public class FireworksContainer {
         container.registerComponentInstance(fireworksProject);
         container.registerComponentInstance(projectAdapter);
 
+        container.registerComponentImplementation(ApplicationAdapter.class);
+
         container.registerComponentImplementation(CompilerManagerAdapter.class);
         container.registerComponentImplementation(RefactoringTestShadowListenerProvider.class);
-        
+
         container.registerComponentImplementation(CodeCompletionAdapter.class);
-        container.registerComponentImplementation(AutoRunTaskTimer.class);
+        container.registerComponentImplementation(AllEditorsOpenedAdapter.class);
+        container.registerComponentImplementation(TaskRunnerFactory.class);
+        container.registerComponentImplementation(TimerTaskManager.class);
+        container.registerComponentImplementation(CabinetControllerActionTimer.class);
+        container.registerComponentImplementation(ReschedulableTaskAdapter.class);
+        container.registerComponentImplementation(TimerScheduler.class);
+        container.registerComponentImplementation(ConfiguredTimer.class);
 
         container.registerComponentImplementation(AllTestShadowCabinet.class);
-        container.registerComponentImplementation(RunAllTestsTask.class);
+        container.registerComponentImplementation(TestCaseSearcher.class);
+        container.registerComponentImplementation(RunAllTestsRunnerAdapter.class);
 
         container.registerComponentImplementation(TestCaseOpenedListener.class);
         container.registerComponentImplementation(EditorFactoryListenerAdapter.class);
@@ -64,6 +76,7 @@ public class FireworksContainer {
         container.registerComponentImplementation(DocumentListenerAdapter.class);
         container.registerComponentImplementation(DeleteTestShadowListener.class);
         container.registerComponentImplementation(Listeners.class);
+        container.registerComponentImplementation(AutoRunTaskListeners.class);
 
         container.registerComponentImplementation(JumpToSourceAdapter.class);
         container.registerComponentImplementation(StatusBarAdapter.class);
@@ -90,6 +103,7 @@ public class FireworksContainer {
         container.registerComponentImplementation(TestResultFactory.class);
 
         container.registerComponentImplementation(IntellijShadowCabinet.class);
+        container.registerComponentImplementation(RecentTestListRunnerAdapter.class);
         container.registerComponentImplementation(ShadowCabinetController.class);
     }
 
@@ -121,5 +135,9 @@ public class FireworksContainer {
 
     public void disposeComponent() {
         projectAdapter.dispose();
+    }
+
+    public AutoRunTaskListeners getListeners() {
+        return (AutoRunTaskListeners) getInstance(AutoRunTaskListeners.class);
     }
 }

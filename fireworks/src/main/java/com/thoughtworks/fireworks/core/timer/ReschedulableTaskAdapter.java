@@ -13,10 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.controllers;
+package com.thoughtworks.fireworks.core.timer;
 
-public interface CabinetController {
-    void fireRunTestListActionEvent();
+import com.thoughtworks.fireworks.controllers.CabinetController;
 
-    void fireRunAllTestsActionEvent();
+public class ReschedulableTaskAdapter implements ReschedulableTask {
+    private final CabinetControllerActionTimer timer;
+    private final CabinetController controller;
+
+    public ReschedulableTaskAdapter(CabinetControllerActionTimer timer, CabinetController controller) {
+        this.timer = timer;
+        this.controller = controller;
+    }
+
+    public void reschedule() {
+        timer.reschedule();
+    }
+
+    public void run() {
+        controller.fireRunTestListActionEvent();
+    }
 }

@@ -13,12 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.plugin;
+package com.thoughtworks.fireworks.core.timer;
 
-import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.thoughtworks.fireworks.core.FireworksConfig;
 
-public class FireworksRunAllTestsAction extends BaseAction {
-    public void actionPerformed(AnActionEvent e) {
-        fireworksProject(e).getCabinetController().fireRunAllTestsActionEvent();
+public class ConfiguredTimer {
+    private final FireworksConfig config;
+    private final CabinetControllerActionTimer timer;
+
+    public ConfiguredTimer(FireworksConfig config, CabinetControllerActionTimer timer) {
+        this.config = config;
+        this.timer = timer;
+    }
+
+    public void schedule() {
+        timer.schedule(config.autoRunTestsDelayTime());
+    }
+
+    public void reschedule() {
+        timer.reschedule();
+    }
+
+    public void cancelTasks() {
+        timer.cancelTasks();
     }
 }

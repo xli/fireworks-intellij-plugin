@@ -15,47 +15,57 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.EditorFactory;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
-import com.thoughtworks.fireworks.core.FireworksConfig;
+import com.thoughtworks.fireworks.adapters.document.DocumentEventAdapter;
+import com.thoughtworks.fireworks.core.timer.AllEditorsOpenedAdaptee;
+import com.thoughtworks.fireworks.core.timer.ConfiguredTimer;
 
 import java.awt.*;
 import java.awt.event.AWTEventListener;
-
+import java.awt.event.KeyEvent;
+//todo:refactor
 public class DocumentListenerAdapter implements DocumentListener, AWTEventListener {
-    private final AutoRunTaskTimer timer;
-    private final FireworksConfig config;
+    private static final String GO_TO_FILE_OR_CLASS_UI_CLASS_NAME = "com.intellij.ide.util.gotoByName.ChooseByNameBase";
+
+    private final ConfiguredTimer timer;
+    private final AllEditorsOpenedAdaptee editors;
     private final ProjectAdapter project;
 
-    public DocumentListenerAdapter(FireworksConfig config, ProjectAdapter project, AutoRunTaskTimer timer) {
-        this.config = config;
+    public DocumentListenerAdapter(ProjectAdapter project, ConfiguredTimer timer, AllEditorsOpenedAdaptee editors) {
         this.project = project;
         this.timer = timer;
-    }
-
-    public void documentChanged(DocumentEvent event) {
-        final Document document = event.getDocument();
-        boolean inputLetters = event.getNewFragment().toString().trim().length() > 0;
-        if (inputLetters && project.createDocumentAdaptee(document).isInSourceOrTestContent()) {
-            if (hasWritableAndValidDocInEditors(document)) {
-                timer.schedule(config.autoRunTestsDelayTime());
-            }
-        }
-    }
-
-    private boolean hasWritableAndValidDocInEditors(Document document) {
-        return new EditorsAdapter(docEditors(document)).hasWritableAndValidDoc();
-    }
-
-    private Editor[] docEditors(Document document) {
-        return EditorFactory.getInstance().getEditors(document);
+        this.editors = editors;
     }
 
     public void eventDispatched(AWTEvent event) {
-        timer.reSchedule();
+        if (event instanceof KeyEvent) {
+            String sourceClassName = event.getSource().getClass().getName();
+            if (sourceClassName.startsWith(GO_TO_FILE_OR_CLASS_UI_CLASS_NAME)) {
+                timer.cancelTasks();
+                return;
+            }
+        }
+        timer.reschedule();
+    }
+
+    public void documentChanged(final DocumentEvent event) {
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+            public void run() {
+                project.getPsiDocumentManager().commitDocument(event.getDocument());
+                final DocumentEventAdapter eventAdapter = new DocumentEventAdapter(event, project);
+                if (eventAdapter.documentInSourceOrTestContent()
+                        && eventAdapter.documentContentChangedExcludeComment()
+                        && editors.hasNonViewerEditorAndWritable()) {
+                    if (editors.documentsInSourceOrTestContentAreValidAndTheyAreNotXmlOrDtdFiles()) {
+                        timer.schedule();
+                    } else {
+                        timer.cancelTasks();
+                    }
+                }
+            }
+        });
     }
 
     public void beforeDocumentChange(DocumentEvent event) {

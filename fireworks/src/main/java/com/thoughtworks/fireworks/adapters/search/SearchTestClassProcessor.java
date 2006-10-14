@@ -13,24 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.adapters;
+package com.thoughtworks.fireworks.adapters.search;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.PsiElementProcessor;
+import com.thoughtworks.fireworks.adapters.ProgressIndicatorUtils;
+import com.thoughtworks.fireworks.adapters.ProjectAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
-import com.thoughtworks.fireworks.core.AllTestShadowCabinet;
+import com.thoughtworks.fireworks.core.TestCollection;
 
 public class SearchTestClassProcessor implements PsiElementProcessor<PsiClass> {
     private final ProjectAdapter project;
-    private final AllTestShadowCabinet cabinet;
+    private final TestCollection testCollection;
 
     private int found = 0;
     private int classes = 0;
 
-    public SearchTestClassProcessor(ProjectAdapter project, AllTestShadowCabinet cabinet) {
+    public SearchTestClassProcessor(ProjectAdapter project, TestCollection testCollection) {
         this.project = project;
-        this.cabinet = cabinet;
+        this.testCollection = testCollection;
     }
 
     public boolean execute(PsiClass element) {
@@ -44,9 +46,10 @@ public class SearchTestClassProcessor implements PsiElementProcessor<PsiClass> {
         PsiFile psiFile = element.getContainingFile();
         DocumentAdaptee doc = project.createDocumentAdaptee(psiFile);
 
+        //todo refactor document
         if (doc.isWritable() && doc.isExpectedJUnitTestCase(element)) {
             found++;
-            cabinet.addTestShadow(doc.getSunshine(), element.getQualifiedName());
+            testCollection.add(doc.getSunshine(), element.getQualifiedName());
         }
         return true;
     }
