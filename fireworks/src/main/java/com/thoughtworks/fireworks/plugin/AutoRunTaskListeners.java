@@ -17,18 +17,24 @@ package com.thoughtworks.fireworks.plugin;
 
 import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.editor.event.DocumentListener;
+import com.thoughtworks.fireworks.adapters.ProjectAdapter;
+import com.thoughtworks.fireworks.adapters.RunContentListenerTimerAdapter;
 
 import java.awt.*;
 import java.awt.event.AWTEventListener;
 
 public class AutoRunTaskListeners {
+    private final ProjectAdapter project;
     private final DocumentListener documentListener;
     private final AWTEventListener awtListener;
+    private final RunContentListenerTimerAdapter timerAdapter;
     private boolean enable;
 
-    public AutoRunTaskListeners(DocumentListener documentListener, AWTEventListener awtListener) {
+    public AutoRunTaskListeners(ProjectAdapter project, DocumentListener documentListener, AWTEventListener awtListener, RunContentListenerTimerAdapter timerAdapter) {
+        this.project = project;
         this.documentListener = documentListener;
         this.awtListener = awtListener;
+        this.timerAdapter = timerAdapter;
     }
 
     synchronized public void enableListenersForAutoRunTask() {
@@ -38,7 +44,10 @@ public class AutoRunTaskListeners {
         enable = true;
         Toolkit.getDefaultToolkit().addAWTEventListener(awtListener, AWTEvent.KEY_EVENT_MASK);
         Toolkit.getDefaultToolkit().addAWTEventListener(awtListener, AWTEvent.MOUSE_EVENT_MASK);
+        Toolkit.getDefaultToolkit().addAWTEventListener(awtListener, AWTEvent.MOUSE_MOTION_EVENT_MASK);
+        Toolkit.getDefaultToolkit().addAWTEventListener(awtListener, AWTEvent.MOUSE_WHEEL_EVENT_MASK);
         EditorFactory.getInstance().getEventMulticaster().addDocumentListener(documentListener);
+        project.getExecutionManager().getContentManager().addRunContentListener(timerAdapter);
     }
 
     synchronized public void disableListenersForAutoRunTask() {
@@ -48,5 +57,6 @@ public class AutoRunTaskListeners {
         enable = false;
         Toolkit.getDefaultToolkit().removeAWTEventListener(awtListener);
         EditorFactory.getInstance().getEventMulticaster().removeDocumentListener(documentListener);
+        project.getExecutionManager().getContentManager().removeRunContentListener(timerAdapter);
     }
 }

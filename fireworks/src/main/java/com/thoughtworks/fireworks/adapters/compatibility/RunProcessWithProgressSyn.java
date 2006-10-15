@@ -29,18 +29,10 @@ public class RunProcessWithProgressSyn {
     private final static String methodName = "runProcessWithProgressSynchronously";
     private final static Class[] paramTypes = new Class[]{Runnable.class, String.class, boolean.class, Project.class};
 
-    private final Runnable process;
-    private final String title;
-    private final boolean canBeCanceled;
-    private final Project project;
     private Method method;
     private Object obj;
 
-    public RunProcessWithProgressSyn(Runnable process, String title, boolean canBeCanceled, Project project) {
-        this.process = process;
-        this.title = title;
-        this.canBeCanceled = canBeCanceled;
-        this.project = project;
+    public RunProcessWithProgressSyn() {
         try {
             lookUpRunProcessMethodFromApplication();
         } catch (NoSuchMethodException e) {
@@ -62,12 +54,11 @@ public class RunProcessWithProgressSyn {
         }
     }
 
-    public void execute() {
+    public void execute(Runnable process, String title, boolean canBeCanceled, Project project) {
         try {
             method.invoke(obj, new Object[]{process, title, canBeCanceled, project});
         } catch (Exception e) {
             LOG.error("catch exception when invoking " + methodName + ": " + method, e);
         }
-
     }
 }

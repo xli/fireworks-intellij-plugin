@@ -132,13 +132,15 @@ Contract me:) swing1979@gmail.com</p></b>
     <change-notes>
         <![CDATA[
         <ul><u><b>Version 1.07 changes</b></u>
-            <li>new feature: new configuration "Enable auto run fireworks task"
-            <li>new feature: new hot key "shift alt A", enable/disable task of running recent test list automatically.
+            <li>new feature: new configuration "Enable auto run fireworks task"</li>
+            <li>new feature: new hot key "shift alt A", enable/disable task of running recent test list automatically.</li>
+            <li>change: listen all of mouse event, any action of mouse will make Fireworks reschedule task of running tests.</li>
             <li>power up: fireworks will cancel task of running recent test list when document in editor opened has errors, except:
                 <ul>
                     <li>document is not in source or test folder.</li>
                     <li>language of document is xml or dtd.</li>
                 </ul>
+            </li>
             <li>power up: fireworks will not cancel task of running recent test list, when:
                 <ul>
                     <li>text inputed is comment of Language or Java Doc</li>
@@ -188,6 +190,8 @@ Contract me:) swing1979@gmail.com</p></b>
         </ul>
         <br>
         <ul><u><b>Version 1.01 changes</b></u>
+            <li>new feature: test name displayed in the tree of recent test list will be renamed when developer rename the name of test.</li>
+            <li>new feature: test will be remove from tree of recent test list when test file is deleted.</li>
             <li>fix bug: Remove a test when opening a JUnit TestCase and the size of recent test list is full.</li>
             <li>fix bug: Inner class of JUnit TestCase would be as JUnit TestCase when running all tests.</li>
         </ul>
@@ -198,7 +202,7 @@ Contract me:) swing1979@gmail.com</p></b>
             <li>Enable/disable running tests in the "recent test list" automatically.
                 <ul>
                 <li>To enable it, you should set value of "Delay time(millisecond)" in the Fireworks configuration form larger than zero.</li>
-                <li>To disable it, you should set value of "Delay time(millisecond)" to less than 1.</li>
+                <li>To disable it, you should set value of "Delay time(millisecond)" to less than 0.</li>
                 </ul>
             </li>
             <li>The test result is organized by a table which will pick out the key summary of the test result.

@@ -19,7 +19,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
-import com.thoughtworks.fireworks.core.timer.AllEditorsOpenedAdaptee;
+import com.thoughtworks.fireworks.controllers.timer.AllEditorsOpenedAdaptee;
 
 public class AllEditorsOpenedAdapter implements AllEditorsOpenedAdaptee {
     private final ProjectAdapter project;

@@ -17,8 +17,6 @@ package com.thoughtworks.fireworks.core;
 
 import junit.framework.TestCase;
 
-import java.util.Date;
-
 public class UtilsTest extends TestCase {
 
     public void testGetJavaVersion() throws Exception {

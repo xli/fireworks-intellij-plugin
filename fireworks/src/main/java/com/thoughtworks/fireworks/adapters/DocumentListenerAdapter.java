@@ -19,15 +19,13 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.thoughtworks.fireworks.adapters.document.DocumentEventAdapter;
-import com.thoughtworks.fireworks.core.timer.AllEditorsOpenedAdaptee;
-import com.thoughtworks.fireworks.core.timer.ConfiguredTimer;
+import com.thoughtworks.fireworks.controllers.timer.AllEditorsOpenedAdaptee;
+import com.thoughtworks.fireworks.controllers.timer.ConfiguredTimer;
 
 import java.awt.*;
 import java.awt.event.AWTEventListener;
-import java.awt.event.KeyEvent;
-//todo:refactor
+
 public class DocumentListenerAdapter implements DocumentListener, AWTEventListener {
-    private static final String GO_TO_FILE_OR_CLASS_UI_CLASS_NAME = "com.intellij.ide.util.gotoByName.ChooseByNameBase";
 
     private final ConfiguredTimer timer;
     private final AllEditorsOpenedAdaptee editors;
@@ -40,13 +38,6 @@ public class DocumentListenerAdapter implements DocumentListener, AWTEventListen
     }
 
     public void eventDispatched(AWTEvent event) {
-        if (event instanceof KeyEvent) {
-            String sourceClassName = event.getSource().getClass().getName();
-            if (sourceClassName.startsWith(GO_TO_FILE_OR_CLASS_UI_CLASS_NAME)) {
-                timer.cancelTasks();
-                return;
-            }
-        }
         timer.reschedule();
     }
 

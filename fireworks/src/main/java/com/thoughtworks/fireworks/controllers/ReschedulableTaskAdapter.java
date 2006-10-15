@@ -13,9 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.core.timer;
+package com.thoughtworks.fireworks.controllers;
 
-import com.thoughtworks.fireworks.controllers.CabinetController;
+import com.thoughtworks.fireworks.controllers.timer.CabinetControllerActionTimer;
+import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
 
 public class ReschedulableTaskAdapter implements ReschedulableTask {
     private final CabinetControllerActionTimer timer;

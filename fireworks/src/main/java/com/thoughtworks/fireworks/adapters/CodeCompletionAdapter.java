@@ -15,19 +15,13 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.thoughtworks.fireworks.core.timer.CodeCompletionAdaptee;
-import org.apache.log4j.Logger;
+import com.thoughtworks.fireworks.core.developer.Thought;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class CodeCompletionAdapter implements CodeCompletionAdaptee {
-    private final static Logger LOG = Logger.getLogger(CodeCompletionAdapter.class);
-    public static final String CODE_COMPLETION_LIST_CELL_RENDERER = "com.intellij.codeInsight.lookup.impl.LookupCellRenderer";
-
-    private static void log(String str) {
-        LOG.info(str);
-    }
+public class CodeCompletionAdapter implements Thought {
+    private static final String CODE_COMPLETION_LIST_CELL_RENDERER = "com.intellij.codeInsight.lookup.impl.LookupCellRenderer";
 
     private final ProjectAdapter project;
 
@@ -36,12 +30,14 @@ public class CodeCompletionAdapter implements CodeCompletionAdaptee {
     }
 
     public boolean isWorking() {
-        boolean result = checkChildren(project.getSuggesttedParentWindow());
-        log("code completion is working: " + result);
-        return result;
+        return checkChildren(project.getSuggesttedParentWindow());
     }
 
     private boolean checkChildren(Container container) {
+        if (container == null) {
+            return false;
+        }
+
         if (container instanceof JList) {
             return checkJList((JList) container);
         }

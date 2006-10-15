@@ -13,20 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.core.timer;
+package com.thoughtworks.fireworks.controllers.timer;
 
 import com.thoughtworks.fireworks.core.ApplicationAdaptee;
+import com.thoughtworks.fireworks.core.developer.Developer;
+import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
 
 import java.util.TimerTask;
 
 public class TaskRunnerFactory {
     private final ApplicationAdaptee application;
-    private final CodeCompletionAdaptee codeCompletion;
+    private final Developer developer;
     private final AllEditorsOpenedAdaptee editors;
 
-    public TaskRunnerFactory(ApplicationAdaptee application, CodeCompletionAdaptee codeCompletion, AllEditorsOpenedAdaptee editors) {
+    public TaskRunnerFactory(ApplicationAdaptee application, Developer developer, AllEditorsOpenedAdaptee editors) {
         this.application = application;
-        this.codeCompletion = codeCompletion;
+        this.developer = developer;
         this.editors = editors;
     }
 
@@ -35,7 +37,7 @@ public class TaskRunnerFactory {
             public void run() {
                 application.invokeLater(new Runnable() {
                     public void run() {
-                        new TaskRunner(task, application, codeCompletion, editors).run();
+                        new TaskRunner(task, developer, editors).run();
                     }
                 });
             }

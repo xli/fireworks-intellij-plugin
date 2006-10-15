@@ -13,9 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.core.timer;
+package com.thoughtworks.fireworks.controllers.timer;
 
 import com.thoughtworks.fireworks.controllers.CabinetController;
+import com.thoughtworks.fireworks.controllers.ReschedulableTaskAdapter;
+import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
 
 import java.util.Timer;
 

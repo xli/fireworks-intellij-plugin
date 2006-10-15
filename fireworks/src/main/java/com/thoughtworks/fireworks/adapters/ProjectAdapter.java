@@ -15,6 +15,7 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
+import com.intellij.execution.ExecutionManager;
 import com.intellij.execution.filters.OpenFileHyperlinkInfo;
 import com.intellij.execution.filters.TextConsoleBuidlerFactory;
 import com.intellij.openapi.compiler.CompileStatusNotification;
@@ -47,7 +48,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
 //todo: refactor
+
 public class ProjectAdapter {
     private final List buildListeners = new ArrayList();
 
@@ -55,11 +58,13 @@ public class ProjectAdapter {
     private final TestsRunningProgressIndicatorAdapter progressIndicator;
     private final FireworksConfig config;
     private List<ConsoleViewAdapter> consoles = new ArrayList();
+    private RunProcessWithProgressSyn runProcessWithProgressSyn;
 
     public ProjectAdapter(Project project, FireworksConfig config, TestsRunningProgressIndicatorAdapter progressIndicator) {
         this.config = config;
         this.project = project;
         this.progressIndicator = progressIndicator;
+        this.runProcessWithProgressSyn = new RunProcessWithProgressSyn();
     }
 
     public void registerToolWindow(String id, String title, JComponent component, Icon icon) {
@@ -192,7 +197,7 @@ public class ProjectAdapter {
     }
 
     public void runProcessWithProgressSynchronously(Runnable process, String title, boolean canBeCanceled) {
-        new RunProcessWithProgressSyn(process, title, canBeCanceled, project).execute();
+        runProcessWithProgressSyn.execute(process, title, canBeCanceled, project);
     }
 
     public void make(CompileStatusNotification compileStatusNotification) {
@@ -216,5 +221,9 @@ public class ProjectAdapter {
 
     public PsiSearchHelper getSearchHelper() {
         return getPsiManager().getSearchHelper();
+    }
+
+    public ExecutionManager getExecutionManager() {
+        return ExecutionManager.getInstance(project);
     }
 }

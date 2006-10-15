@@ -13,28 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.core.timer;
+package com.thoughtworks.fireworks.ui;
 
-import java.util.TimerTask;
+import com.thoughtworks.fireworks.core.developer.Thought;
 
-public class TimerTaskManager {
+import javax.swing.*;
 
-    private final TaskRunnerFactory runnerFactory;
-    private TimerTask task;
-
-    public TimerTaskManager(TaskRunnerFactory runnerFactory) {
-        this.runnerFactory = runnerFactory;
-    }
-
-    synchronized public TimerTask getTask(ReschedulableTask reschedulableTask) {
-        cancelTask();
-        task = runnerFactory.createTaskRunner(reschedulableTask);
-        return task;
-    }
-
-    synchronized public void cancelTask() {
-        if (task != null) {
-            task.cancel();
+public class MenuSelectionAdapter implements Thought {
+    public boolean isWorking() {
+        MenuSelectionManager menuSelectionManager = MenuSelectionManager.defaultManager();
+        if (menuSelectionManager == null) {
+            return false;
         }
+        MenuElement[] selectedPath = menuSelectionManager.getSelectedPath();
+        return selectedPath != null && selectedPath.length > 0;
     }
 }

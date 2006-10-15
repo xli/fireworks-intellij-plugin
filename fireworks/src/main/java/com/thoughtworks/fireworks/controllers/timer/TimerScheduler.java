@@ -13,9 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.core.timer;
+package com.thoughtworks.fireworks.controllers.timer;
 
 import com.thoughtworks.fireworks.controllers.ShadowCabinetControllerListener;
+import com.thoughtworks.fireworks.core.Chronograph;
+import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
 
 import java.util.Timer;
 
@@ -51,7 +53,7 @@ public class TimerScheduler implements ShadowCabinetControllerListener {
     }
 
     public void actionStarted() {
-        setDelayTime(-1);
+        cancelTasks();
     }
 
     public void actionFinished() {

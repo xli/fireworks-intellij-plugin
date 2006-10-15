@@ -35,7 +35,7 @@ public class IntellijShadowCabinet implements TestShadowMap, Cabinet {
     }
 
     public void action(final TestResult result) {
-        if(isEmptyCabinetPreActionTime && isEmpty())  {
+        if (isEmptyCabinetPreActionTime && isEmpty()) {
             return;
         }
         compilerManager.compile(new CabinetActionNotification(shadowCabinet, result));
@@ -71,6 +71,7 @@ public class IntellijShadowCabinet implements TestShadowMap, Cabinet {
     public void removeListener(ShadowCabinetListener listener) {
         shadowCabinet.removeListener(listener);
     }
+
     private boolean isEmpty() {
         return size() == 0;
     }
