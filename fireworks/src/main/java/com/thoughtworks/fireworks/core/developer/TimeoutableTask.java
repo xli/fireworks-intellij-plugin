@@ -18,7 +18,7 @@ package com.thoughtworks.fireworks.core.developer;
 import com.thoughtworks.fireworks.core.Chronograph;
 import org.apache.log4j.Logger;
 
-class TimeoutableTask implements Runnable {
+public class TimeoutableTask implements Runnable {
     private final static Logger LOG = Logger.getLogger(TimeoutableTask.class);
 
     private static void log(String str) {
@@ -29,7 +29,7 @@ class TimeoutableTask implements Runnable {
     private final Chronograph chronograph;
     private static final int TIME_OUT = 100;
 
-    TimeoutableTask(ReschedulableTask task) {
+    public TimeoutableTask(ReschedulableTask task) {
         this.task = task;
         this.chronograph = new Chronograph();
         chronograph.restart();

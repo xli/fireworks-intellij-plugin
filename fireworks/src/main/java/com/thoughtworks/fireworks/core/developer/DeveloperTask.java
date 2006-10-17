@@ -13,11 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.controllers.timer;
+package com.thoughtworks.fireworks.core.developer;
 
-public interface AllEditorsOpenedAdaptee {
+public class DeveloperTask implements ReschedulableTask {
+    private final Developer developer;
+    private final ReschedulableTask task;
 
-    boolean hasNonViewerEditorAndWritable();
+    public DeveloperTask(Developer developer, ReschedulableTask task) {
+        this.developer = developer;
+        this.task = task;
+    }
 
-    boolean documentsInSourceOrTestContentAreValidAndTheyAreNotXmlOrDtdFiles();
+    public void reschedule() {
+        task.reschedule();
+    }
+
+    public void run() {
+        developer.considersRunning(task);
+    }
 }

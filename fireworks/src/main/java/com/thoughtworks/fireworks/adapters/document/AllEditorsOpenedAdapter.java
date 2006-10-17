@@ -19,13 +19,17 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
-import com.thoughtworks.fireworks.controllers.timer.AllEditorsOpenedAdaptee;
+import com.thoughtworks.fireworks.core.developer.Thought;
 
-public class AllEditorsOpenedAdapter implements AllEditorsOpenedAdaptee {
+public class AllEditorsOpenedAdapter implements Thought {
     private final ProjectAdapter project;
 
     public AllEditorsOpenedAdapter(ProjectAdapter project) {
         this.project = project;
+    }
+
+    public boolean isWorking() {
+        return !documentsInSourceOrTestContentAreValidAndTheyAreNotXmlOrDtdFiles();
     }
 
     public boolean hasNonViewerEditorAndWritable() {

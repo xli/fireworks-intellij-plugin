@@ -24,7 +24,6 @@ import com.thoughtworks.fireworks.controllers.timer.*;
 import com.thoughtworks.fireworks.core.AllTestShadowCabinet;
 import com.thoughtworks.fireworks.core.IntellijShadowCabinet;
 import com.thoughtworks.fireworks.core.TestResultFactory;
-import com.thoughtworks.fireworks.core.TestShadowMap;
 import com.thoughtworks.fireworks.core.developer.Developer;
 import com.thoughtworks.fireworks.core.table.ShadowTableModel;
 import com.thoughtworks.fireworks.core.tree.ShadowSummaryTreeNode;
@@ -53,50 +52,38 @@ public class FireworksContainer {
         container.registerComponentInstance(progressIndicator);
         container.registerComponentInstance(fireworksProject);
         container.registerComponentInstance(projectAdapter);
-
         container.registerComponentImplementation(ApplicationAdapter.class);
 
+        registerThought();
+        registerComponentsForRunningTestAutomatically();
+        registerComponentsForAddingTestsIntoRecentTestList();
+        registerComponentsForView();
+
+        container.registerComponentImplementation(AutoRunTaskListeners.class);
+        container.registerComponentImplementation(Listeners.class);
+
         container.registerComponentImplementation(CompilerManagerAdapter.class);
-        container.registerComponentImplementation(RefactoringTestShadowListenerProvider.class);
-
-        container.registerComponentImplementation(CodeCompletionAdapter.class);
-        container.registerComponentImplementation(GoToFileOrClassAdapter.class);
-        container.registerComponentImplementation(MenuSelectionAdapter.class);
-        container.registerComponentImplementation(AllEditorsOpenedAdapter.class);
-        container.registerComponentImplementation(TaskRunnerFactory.class);
-        container.registerComponentImplementation(TimerTaskManager.class);
-        container.registerComponentImplementation(CabinetControllerActionTimer.class);
-        container.registerComponentImplementation(ReschedulableTaskAdapter.class);
-        container.registerComponentImplementation(TimerScheduler.class);
-        container.registerComponentImplementation(ConfiguredTimer.class);
-        container.registerComponentImplementation(RunContentListenerTimerAdapter.class);
-        container.registerComponentImplementation(Developer.class);
-
         container.registerComponentImplementation(AllTestShadowCabinet.class);
         container.registerComponentImplementation(TestCaseSearcher.class);
         container.registerComponentImplementation(RunAllTestsRunnerAdapter.class);
+        container.registerComponentImplementation(TestResultFactory.class);
+        container.registerComponentImplementation(IntellijShadowCabinet.class);
+        container.registerComponentImplementation(RecentTestListRunnerAdapter.class);
+        container.registerComponentImplementation(ShadowCabinetController.class);
+    }
 
-        container.registerComponentImplementation(TestCaseOpenedListener.class);
-        container.registerComponentImplementation(EditorFactoryListenerAdapter.class);
-        container.registerComponentImplementation(FileDocManagerListenerAdapter.class);
-        container.registerComponentImplementation(DocumentListenerAdapter.class);
-        container.registerComponentImplementation(DeleteTestShadowListener.class);
-        container.registerComponentImplementation(Listeners.class);
-        container.registerComponentImplementation(AutoRunTaskListeners.class);
-
+    private void registerComponentsForView() {
         container.registerComponentImplementation(JumpToSourceAdapter.class);
         container.registerComponentImplementation(StatusBarAdapter.class);
-
+        container.registerComponentImplementation(ShadowTreeModel.class);
         container.registerComponentImplementation(ShadowSummaryTreeNode.class);
         container.registerComponentImplementation(TestShadowsStatus.class);
         container.registerComponentImplementation(TestShadowTreeRenderer.class);
-        container.registerComponentImplementation(ShadowTreeModel.class);
         container.registerComponentImplementation(TestShadowListTree.class);
         container.registerComponentImplementation(ShadowTableModel.class);
         container.registerComponentImplementation(TestShadowResultTable.class);
         container.registerComponentImplementation(DialogTraceLogViewer.class);
         container.registerComponentImplementation(SeperateRowByColorTableCellRenderer.class);
-
         container.registerComponentImplementation(TestLogPanel.class);
         container.registerComponentImplementation(TreeDetailPanel.class);
         container.registerComponentImplementation(TestResultSummary.class);
@@ -105,12 +92,34 @@ public class FireworksContainer {
         container.registerComponentImplementation(ToolWindow.class);
         container.registerComponentImplementation(ShadowCabinetViewToolWindowImpl.class);
         container.registerComponentImplementation(TestResultSummaryBgColor.class);
+    }
 
-        container.registerComponentImplementation(TestResultFactory.class);
+    private void registerComponentsForRunningTestAutomatically() {
+        container.registerComponentImplementation(AllEditorsOpenedAdapter.class);
+        container.registerComponentImplementation(TimerTaskFactory.class);
+        container.registerComponentImplementation(TimerTaskManager.class);
+        container.registerComponentImplementation(CabinetControllerActionTimer.class);
+        container.registerComponentImplementation(ReschedulableTaskAdapter.class);
+        container.registerComponentImplementation(TimerScheduler.class);
+        container.registerComponentImplementation(ConfiguredTimer.class);
+        container.registerComponentImplementation(RunContentListenerTimerAdapter.class);
+        container.registerComponentImplementation(Developer.class);
+        container.registerComponentImplementation(DocumentListenerAdapter.class);
+    }
 
-        container.registerComponentImplementation(IntellijShadowCabinet.class);
-        container.registerComponentImplementation(RecentTestListRunnerAdapter.class);
-        container.registerComponentImplementation(ShadowCabinetController.class);
+    private void registerComponentsForAddingTestsIntoRecentTestList() {
+        container.registerComponentImplementation(RefactoringTestShadowListenerProvider.class);
+        container.registerComponentImplementation(TestCaseOpenedListener.class);
+        container.registerComponentImplementation(EditorFactoryListenerAdapter.class);
+        container.registerComponentImplementation(FileDocManagerListenerAdapter.class);
+        container.registerComponentImplementation(DeleteTestShadowListener.class);
+    }
+
+    private void registerThought() {
+        container.registerComponentImplementation(CodeCompletionAdapter.class);
+        container.registerComponentImplementation(GoToFileOrClassAdapter.class);
+        container.registerComponentImplementation(LiveTemplateAdapter.class);
+        container.registerComponentImplementation(MenuSelectionAdapter.class);
     }
 
     public void start() {
@@ -127,23 +136,11 @@ public class FireworksContainer {
         }
     }
 
-    public CabinetController getCabinetController() {
-        return ((CabinetController) getInstance(CabinetController.class));
-    }
-
-    public TestShadowMap getTestShadowMap() {
-        return (TestShadowMap) getInstance(TestShadowMap.class);
-    }
-
-    private Object getInstance(Class type) {
-        return container.getComponentInstanceOfType(type);
+    public <T> T getInstance(Class<T> type) {
+        return (T) container.getComponentInstanceOfType(type);
     }
 
     public void disposeComponent() {
         projectAdapter.dispose();
-    }
-
-    public AutoRunTaskListeners getListeners() {
-        return (AutoRunTaskListeners) getInstance(AutoRunTaskListeners.class);
     }
 }

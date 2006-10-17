@@ -1,0 +1,37 @@
+<project default="all" name="DontMakeMeTest" basedir=".">
+    <property name="build-plugin-for-deployment" value="true"/>
+	<target name="rebuild-shadow">
+		<ant dir="core" inheritAll="false"/>
+	</target>
+	<target name="rebuild-fireworks">
+		<ant dir="fireworks" inheritAll="false"/>
+	</target>
+	<target name="zip-fireworks-plugin" depends="rebuild-shadow, rebuild-fireworks" description="build plugin as zip for deplopment">
+		<zip destfile="fireworks.zip">
+			<zipfileset dir="fireworks/target/" prefix="fireworks/lib">
+				<include name="fireworks.jar" />
+			</zipfileset>
+			<zipfileset dir="core/target/" prefix="fireworks/lib">
+				<include name="shadow-1.0.jar" />
+			</zipfileset>
+			<zipfileset dir="dependent-libs/" prefix="fireworks/lib">
+				<include name="*.jar"/>
+				<exclude name="turtlemock*.jar"/>
+			</zipfileset>
+		</zip>
+	</target>
+	<target name="zip-source" description="create a zip file includes all source of project">
+		<zip destfile="dontmakemetest-src.zip">
+			<zipfileset dir="fireworks" prefix="dontmakemetest-src/fireworks">
+				<include name="**/*.*" />
+			</zipfileset>
+			<zipfileset dir="core" prefix="dontmakemetest-src/core">
+				<include name="**/*.*" />
+			</zipfileset>
+			<zipfileset dir="dependent-libs" prefix="dontmakemetest-src/dependent-libs">
+				<include name="*.jar"/>
+			</zipfileset>
+		</zip>
+	</target>
+	<target name="all" depends="zip-fireworks-plugin, zip-source" description="zip fireworks plugin and all source"/>
+</project>

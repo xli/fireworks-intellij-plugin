@@ -16,27 +16,15 @@
 package com.thoughtworks.fireworks.plugin;
 
 import com.intellij.openapi.components.ProjectComponent;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.thoughtworks.fireworks.controllers.CabinetController;
-import com.thoughtworks.fireworks.core.FireworksConfig;
+import com.thoughtworks.fireworks.controllers.timer.TimerTaskManager;
 import com.thoughtworks.fireworks.core.TestShadowMap;
-import com.thoughtworks.shadow.Utils;
 
-public class FireworksProject extends FireworksConfiguration implements ProjectComponent, FireworksConfig {
-
-    private static final String DEFAULT_TEST_CLASS_NAME_REGEX = ".*Test";
-
-    public String expectedTestCaseNameRegex = null;
-    public String maxMemory = null;
-    public int maxSize = 5;
-    public boolean enable = true;
-    public boolean enableAutoTask = true;
-    public int autoRunTestsDelayTime = 4000;
+public class FireworksProject extends FireworksConfigurationImpl implements ProjectComponent {
 
     private Project project;
     private FireworksContainer container;
-    private String jvmArgs;
 
     public FireworksProject(Project project) {
         this.project = project;
@@ -66,104 +54,42 @@ public class FireworksProject extends FireworksConfiguration implements ProjectC
         getListenersForAutoRunTask().disableListenersForAutoRunTask();
     }
 
-    public CabinetController getCabinetController() {
-        return container.getCabinetController();
-    }
-
-    public String maxMemory() {
-        if (maxMemory == null || !maxMemory.matches("\\d+")) {
-            return null;
-        }
-        return maxMemory;
-    }
-
-    public String expectedTestCaseNameRegex() {
-        if (Utils.isEmpty(expectedTestCaseNameRegex)) {
-            return DEFAULT_TEST_CLASS_NAME_REGEX;
-        }
-        return expectedTestCaseNameRegex;
-    }
-
-    public int maxSize() {
-        return maxSize;
-    }
-
-    public int autoRunTestsDelayTime() {
-        return autoRunTestsDelayTime;
-    }
-
-    public String jvmArgs() {
-        return jvmArgs;
-    }
-
     public void setMaxSize(int maxSize) {
-        this.maxSize = maxSize;
+        super.setMaxSize(maxSize);
         getTestShadowMap().setMaxSize(maxSize);
     }
 
-    public String getDisplayName() {
-        return "Fireworks";
-    }
-
-    public void apply() throws ConfigurationException {
-        enable = getConfigurationUI().isEnable();
-        resetEnableFireworks();
-
-        enableAutoTask = getConfigurationUI().isAutoTaskEnabled();
-        resetAutoTaskEnabled();
-
-        maxMemory = getConfigurationUI().maxMemory();
-        expectedTestCaseNameRegex = getConfigurationUI().expectedTestCaseNameRegex();
-        setMaxSize(getConfigurationUI().maxSize());
-        autoRunTestsDelayTime = getConfigurationUI().autoRunTestsDelayTime();
-        jvmArgs = getConfigurationUI().jvmArgs();
-    }
-
-    public void reset() {
-        getConfigurationUI().setEnable(enable);
-        getConfigurationUI().setAutoTaskEnabled(enableAutoTask);
-        getConfigurationUI().setMaxMemory(maxMemory);
-        getConfigurationUI().setExpectedTestCaseNameRegex(expectedTestCaseNameRegex);
-        getConfigurationUI().setMaxSize(maxSize);
-        getConfigurationUI().setAutoRunTestsDelayTime(autoRunTestsDelayTime);
-        getConfigurationUI().setJvmArgs(jvmArgs);
-    }
-
-    public TestShadowMap getTestShadowMap() {
-        return container.getTestShadowMap();
-    }
-
-    public boolean isEnable() {
-        return enable;
-    }
-
-    public boolean isAutoTaskEnabled() {
-        return enableAutoTask;
-    }
-
-    public void changeAutoTaskEnabled() {
-        enableAutoTask = !enableAutoTask;
-        resetAutoTaskEnabled();
-    }
-
-    private void resetEnableFireworks() {
-        if (enable) {
+    protected void resetEnableFireworks() {
+        if (isEnable()) {
             container.start();
         } else {
             container.stop();
         }
     }
 
-    private void resetAutoTaskEnabled() {
-        if (enable && enableAutoTask) {
+    protected void resetAutoTaskEnabled() {
+        if (isEnable() && isAutoTaskEnabled()) {
             getListenersForAutoRunTask().enableListenersForAutoRunTask();
         } else {
             getListenersForAutoRunTask().disableListenersForAutoRunTask();
+            getTimerTaskManager().cancelTask();
         }
     }
 
+    private TimerTaskManager getTimerTaskManager() {
+        return container.getInstance(TimerTaskManager.class);
+    }
+
     private AutoRunTaskListeners getListenersForAutoRunTask() {
-        return container.getListeners();
+        return container.getInstance(AutoRunTaskListeners.class);
+    }
+
+    public CabinetController getCabinetController() {
+        return container.getInstance(CabinetController.class);
+    }
+
+    public TestShadowMap getTestShadowMap() {
+        return container.getInstance(TestShadowMap.class);
     }
 
 }

@@ -41,6 +41,10 @@ public abstract class FireworksConfiguration implements Configurable, JDOMExtern
         return null;
     }
 
+    public String getDisplayName() {
+        return "Fireworks";
+    }
+
     public JComponent createComponent() {
         return getConfigurationUI().getRootComponent();
     }

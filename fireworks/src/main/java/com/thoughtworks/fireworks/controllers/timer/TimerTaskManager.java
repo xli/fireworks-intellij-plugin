@@ -21,16 +21,16 @@ import java.util.TimerTask;
 
 public class TimerTaskManager {
 
-    private final TaskRunnerFactory runnerFactory;
+    private final TimerTaskFactory factory;
     private TimerTask task;
 
-    public TimerTaskManager(TaskRunnerFactory runnerFactory) {
-        this.runnerFactory = runnerFactory;
+    public TimerTaskManager(TimerTaskFactory factory) {
+        this.factory = factory;
     }
 
     synchronized public TimerTask getTask(ReschedulableTask reschedulableTask) {
         cancelTask();
-        task = runnerFactory.createTaskRunner(reschedulableTask);
+        task = factory.createTimerTask(reschedulableTask);
         return task;
     }
 

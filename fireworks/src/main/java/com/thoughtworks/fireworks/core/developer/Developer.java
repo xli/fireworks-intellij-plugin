@@ -15,7 +15,6 @@
  */
 package com.thoughtworks.fireworks.core.developer;
 
-import com.thoughtworks.fireworks.core.ApplicationAdaptee;
 import org.apache.log4j.Logger;
 
 public class Developer {
@@ -25,11 +24,9 @@ public class Developer {
         LOG.info(str);
     }
 
-    private final ApplicationAdaptee application;
     private final Thought[] thoughts;
 
-    public Developer(ApplicationAdaptee application, Thought[] thoughts) {
-        this.application = application;
+    public Developer(Thought[] thoughts) {
         this.thoughts = thoughts;
     }
 
@@ -49,7 +46,7 @@ public class Developer {
         if (isThinkingSomething()) {
             task.reschedule();
         } else {
-            application.invokeLater(new TimeoutableTask(task));
+            task.run();
         }
     }
 }

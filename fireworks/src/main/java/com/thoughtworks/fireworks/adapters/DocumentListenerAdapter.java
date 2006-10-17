@@ -18,8 +18,8 @@ package com.thoughtworks.fireworks.adapters;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
+import com.thoughtworks.fireworks.adapters.document.AllEditorsOpenedAdapter;
 import com.thoughtworks.fireworks.adapters.document.DocumentEventAdapter;
-import com.thoughtworks.fireworks.controllers.timer.AllEditorsOpenedAdaptee;
 import com.thoughtworks.fireworks.controllers.timer.ConfiguredTimer;
 
 import java.awt.*;
@@ -28,10 +28,10 @@ import java.awt.event.AWTEventListener;
 public class DocumentListenerAdapter implements DocumentListener, AWTEventListener {
 
     private final ConfiguredTimer timer;
-    private final AllEditorsOpenedAdaptee editors;
+    private final AllEditorsOpenedAdapter editors;
     private final ProjectAdapter project;
 
-    public DocumentListenerAdapter(ProjectAdapter project, ConfiguredTimer timer, AllEditorsOpenedAdaptee editors) {
+    public DocumentListenerAdapter(ProjectAdapter project, ConfiguredTimer timer, AllEditorsOpenedAdapter editors) {
         this.project = project;
         this.timer = timer;
         this.editors = editors;

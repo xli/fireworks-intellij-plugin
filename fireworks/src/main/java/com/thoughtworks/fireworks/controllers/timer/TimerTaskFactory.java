@@ -15,24 +15,28 @@
  */
 package com.thoughtworks.fireworks.controllers.timer;
 
+import com.thoughtworks.fireworks.core.ApplicationAdaptee;
 import com.thoughtworks.fireworks.core.developer.Developer;
+import com.thoughtworks.fireworks.core.developer.DeveloperTask;
 import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
+import com.thoughtworks.fireworks.core.developer.TimeoutableTask;
 
-class TaskRunner {
-    private final ReschedulableTask task;
+import java.util.TimerTask;
+
+public class TimerTaskFactory {
+    private final ApplicationAdaptee application;
     private final Developer developer;
-    private final AllEditorsOpenedAdaptee editors;
 
-    TaskRunner(ReschedulableTask task, Developer developer, AllEditorsOpenedAdaptee editors) {
-        this.task = task;
+    public TimerTaskFactory(ApplicationAdaptee application, Developer developer) {
+        this.application = application;
         this.developer = developer;
-        this.editors = editors;
     }
 
-    public void run() {
-        if (!editors.documentsInSourceOrTestContentAreValidAndTheyAreNotXmlOrDtdFiles()) {
-            return;
-        }
-        developer.considersRunning(task);
+    public TimerTask createTimerTask(final ReschedulableTask task) {
+        return new TimerTask() {
+            public void run() {
+                application.invokeLater(new TimeoutableTask(new DeveloperTask(developer, task)));
+            }
+        };
     }
 }

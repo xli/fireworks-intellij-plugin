@@ -19,30 +19,36 @@ import com.thoughtworks.turtlemock.Mock;
 import com.thoughtworks.turtlemock.Turtle;
 import junit.framework.TestCase;
 
-public class DeveloperTest extends TestCase {
-    private Mock thought;
+public class DeveloperTaskTest extends TestCase {
     private Developer developer;
     private Mock task;
-    private ReschedulableTask taskMocked;
+    private DeveloperTask developerTask;
+    private Mock thought;
 
     protected void setUp() throws Exception {
         thought = Turtle.mock(Thought.class);
         developer = new Developer(new Thought[]{(Thought) thought.mockTarget()});
-
         task = Turtle.mock(ReschedulableTask.class);
-        taskMocked = (ReschedulableTask) task.mockTarget();
+        developerTask = new DeveloperTask(developer, (ReschedulableTask) task.mockTarget());
     }
 
-    public void testShouldRunTaskIfDeveloperIsNotThinking() throws Exception {
-        thought.ifCall("isWorking").willReturn(Boolean.FALSE);
-        developer.considersRunning(taskMocked);
+    public void testShouldConsiderRunningTask() throws Exception {
+        thought.ifCall("isWorking").willReturn(Boolean.FALSE);        
+        developerTask.run();
         task.assertDid("run");
     }
 
-    public void testShouldNotRunTaskIfDeveloperIsThinking() throws Exception {
+    public void testShouldRescheduleTaskWhenDeveloperIsThinking() throws Exception {
         thought.ifCall("isWorking").willReturn(Boolean.TRUE);
-        developer.considersRunning((ReschedulableTask) task.mockTarget());
+        developerTask = new DeveloperTask(developer, (ReschedulableTask) task.mockTarget());
+        developerTask.run();
         task.assertDid("reschedule");
         task.assertNotDid("run");
+    }
+
+    public void testShouldDelegateReschedule() throws Exception {
+        developerTask.reschedule();
+        task.assertDid("reschedule");
+        thought.assertDidNothing();
     }
 }

@@ -37,7 +37,6 @@ public class CodeCompletionAdapter implements Thought {
         if (container == null) {
             return false;
         }
-
         if (container instanceof JList) {
             return checkJList((JList) container);
         }

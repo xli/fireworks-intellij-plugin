@@ -1,22 +1,11 @@
 * 待完成时，不能触发
 * timer package test
 * show timer schedule status
-! listening all mouse event
-! add refactor feature
-! refactor: IntelliJ is waiting for typing in name of class/file which is developer want to find.
-! hotkey shift alt A
-! new configuration: Enable auto run task
 
 * check JUnit, if there is no JUnit exist, disable fireworks
 * ant build.xml for fireworks and shadow
-* firework will not trigger task, when:
-    ! inputs is comments
-    ! IntelliJ is waiting for typing in name of class/file which is developer want to find.
-    ! IntelliJ execute "Run" action.
-!fireworks will cancel task of running recent test list when document in editor opened has errors, except:
-    !document is not in source or test folder.
-    !language of document is xml or dtd.
-* should cancel timer when disable task of auto run test
+! should cancel timer when disable task of auto run test
+
 * there is unexpected info in the ant executing log:
     [verbose] dropping C:\C from path as it doesn't exist
 * test junit4.0
@@ -37,7 +26,19 @@
 ? remember selected tab
 ? remove TestTreeNode(What to do?).
 ? remove failure msg in the table after test case was deleted
-
+==============================2006.10.15====================================
+! listening all mouse event
+! add refactor feature doc
+! refactor: IntelliJ is waiting for typing in name of class/file which is developer want to find.
+! hotkey shift alt A
+! new configuration: Enable auto run task
+! firework will not trigger task, when:
+    ! inputs is comments
+    ! IntelliJ is waiting for typing in name of class/file which is developer want to find.
+    ! IntelliJ execute "Run" action.
+!fireworks will cancel task of running recent test list when document in editor opened has errors, except:
+    !document is not in source or test folder.
+    !language of document is xml or dtd.
 ============================2006.10.12================================================
 ! Fireworks will not trigger task of running tests when code completion is working.
 ! Fireworks will not trigger task of running tests when editing a file not in source content and test content.

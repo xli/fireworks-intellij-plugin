@@ -143,7 +143,7 @@ Contract me:) swing1979@gmail.com</p></b>
             </li>
             <li>power up: fireworks will not cancel task of running recent test list, when:
                 <ul>
-                    <li>text inputed is comment of Language or Java Doc</li>
+                    <li>text inputted is comment of Language or Java Doc</li>
                     <li>IntelliJ execute "Run" action.</li>
                     <li>IntelliJ is waiting for typing in name of class/file which is developer want to find.</li>
                 </ul>
