@@ -1,5 +1,8 @@
 <project default="all" name="DontMakeMeTest" basedir=".">
-    <property name="build-plugin-for-deployment" value="true"/>
+    <property name="build.dir" value="dist"/>
+	<target name="clean">
+        <delete dir="${build.dir}"/>
+	</target>
 	<target name="rebuild-shadow">
 		<ant dir="core" inheritAll="false"/>
 	</target>
@@ -7,7 +10,8 @@
 		<ant dir="fireworks" inheritAll="false"/>
 	</target>
 	<target name="zip-fireworks-plugin" depends="rebuild-shadow, rebuild-fireworks" description="build plugin as zip for deplopment">
-		<zip destfile="fireworks.zip">
+		<mkdir dir="${build.dir}"/>
+		<zip destfile="${build.dir}/fireworks.zip">
 			<zipfileset dir="fireworks/target/" prefix="fireworks/lib">
 				<include name="fireworks.jar" />
 			</zipfileset>
@@ -21,12 +25,13 @@
 		</zip>
 	</target>
 	<target name="zip-source" description="create a zip file includes all source of project">
-		<zip destfile="dontmakemetest-src.zip">
+		<mkdir dir="${build.dir}"/>
+		<zip destfile="${build.dir}/dontmakemetest-src.zip">
 			<zipfileset dir="." prefix="dontmakemetest-src">
 				<include name="**/*.*"/>
 				<exclude name="*.zip"/>
 			</zipfileset>
 		</zip>
 	</target>
-	<target name="all" depends="zip-fireworks-plugin, zip-source" description="zip fireworks plugin and all source"/>
+	<target name="all" depends="clean, zip-fireworks-plugin, zip-source" description="zip fireworks plugin and all source"/>
 </project>
