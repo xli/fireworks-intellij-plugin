@@ -22,14 +22,9 @@
 	</target>
 	<target name="zip-source" description="create a zip file includes all source of project">
 		<zip destfile="dontmakemetest-src.zip">
-			<zipfileset dir="fireworks" prefix="dontmakemetest-src/fireworks">
-				<include name="**/*.*" />
-			</zipfileset>
-			<zipfileset dir="core" prefix="dontmakemetest-src/core">
-				<include name="**/*.*" />
-			</zipfileset>
-			<zipfileset dir="dependent-libs" prefix="dontmakemetest-src/dependent-libs">
-				<include name="*.jar"/>
+			<zipfileset dir="." prefix="dontmakemetest-src">
+				<include name="**/*.*"/>
+				<exclude name="*.zip"/>
 			</zipfileset>
 		</zip>
 	</target>
