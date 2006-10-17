@@ -23,7 +23,7 @@ public class TestShadowResultTest extends TestCase {
 
         runListenerAdaptee.assertDid("testIgnored").with(ignoredTestCase);
     }
-    
+
     public void testShouldLogAsRunTestIfTestIsIgnored() throws Exception {
         ignoredTestCase.run(result);
 

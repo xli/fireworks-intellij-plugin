@@ -97,7 +97,7 @@ public class TestShadowTest extends TestCase {
     }
 
     public void testShouldBeErrorWhenJUnitTestRunnerDoesNotInTheClasspath() throws Exception {
-        Sunshine sunshine = new AntSunshine(new URL[]{Utils.toURL("src/test/class")});
+        Sunshine sunshine = new AntSunshine(new URL[]{Utils.toURL(TestUtils.baseDir() + "src/test/class")});
         ShineTestClassShadow shadow = new ShineTestClassShadow("ClassOutOfClasspath", sunshine);
         TestResult result = TestResultAssert.run(shadow);
         Assert.assertEquals(1, result.runCount());

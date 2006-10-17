@@ -22,7 +22,7 @@ import java.net.URL;
 
 public class UtilsTest extends TestCase {
     public void testLoadClassFromClasspaths() throws Exception {
-        URL[] classpaths = new URL[]{new File("src/test/class").toURL()};
+        URL[] classpaths = new URL[]{new File(TestUtils.baseDir() + "src/test/class").toURL()};
         Class outClasspathClass = Utils.load(classpaths, "ClassOutOfClasspath");
         assertNotNull(outClasspathClass);
     }

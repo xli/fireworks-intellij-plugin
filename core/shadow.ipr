@@ -39,7 +39,9 @@
     <option name="maxMemory" value="" />
     <option name="maxSize" value="5" />
     <option name="enable" value="true" />
-    <option name="autoRunTestsDelayTime" value="-1" />
+    <option name="enableAutoTask" value="true" />
+    <option name="autoRunTestsDelayTime" value="4000" />
+    <option name="jvmArgs" value="" />
   </component>
   <component name="GUI Designer component loader factory" />
   <component name="ImportConfiguration">

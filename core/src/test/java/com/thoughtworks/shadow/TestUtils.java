@@ -21,10 +21,19 @@ import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.Project;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.PrintStream;
 import java.net.URL;
 
 public class TestUtils {
+
+    public static String baseDir() {
+        if (new File("core").isDirectory()) {
+            return "core/";
+        }
+        return "";
+    }
+
     public static DefaultLogger simpleBuildLogger(ByteArrayOutputStream log) {
         DefaultLogger buildListener = new DefaultLogger();
         buildListener.setMessageOutputLevel(Project.MSG_DEBUG);
@@ -39,8 +48,8 @@ public class TestUtils {
 
     public static URL[] classpaths() {
         URL[] classpaths = new URL[2];
-        classpaths[0] = Utils.toURL("target/test-classes");
-        classpaths[1] = Utils.toURL("libs/junit/junit/4.1/junit-4.1.jar");
+        classpaths[0] = Utils.toURL(baseDir() + "target/test-classes");
+        classpaths[1] = Utils.toURL(baseDir() + "libs/junit/junit/4.1/junit-4.1.jar");
         return classpaths;
     }
 
