@@ -32,7 +32,7 @@ public class TestResultSummaryBgColor implements ResultOfTestEndListener {
         fireEvent(result.runCount(), result.failureCount(), result.errorCount());
     }
 
-    public void fireEvent(int runCount, int failureCount, int errorCount) {
+    void fireEvent(int runCount, int failureCount, int errorCount) {
         fireEvent(getColor(runCount, failureCount + errorCount));
     }
 

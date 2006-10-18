@@ -19,20 +19,16 @@ import java.util.*;
 
 public class TreeNodesMap {
 
-    private Map<ShadowTreeNode, List<ShadowTreeNode>> nodes = new HashMap();
+    private Map<ShadowTreeNode, List<ShadowTreeNode>> nodes = new HashMap<ShadowTreeNode, List<ShadowTreeNode>>();
     private final ShadowTreeNode root;
 
     public TreeNodesMap(ShadowTreeNode root) {
         this.root = root;
-        nodes.put(root, new ArrayList());
+        nodes.put(root, new ArrayList<ShadowTreeNode>());
     }
 
     public void add(ShadowTreeNode node) {
         getParentChildren(node).add(node);
-    }
-
-    public boolean contains(ShadowTreeNode node) {
-        return getParentChildren(node).contains(node);
     }
 
     public void remove(ShadowTreeNode node) {
@@ -53,7 +49,7 @@ public class TreeNodesMap {
     }
 
     public List<ShadowTreeNode> clearTestMethodNode() {
-        List<ShadowTreeNode> testMethodNodes = new ArrayList();
+        List<ShadowTreeNode> testMethodNodes = new ArrayList<ShadowTreeNode>();
         for (Iterator<ShadowTreeNode> iter = nodes.keySet().iterator(); iter.hasNext();) {
             ShadowTreeNode node = iter.next();
             boolean isTestClassNode = node.parent() == root;
@@ -71,7 +67,7 @@ public class TreeNodesMap {
 
     private List<ShadowTreeNode> getChildren(ShadowTreeNode parent) {
         if (nodes.get(parent) == null) {
-            nodes.put(parent, new ArrayList());
+            nodes.put(parent, new ArrayList<ShadowTreeNode>());
         }
         return nodes.get(parent);
     }

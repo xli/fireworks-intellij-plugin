@@ -1,9 +1,8 @@
 * 待完成时，不能触发
 * timer package test
 * show timer schedule status
-
 * check JUnit, if there is no JUnit exist, disable fireworks
-* ant build.xml for fireworks and shadow
+! ant build.xml for fireworks and shadow
 ! should cancel timer when disable task of auto run test
 
 * there is unexpected info in the ant executing log:

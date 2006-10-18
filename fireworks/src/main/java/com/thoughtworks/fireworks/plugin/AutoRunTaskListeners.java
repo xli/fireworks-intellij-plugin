@@ -15,9 +15,6 @@
  */
 package com.thoughtworks.fireworks.plugin;
 
-import com.intellij.openapi.command.CommandAdapter;
-import com.intellij.openapi.command.CommandEvent;
-import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
@@ -27,12 +24,6 @@ import java.awt.*;
 import java.awt.event.AWTEventListener;
 
 public class AutoRunTaskListeners {
-    public static final CommandAdapter LISTENER = new CommandAdapter() {
-        public void commandStarted(CommandEvent event) {
-//            System.out.println("cccccc name: " + event.getCommandName());
-//            System.out.println("cccccc cmd : " + event.getCommand());
-        }
-    };
     private final ProjectAdapter project;
     private final DocumentListener documentListener;
     private final AWTEventListener awtListener;
@@ -57,9 +48,6 @@ public class AutoRunTaskListeners {
         Toolkit.getDefaultToolkit().addAWTEventListener(awtListener, AWTEvent.MOUSE_WHEEL_EVENT_MASK);
         EditorFactory.getInstance().getEventMulticaster().addDocumentListener(documentListener);
         project.getExecutionManager().getContentManager().addRunContentListener(timerAdapter);
-
-        //todo
-        CommandProcessor.getInstance().addCommandListener(LISTENER);
     }
 
     synchronized public void disableListenersForAutoRunTask() {

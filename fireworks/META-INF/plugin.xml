@@ -131,6 +131,9 @@ Contract me:) swing1979@gmail.com</p></b>
     </description>
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.08 changes</b></u>
+            <li>change: Time period of triggering task of running test twice reduced to 5 seconds.</li>
+        </ul>
         <ul><u><b>Version 1.07 changes</b></u>
             <li>new feature: new configuration "Enable auto run fireworks task"</li>
             <li>new feature: new hot key "shift alt A", enable/disable task of running recent test list automatically.</li>
@@ -219,7 +222,7 @@ Contract me:) swing1979@gmail.com</p></b>
         </ul>
         ]]>
     </change-notes>
-    <version>1.07</version>
+    <version>1.08</version>
     <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000" until-build="5766"/>

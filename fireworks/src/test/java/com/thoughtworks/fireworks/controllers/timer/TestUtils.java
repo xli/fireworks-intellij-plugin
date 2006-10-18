@@ -15,29 +15,16 @@
  */
 package com.thoughtworks.fireworks.controllers.timer;
 
-import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
+import com.thoughtworks.fireworks.core.ApplicationAdaptee;
+import com.thoughtworks.fireworks.core.developer.Developer;
+import com.thoughtworks.fireworks.core.developer.Thought;
+import com.thoughtworks.turtlemock.Mock;
+import com.thoughtworks.turtlemock.Turtle;
 
-import java.util.TimerTask;
-
-public class TimerTaskManager {
-
-    private final TimerTaskFactory factory;
-    private TimerTask task;
-
-    public TimerTaskManager(TimerTaskFactory factory) {
-        this.factory = factory;
-    }
-
-    synchronized public TimerTask getTask(ReschedulableTask reschedulableTask) {
-        cancelTask();
-        task = factory.createTimerTask(reschedulableTask);
-        return task;
-    }
-
-    synchronized public boolean cancelTask() {
-        if (task != null) {
-            return task.cancel();
-        }
-        return false;
+public class TestUtils {
+    public static TimerTaskFactory createTimerTaskFactory() {
+        Mock application = Turtle.mock(ApplicationAdaptee.class);
+        Developer developer = new Developer(new Thought[0]);
+        return new TimerTaskFactory((ApplicationAdaptee) application.mockTarget(), developer);
     }
 }

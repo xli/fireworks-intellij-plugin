@@ -50,14 +50,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 //todo: refactor
-
 public class ProjectAdapter {
-    private final List buildListeners = new ArrayList();
+    private final List<BuildListener> buildListeners = new ArrayList<BuildListener>();
 
     private final Project project;
     private final TestsRunningProgressIndicatorAdapter progressIndicator;
     private final FireworksConfig config;
-    private List<ConsoleViewAdapter> consoles = new ArrayList();
+    private List<ConsoleViewAdapter> consoles = new ArrayList<ConsoleViewAdapter>();
     private RunProcessWithProgressSyn runProcessWithProgressSyn;
 
     public ProjectAdapter(Project project, FireworksConfig config, TestsRunningProgressIndicatorAdapter progressIndicator) {

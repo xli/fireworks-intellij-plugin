@@ -19,18 +19,18 @@ import com.thoughtworks.fireworks.core.tree.ShadowMethodTreeNode;
 import com.thoughtworks.fireworks.core.tree.ShadowTreeNode;
 import com.thoughtworks.fireworks.core.tree.TestStatusSummaryListener;
 import com.thoughtworks.shadow.Shadow;
-import org.apache.commons.collections.map.HashedMap;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TestShadowTreeRenderer implements TreeCellRenderer, TestStatusSummaryListener {
 
-    private Map<ShadowTreeNode, Icon> icons = Collections.synchronizedMap(new HashedMap());
+    private Map<ShadowTreeNode, Icon> icons = Collections.synchronizedMap(new HashMap<ShadowTreeNode, Icon>());
 
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel,
                                                   boolean expanded, boolean leaf,

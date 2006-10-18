@@ -28,12 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCabinetListener, Log {
-    private final List<TreeModelListener> listeners = new ArrayList();
+    private final List<TreeModelListener> listeners = new ArrayList<TreeModelListener>();
 
     private final TreeNodesMap treeNodes;
     private final ShadowSummaryTreeNode root;
 
-    private List<Test> tests = new ArrayList();
+    private List<Test> tests = new ArrayList<Test>();
     private TestFailures testFailures = new TestFailures();
 
     public ShadowTreeModel(ShadowSummaryTreeNode root) {
@@ -78,7 +78,7 @@ public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCab
     }
 
     public void addFailure(Test test, AssertionFailedError t) {
-        testFailures.addIntoBuffer((Shadow) test, t);
+        addError(test, t);
     }
 
     public void endTest(Test test) {
@@ -118,7 +118,7 @@ public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCab
 
     public void startAction() {
         testFailures = new TestFailures();
-        tests = new ArrayList();
+        tests = new ArrayList<Test>();
         List<ShadowTreeNode> nodes = treeNodes.clearTestMethodNode();
         for (ShadowTreeNode node : nodes) {
             removeNode(node);
@@ -158,7 +158,7 @@ public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCab
     }
 
     private ShadowTreeNode[] getParents(ShadowTreeNode node) {
-        List<ShadowTreeNode> list = new ArrayList();
+        List<ShadowTreeNode> list = new ArrayList<ShadowTreeNode>();
         while (node != null) {
             list.add(0, node);
             node = node.parent();

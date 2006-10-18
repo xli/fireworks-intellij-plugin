@@ -23,7 +23,7 @@ import java.util.*;
 
 public class TestFailures {
 
-    private final Map<ShadowTreeNode, List<Throwable>> testFailures = new HashMap();
+    private final Map<ShadowTreeNode, List<Throwable>> testFailures = new HashMap<ShadowTreeNode, List<Throwable>>();
 
     private void put(ShadowTreeNode node, Throwable t) {
         getFailures(node).add(t);
@@ -40,7 +40,7 @@ public class TestFailures {
     private List<Throwable> getFailures(ShadowTreeNode node) {
         List<Throwable> failures = testFailures.get(node);
         if (failures == null) {
-            failures = new ArrayList();
+            failures = new ArrayList<Throwable>();
             testFailures.put(node, failures);
         }
         return failures;
@@ -82,7 +82,7 @@ public class TestFailures {
         consoleView.cleanAndPrint(buffer.toString());
     }
 
-    private final Map<Shadow, Throwable> buffer = new HashMap();
+    private final Map<Shadow, Throwable> buffer = new HashMap<Shadow, Throwable>();
 
     public void addIntoBuffer(Shadow shadow, Throwable t) {
         buffer.put(shadow, t);

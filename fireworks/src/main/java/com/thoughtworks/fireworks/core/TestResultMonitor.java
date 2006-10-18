@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestResultMonitor implements RunListenerAdaptee {
-    private List listeners = new ArrayList();
+    private List<ResultOfTestEndListener> listeners = new ArrayList<ResultOfTestEndListener>();
     private final TestShadowResult result;
 
     public TestResultMonitor(TestShadowResult result) {

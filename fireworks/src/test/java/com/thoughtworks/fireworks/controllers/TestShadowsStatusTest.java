@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestShadowsStatusTest extends TestCase implements TestStatusSummaryListener {
-    private Map<Object, Object> icons = new HashMap();
+    private Map<Object, Object> icons = new HashMap<Object, Object>();
     private ShadowSummaryTreeNode rootKey;
     private TestShadowsStatus status;
     private ShadowCabinet cabinet;

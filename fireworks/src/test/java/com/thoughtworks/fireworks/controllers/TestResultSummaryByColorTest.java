@@ -15,11 +15,12 @@
  */
 package com.thoughtworks.fireworks.controllers;
 
+import com.thoughtworks.shadow.TestShadowResult;
 import junit.framework.TestCase;
 
 import java.awt.*;
 
-public class TestResultSummaryColorTest extends TestCase implements TestResultSummaryBgColorListener {
+public class TestResultSummaryByColorTest extends TestCase implements TestResultSummaryBgColorListener {
     private Color bgColor;
     private TestResultSummaryBgColor color;
 
@@ -28,6 +29,9 @@ public class TestResultSummaryColorTest extends TestCase implements TestResultSu
     }
 
     public void testShouldBeRedIfRunCountIsZero() throws Exception {
+        color.testEnd(new TestShadowResult());
+        assertEquals(Color.RED, bgColor);
+
         color.fireEvent(0, 0, 0);
         assertEquals(Color.RED, bgColor);
     }

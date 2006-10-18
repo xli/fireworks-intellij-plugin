@@ -16,7 +16,6 @@
 package com.thoughtworks.fireworks.controllers.timer;
 
 import com.thoughtworks.fireworks.controllers.CabinetController;
-import com.thoughtworks.fireworks.controllers.ReschedulableTaskAdapter;
 import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
 
 import java.util.Timer;

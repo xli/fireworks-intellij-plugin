@@ -46,12 +46,6 @@ public class Icons {
         return greenImage(imageIcon, height, width);
     }
 
-    public static ImageIcon redImage(ImageIcon original, int height, int width) {
-        Image img = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
-        img.getGraphics().drawImage(original.getImage(), 0, 0, height, width, new Color(255, 0, 0, 0), null);
-        return new ImageIcon(img);
-    }
-
     public static ImageIcon greenImage(ImageIcon original, int height, int width) {
         Image img = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
         img.getGraphics().drawImage(original.getImage(), 0, 0, height, width, new Color(0, 255, 0, 0), null);

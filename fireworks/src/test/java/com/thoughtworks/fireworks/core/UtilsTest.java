@@ -42,4 +42,15 @@ public class UtilsTest extends TestCase {
             assertNotNull(e.getMessage());
         }
     }
+
+    public void testShouldReturnEmptyStringIfParamIsNull() throws Exception {
+        assertEquals("", Utils.toString(null));
+    }
+
+    public void testIsEmpty() throws Exception {
+        assertTrue(Utils.isEmpty(""));
+        assertTrue(Utils.isEmpty(null));
+
+        assertFalse(Utils.isEmpty("is not empty"));
+    }
 }

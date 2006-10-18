@@ -91,6 +91,14 @@ public class ShadowTreeModelTest extends TestCase {
         listener.assertDid("treeNodesInserted").withFirstArgConstraint(childEventConstraint());
     }
 
+    public void testRemoveTreeModelListener() throws Exception {
+        model.addTreeModelListener((TreeModelListener) listener.mockTarget());
+        model.removeTreeModelListener((TreeModelListener) listener.mockTarget());
+        cabinet.add(shadow);
+
+        listener.assertDidNothing();
+    }
+
     public void testShouldFireTreeNodesRemovedEventWhenAfterRemoveTestEventIsFired() throws Exception {
         model.addTreeModelListener((TreeModelListener) listener.mockTarget());
         cabinet.add(shadow);

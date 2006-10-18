@@ -22,7 +22,7 @@ import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
 import java.util.Timer;
 
 public class TimerScheduler implements ShadowCabinetControllerListener {
-    private final static int TEN_SECONDS = 100;
+    private final static int FIVE_SECONDS = 5000;
 
     private long delayTime = -1;
     private final Chronograph chronograph = new Chronograph();
@@ -34,7 +34,7 @@ public class TimerScheduler implements ShadowCabinetControllerListener {
     }
 
     synchronized public void setDelayTime(long delayTime) {
-        if (isInTenSecondsAfterFireCabinetAction()) {
+        if (isInFiveSecondsAfterFireCabinetAction()) {
             return;
         }
         this.delayTime = delayTime;
@@ -60,7 +60,7 @@ public class TimerScheduler implements ShadowCabinetControllerListener {
         chronograph.restart();
     }
 
-    private boolean isInTenSecondsAfterFireCabinetAction() {
-        return chronograph.measurement() < TEN_SECONDS;
+    private boolean isInFiveSecondsAfterFireCabinetAction() {
+        return chronograph.measurement() < FIVE_SECONDS;
     }
 }

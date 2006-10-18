@@ -1,16 +1,10 @@
-<project default="jar" name="Fireworks" basedir=".">
-    <property name="build.dir" value="target"/>
-    <property name="test.output.dir" value="${build.dir}/surefire-reports"/>
+<project default="all" name="Fireworks" basedir=".">
+    <property name="clover.dir" value="./../clover"/>
     <property name="shadow.lib.dir" value="./../core/target/"/>
-    <property name="lib.dir" value="./../dependent-libs"/>
     <property name="resources.dir" value="src/main/images"/>
-    <property name="main.src.dir" value="src/main/java"/>
-    <property name="main.classes.dir" value="${build.dir}/classes"/>
-    <property name="test.src.dir" value="src/test/java"/>
-    <property name="test.classes.dir" value="${build.dir}/test-classes"/>
     <property name="idea_home" value="C:/Program Files/JetBrains/IntelliJ IDEA 5.0/"/>
 	<echo>
-This build(fireworks/build.xml) script is used to compile, test  fireworks project and 
+This build script(fireworks/build.xml) is used to compile, test  fireworks project and 
 build jar of fireworks project. If you want to build fireworks plugin for deployment, 
 please run build script in the parent folder.
 
@@ -18,74 +12,50 @@ Please set the property 'idea_home' to point to your IntelliJ IDEA installation 
 current value of 'idea_home' is: ${idea_home}
 	</echo>
 
+	<import file="${clover.dir}/clover-build.xml"/>
+
     <path id="main.classpath">
         <fileset dir="${shadow.lib.dir}" includes="shadow*.jar"/>
         <fileset dir="${lib.dir}" includes="*.jar"/>
         <fileset dir="${idea_home}">
-            <include name="jre/lib/*.jar"/>
-            <include name="jre/lib/ext/*.jar"/>
-            <include name="lib/**/*.jar"/>
+            <include name="lib/openapi.jar"/>
+            <include name="lib/extensions.jar"/>
+            <include name="lib/annotations.jar"/>
+            <include name="lib/log4j.jar"/>
+            <include name="lib/jdom.jar"/>
+            <include name="lib/picocontainer.jar"/>
         </fileset>
     </path>
 
-    <path id="test.classpath">
-        <path refid="main.classpath"/>
-        <pathelement location="${main.classes.dir}"/>
-    </path>
-    <path id="run.test.classpath">
-        <path refid="test.classpath"/>
-        <pathelement location="${test.classes.dir}"/>
-    </path>
-
-    <target name="clean" description="clean build result">
-        <delete dir="${build.dir}"/>
-    </target>
-
-    <target name="compile" depends="clean" description="compile all code">
-        <macro-compile srcdir="${main.src.dir}" destdir="${main.classes.dir}" classpathref="main.classpath"/>
-        <macro-compile srcdir="${test.src.dir}" destdir="${test.classes.dir}" classpathref="test.classpath"/>
+    <target name="copy-resource">
         <copy todir="${main.classes.dir}" overwrite="true">
             <fileset dir="${resources.dir}">
                 <filename name="*.*"/>
             </fileset>
         </copy>
     </target>
-
-    <target name="test" depends="compile" description="run tests">
-        <mkdir dir="${test.output.dir}"/>
-        <junit fork="true" printsummary="true" failureproperty="junit.failed" errorproperty="junit.failed">
-            <classpath refid="run.test.classpath"/>
-            <batchtest fork="yes" todir="${test.output.dir}">
-                <fileset dir="${test.src.dir}">
-                    <include name="/**/*Test.java"/>
-                </fileset>
-            </batchtest>
-            <formatter type="plain" usefile="true"/>
-        </junit>
-        <fail if="junit.failed" message="One or more tests failed. See test output '${test.output.dir}' for details"/>
+	
+    <target name="clover-copy-resource">
+        <copy todir="${clover.main.classes.dir}" overwrite="true">
+            <fileset dir="${resources.dir}">
+                <filename name="*.*"/>
+            </fileset>
+        </copy>
     </target>
 
-    <target name="jar" depends="test" description="build fireworks jar">
+    <target name="jar" depends="clean, compile, copy-resource, test" description="run tests, build jar for deployment">
         <jar file="${build.dir}/fireworks.jar">
             <fileset dir="${main.classes.dir}">
                 <include name="**/*.*"/>
             </fileset>
             <fileset dir=".">
                 <include name="LICENSE.TXT"/>
-                <include name="META-INF/plugin.xml"/>
+				<include name="META-INF/plugin.xml"/>
             </fileset>
         </jar>
     </target>
 
-    <macrodef name="macro-compile">
-        <attribute name="srcdir"/>
-        <attribute name="destdir"/>
-        <attribute name="classpathref"/>
-        <sequential>
-            <mkdir dir="@{destdir}"/>
-            <javac srcdir="@{srcdir}" destdir="@{destdir}" includes="**/*.*" classpathref="@{classpathref}"
-                   debug="true" encoding="UTF-8"/>
-        </sequential>
-    </macrodef>
+	<target name="build-clover-report" depends="clean, compile, clover-setup, clover-compile, clover-copy-resource, clover-test, clover-report" description="build clover report"/>
 
+	<target name="all" depends="jar, clover-setup, clover-compile, clover-copy-resource, clover-test, clover-report" description="build jar and clover report"/>
 </project>

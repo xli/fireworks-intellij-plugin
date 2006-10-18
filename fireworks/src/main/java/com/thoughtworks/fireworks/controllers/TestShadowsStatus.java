@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestShadowsStatus implements ShadowCabinetListener, RunListenerAdaptee, TestStateListener {
-    private Map<Object, Icon> testIcons = new HashMap();
+    private Map<Object, Icon> testIcons = new HashMap<Object, Icon>();
     private final ShadowTreeNode rootKey;
     private final TestStatusSummaryListener[] listens;
     private boolean wasSuccessful;
@@ -84,15 +84,7 @@ public class TestShadowsStatus implements ShadowCabinetListener, RunListenerAdap
         changeStatus(shadow, wasSuccessful);
     }
 
-    public Icon getIcon(Object key) {
-        return testIcons.get(key);
-    }
-
     private void changeStatus(Object key, boolean wasSuccessful) {
-        if (!wasSuccessful && this.wasSuccessful) {
-            this.wasSuccessful = wasSuccessful;
-            put(rootKey, Icons.failureIcon());
-        }
         put(key, wasSuccessful ? Icons.successIcon() : Icons.failureIcon());
     }
 

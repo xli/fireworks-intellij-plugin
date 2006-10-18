@@ -56,7 +56,7 @@ public class ModuleAdapter {
 
     private URL[] classpaths() {
         VirtualFile[] files = manager().getFiles(OrderRootType.CLASSES_AND_OUTPUT);
-        Set fileURLs = new HashSet();
+        Set<URL> fileURLs = new HashSet<URL>();
         for (int i = 0; i < files.length; i++) {
             fileURLs.add(Utils.toURL(files[i].getPresentableUrl()));
         }
@@ -64,7 +64,7 @@ public class ModuleAdapter {
         if (test != null) {
             fileURLs.add(Utils.toURL(test.getPresentableUrl()));
         }
-        return (URL[]) fileURLs.toArray(new URL[fileURLs.size()]);
+        return fileURLs.toArray(new URL[fileURLs.size()]);
     }
 
     private File baseDir() {
