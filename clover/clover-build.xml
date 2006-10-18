@@ -1,0 +1,49 @@
+<project default="jar" name="clover" basedir=".">
+	<property name="ant.commons.dir" value="./../ant"/>
+	<import file="${ant.commons.dir}/commons-build.xml"/>
+
+	<property name="clover.libs.dir" value="./../clover/libs"/>
+	<property name="clover.build.dir" value="${build.dir}/clover"/>
+	<property name="clover.main.classes.dir" value="${clover.build.dir}/classes"/>
+    <property name="clover.test.output.dir" value="${clover.build.dir}/test-reports"/>
+    <property name="clover.dir" value="./../clover"/>
+
+	<path id="clover.classpath">
+		<fileset dir="${clover.libs.dir}/" includes="*.jar"/>
+	</path>
+     <path id="clover.main.classpath">
+		<path refid="clover.classpath"/>
+		<path refid="main.classpath"/>
+    </path>
+	<path id="clover.run.test.classpath">
+        <path refid="clover.main.classpath"/>
+        <pathelement location="${clover.main.classes.dir}"/>
+        <pathelement location="${test.classes.dir}"/>
+    </path>
+
+	<taskdef resource="com/cenqua/ant/antlib.xml" classpathref="clover.classpath"/>
+	<extendclasspath path="${clover.libs.dir}/clover.jar"/>
+	<taskdef resource="clovertasks" classpathref="clover.classpath"/>
+
+	 <target name="clover-setup">
+		<mkdir dir="${clover.build.dir}"/>
+		<clover-setup initString="${clover.build.dir}/clover.db" source="1.5">
+			<files includes="com/thoughtworks/shadow/**, com/thoughtworks/fireworks/core/**, com/thoughtworks/fireworks/controllers/**"/>
+		</clover-setup>
+	 </target>
+    <target name="clover-compile">
+        <macro-compile srcdir="${main.src.dir}" destdir="${clover.main.classes.dir}" classpathref="clover.main.classpath"/>
+    </target>
+    <target name="clover-test">
+        <macro-test testoutputdir="${clover.test.output.dir}" runtestclasspath="clover.run.test.classpath"/>
+    </target>
+
+	<target name="clover-report">
+		<clover-log/>
+		<clover-report>
+		   <current outfile="${clover.build.dir}">
+			  <format type="html"/>
+		   </current>
+		</clover-report>
+	</target>
+</project>

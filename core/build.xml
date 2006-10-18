@@ -6,7 +6,7 @@
         <fileset dir="${lib.dir}" includes="*.jar"/>
     </path>
 
-	<target name="jar" depends="clean, compile, test" description="run tests, build jar for deployment">
+	<target name="jar">
         <jar file="${build.dir}/shadow-1.0.jar">
             <fileset dir="${main.classes.dir}">
                 <include name="**/*.*"/>
@@ -17,8 +17,8 @@
         </jar>
     </target>
 
+	<target name="build-jar"  depends="clean, compile, test, jar"  description="run tests, build jar for deployment"/>
 	<target name="build-clover-report" depends="clean, compile, clover-setup, clover-compile, clover-test, clover-report" description="build clover report"/>
-
-	<target name="all" depends="jar, clover-setup, clover-compile, clover-test, clover-report" description="build jar and clover report"/>
+	<target name="all" depends="build-clover-report, jar" description="build jar and clover report"/>
 
 </project>

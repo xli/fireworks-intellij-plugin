@@ -1,0 +1,59 @@
+<project name="commons" basedir=".">
+    <property name="build.dir" value="target"/>
+    <property name="test.output.dir" value="${build.dir}/test-reports"/>
+    <property name="lib.dir" value="./../dependent-libs"/>
+    <property name="main.src.dir" value="src/main/java"/>
+    <property name="main.classes.dir" value="${build.dir}/classes"/>
+    <property name="test.src.dir" value="src/test/java"/>
+    <property name="test.classes.dir" value="${build.dir}/test-classes"/>
+
+    <path id="compile.test.classpath">
+        <path refid="main.classpath"/>
+        <pathelement location="${main.classes.dir}"/>
+    </path>
+	<path id="run.test.classpath">
+        <path refid="compile.test.classpath"/>
+        <pathelement location="${test.classes.dir}"/>
+    </path>
+
+    <target name="clean" description="clean build result">
+        <delete dir="${build.dir}"/>
+    </target>
+
+	<target name="compile">
+        <macro-compile srcdir="${main.src.dir}" destdir="${main.classes.dir}" classpathref="main.classpath"/>
+        <macro-compile srcdir="${test.src.dir}" destdir="${test.classes.dir}" classpathref="compile.test.classpath"/>
+    </target>
+
+    <target name="test">
+        <macro-test testoutputdir="${test.output.dir}" runtestclasspath="run.test.classpath"/>
+    </target>
+
+    <macrodef name="macro-compile">
+        <attribute name="srcdir"/>
+        <attribute name="destdir"/>
+        <attribute name="classpathref"/>
+        <sequential>
+            <mkdir dir="@{destdir}"/>
+            <javac srcdir="@{srcdir}" destdir="@{destdir}" includes="**/*.*" classpathref="@{classpathref}" debug="true" encoding="UTF-8"/>
+        </sequential>
+    </macrodef>
+    <macrodef name="macro-test">
+        <attribute name="testoutputdir"/>
+        <attribute name="runtestclasspath"/>
+        <sequential>
+			<mkdir dir="@{testoutputdir}"/>
+			<junit fork="true" printsummary="true" failureproperty="junit.failed" errorproperty="junit.failed">
+				<classpath refid="@{runtestclasspath}"/>
+				<batchtest fork="yes" todir="@{testoutputdir}">
+					<fileset dir="${test.src.dir}">
+						<include name="**/*Test.java"/>
+					</fileset>
+				</batchtest>
+				<formatter type="plain" usefile="true"/>
+			</junit>
+			<fail if="junit.failed" message="One or more tests failed. See test output '@{testoutputdir}' for details"/>
+        </sequential>
+    </macrodef>
+
+</project>

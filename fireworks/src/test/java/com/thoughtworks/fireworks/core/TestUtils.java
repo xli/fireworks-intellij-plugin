@@ -21,8 +21,16 @@ import junit.framework.Assert;
 import junit.framework.TestResult;
 
 import java.net.URL;
+import java.io.File;
 
 public class TestUtils {
+
+    public static String baseDir() {
+        if(new File("fireworks").isDirectory()) {
+            return "fireworks/";
+        }
+        return "";
+    }
 
     public static Sunshine sunshine() {
         return new AntSunshine(classpaths());
@@ -30,8 +38,8 @@ public class TestUtils {
 
     public static URL[] classpaths() {
         URL[] classpaths = new URL[2];
-        classpaths[0] = Utils.toURL("target/test-classes");
-        classpaths[1] = Utils.toURL("src/test/libs/junit-3.8.2.jar");
+        classpaths[0] = Utils.toURL(baseDir() + "target/test-classes");
+        classpaths[1] = Utils.toURL(baseDir() + "src/test/libs/junit-3.8.2.jar");
         return classpaths;
     }
 

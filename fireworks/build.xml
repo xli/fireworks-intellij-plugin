@@ -10,6 +10,9 @@ please run build script in the parent folder.
 
 Please set the property 'idea_home' to point to your IntelliJ IDEA installation directory.
 current value of 'idea_home' is: ${idea_home}
+
+Before run this build script, please ensure ${shadow.lib.dir}shadow-1.0.jar exists. You
+can go to folder "core" to build it.
 	</echo>
 
 	<import file="${clover.dir}/clover-build.xml"/>
@@ -43,7 +46,7 @@ current value of 'idea_home' is: ${idea_home}
         </copy>
     </target>
 
-    <target name="jar" depends="clean, compile, copy-resource, test" description="run tests, build jar for deployment">
+    <target name="jar">
         <jar file="${build.dir}/fireworks.jar">
             <fileset dir="${main.classes.dir}">
                 <include name="**/*.*"/>
@@ -55,7 +58,8 @@ current value of 'idea_home' is: ${idea_home}
         </jar>
     </target>
 
+	<target name="build-jar"  depends="clean, compile, copy-resource, test, jar"  description="run tests, build jar for deployment"/>
 	<target name="build-clover-report" depends="clean, compile, clover-setup, clover-compile, clover-copy-resource, clover-test, clover-report" description="build clover report"/>
 
-	<target name="all" depends="jar, clover-setup, clover-compile, clover-copy-resource, clover-test, clover-report" description="build jar and clover report"/>
+	<target name="all" depends="build-clover-report, copy-resource, jar" description="build jar and clover report"/>
 </project>

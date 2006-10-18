@@ -92,7 +92,7 @@
                 <configuration>
                     <jdk>1.5</jdk>
                     <targetPercentage>95%</targetPercentage>
-                    <licenseLocation>${basedir}/clover.license</licenseLocation>
+                    <licenseLocation>${basedir}/../clover/libs/clover.license</licenseLocation>
                 </configuration>
                 <executions>
                     <execution>
@@ -136,7 +136,7 @@
                 <artifactId>maven-clover-plugin</artifactId>
                 <configuration>
                     <jdk>1.5</jdk>
-                    <licenseLocation>${basedir}/clover.license</licenseLocation>
+                    <licenseLocation>${basedir}/../clover/libs/clover.license</licenseLocation>
                 </configuration>
             </plugin>
         </plugins>
