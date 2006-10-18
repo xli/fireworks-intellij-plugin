@@ -1,49 +1,12 @@
-<project default="jar" name="Shadow" basedir=".">
-    <property name="build.dir" value="target"/>
-    <property name="test.output.dir" value="${build.dir}/surefire-reports"/>
-    <property name="lib.dir" value="./../dependent-libs"/>
-    <property name="main.src.dir" value="src/main/java"/>
-    <property name="main.classes.dir" value="${build.dir}/classes"/>
-    <property name="test.src.dir" value="src/test/java"/>
-    <property name="test.classes.dir" value="${build.dir}/test-classes"/>
+<project default="all" name="Shadow" basedir=".">
+    <property name="clover.dir" value="./../clover"/>
+	<import file="${clover.dir}/clover-build.xml"/>
 
     <path id="main.classpath">
         <fileset dir="${lib.dir}" includes="*.jar"/>
     </path>
-    <path id="test.classpath">
-        <path refid="main.classpath"/>
-        <pathelement location="${main.classes.dir}"/>
-    </path>
-    <path id="run.test.classpath">
-        <path refid="test.classpath"/>
-        <pathelement location="${test.classes.dir}"/>
-    </path>
 
-    <target name="clean" description="clean build result">
-        <delete dir="${build.dir}"/>
-    </target>
-
-    <target name="compile" depends="clean" description="compile all code">
-        <macro-compile srcdir="${main.src.dir}" destdir="${main.classes.dir}" classpathref="main.classpath"/>
-        <macro-compile srcdir="${test.src.dir}" destdir="${test.classes.dir}" classpathref="test.classpath"/>
-    </target>
-
-    <target name="test" depends="compile" description="run tests">
-        <mkdir dir="${test.output.dir}"/>
-        <junit fork="true" printsummary="true" failureproperty="junit.failed" errorproperty="junit.failed">
-            <classpath refid="run.test.classpath"/>
-            <batchtest fork="yes" todir="${test.output.dir}">
-                <fileset dir="${test.src.dir}">
-                    <include name="**/*Test.java"/>
-                </fileset>
-            </batchtest>
-            <formatter type="plain" usefile="true"/>
-
-        </junit>
-        <fail if="junit.failed" message="One or more tests failed. See test output '${test.output.dir}' for details"/>
-    </target>
-
-    <target name="jar" depends="test" description="build jar for deployment">
+	<target name="jar" depends="clean, compile, test" description="run tests, build jar for deployment">
         <jar file="${build.dir}/shadow-1.0.jar">
             <fileset dir="${main.classes.dir}">
                 <include name="**/*.*"/>
@@ -54,15 +17,8 @@
         </jar>
     </target>
 
-    <macrodef name="macro-compile">
-        <attribute name="srcdir"/>
-        <attribute name="destdir"/>
-        <attribute name="classpathref"/>
-        <sequential>
-            <mkdir dir="@{destdir}"/>
-            <javac srcdir="@{srcdir}" destdir="@{destdir}" includes="**/*.*" classpathref="@{classpathref}"
-                   debug="true" encoding="UTF-8"/>
-        </sequential>
-    </macrodef>
+	<target name="build-clover-report" depends="clean, compile, clover-setup, clover-compile, clover-test, clover-report" description="build clover report"/>
+
+	<target name="all" depends="jar, clover-setup, clover-compile, clover-test, clover-report" description="build jar and clover report"/>
 
 </project>
