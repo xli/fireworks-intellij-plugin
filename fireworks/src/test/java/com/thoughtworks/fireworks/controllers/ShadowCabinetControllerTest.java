@@ -15,9 +15,12 @@
  */
 package com.thoughtworks.fireworks.controllers;
 
+import com.thoughtworks.turtlemock.Executable;
 import com.thoughtworks.turtlemock.Mock;
 import com.thoughtworks.turtlemock.Turtle;
 import junit.framework.TestCase;
+
+import java.awt.event.ActionListener;
 
 public class ShadowCabinetControllerTest extends TestCase {
     private ShadowCabinetController controller;
@@ -42,14 +45,26 @@ public class ShadowCabinetControllerTest extends TestCase {
 
     public void testFireRunAllTestsActionEvent() throws Exception {
         controller.fireRunAllTestsActionEvent();
-        controllerListener.assertDid("actionStarted").then("actionFinished");
-        allTestsRunner.assertDid("run");
+        assertRunAllTestsActionEventWasFired();
     }
 
-    public void testFireActionListener() throws Exception {
+    public void testFireRunTestListActionEvent() throws Exception {
         controller.fireRunTestListActionEvent();
-        controllerListener.assertDid("actionStarted").then("actionFinished");
-        recentTestListRunner.assertDid("run");
+        assertRunRecentTestListActionEventWasFired();
+    }
+
+    public void testAddRunAllTestsRunnerActionIntoView() throws Exception {
+        view.ifCall("addRunAllTestsActionListener").willExecute(performActinListener());
+
+        controller.start();
+        assertRunAllTestsActionEventWasFired();
+    }
+
+    public void testAddRunTestListActionListenerIntoView() throws Exception {
+        view.ifCall("addRunTestListActionListener").willExecute(performActinListener());
+
+        controller.start();
+        assertRunRecentTestListActionEventWasFired();
     }
 
     public void testShouldBeStartable() throws Exception {
@@ -60,5 +75,25 @@ public class ShadowCabinetControllerTest extends TestCase {
         controller.stop();
         view.assertDid("unregisterToolWindow");
         view.assertDid("removeAllActionListeners");
+    }
+
+    private Executable performActinListener() {
+        return new Executable() {
+            public Object execute(Object[] objects) {
+                ActionListener listener = (ActionListener) objects[0];
+                listener.actionPerformed(null);
+                return null;
+            }
+        };
+    }
+
+    private void assertRunAllTestsActionEventWasFired() {
+        controllerListener.assertDid("actionStarted").then("actionFinished");
+        allTestsRunner.assertDid("run");
+    }
+
+    private void assertRunRecentTestListActionEventWasFired() {
+        controllerListener.assertDid("actionStarted").then("actionFinished");
+        recentTestListRunner.assertDid("run");
     }
 }
