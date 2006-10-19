@@ -29,4 +29,6 @@ public interface TestTree {
     void setSelectionPath(TreePath path);
 
     TreePath getSelectionPath();
+
+    void expandRootNode();
 }

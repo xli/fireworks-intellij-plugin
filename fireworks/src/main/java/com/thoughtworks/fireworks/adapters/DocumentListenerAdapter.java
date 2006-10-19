@@ -52,7 +52,8 @@ public class DocumentListenerAdapter implements DocumentListener, AWTEventListen
                     if (editors.documentsInSourceOrTestContentAreValidAndTheyAreNotXmlOrDtdFiles()) {
                         timer.schedule();
                     } else {
-                        timer.cancelTasks();
+                        //doto: cancelTasks => reschedule??
+                        timer.reschedule();
                     }
                 }
             }

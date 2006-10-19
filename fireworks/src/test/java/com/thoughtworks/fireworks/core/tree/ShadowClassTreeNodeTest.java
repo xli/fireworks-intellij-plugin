@@ -65,4 +65,19 @@ public class ShadowClassTreeNodeTest extends TestCase {
     public void testShouldVisitShadowAndGetPackageNameAsAccessory() throws Exception {
         assertEquals("com.thoughtworks.shadow.junit", treeNode.accessory());
     }
+
+    public void testAccessoryShouldBeEmptyIfClassIsNotInAnyPackage() throws Exception {
+        treeNode.visitTestClassName("classNameWithoutPackage");
+        assertEquals("", treeNode.accessory());
+    }
+
+    public void testShouldDoNothingWhenVisitTestMethodNameAndEnd() throws Exception {
+        treeNode.visitTestMethodName("methodName");
+        treeNode.end();
+
+        assertTrue(treeNode.isRemovable());
+        assertTrue(treeNode.isSource());
+        assertEquals("SuccessfulTestCase", treeNode.label());
+        assertEquals("com.thoughtworks.shadow.junit", treeNode.accessory());
+    }
 }

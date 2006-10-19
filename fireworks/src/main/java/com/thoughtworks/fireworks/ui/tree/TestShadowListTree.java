@@ -80,9 +80,18 @@ public class TestShadowListTree extends JTree implements Log, TestTree, ShadowCa
 
     public void reSelectRootNode() {
         super.clearSelection();
-        super.setSelectionPath(new TreePath(treeModel.getRoot()));
+        super.setSelectionPath(rootNodeTreePath());
+    }
+
+    public void expandRootNode() {
+        super.expandPath(rootNodeTreePath());
     }
 
     public void startAction() {
     }
+
+    private TreePath rootNodeTreePath() {
+        return new TreePath(treeModel.getRoot());
+    }
+
 }

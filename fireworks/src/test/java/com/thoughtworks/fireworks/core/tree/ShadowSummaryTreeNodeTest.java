@@ -16,6 +16,7 @@
 package com.thoughtworks.fireworks.core.tree;
 
 import com.thoughtworks.fireworks.core.FireworksConfig;
+import com.thoughtworks.fireworks.stubs.SimpleShadowVisitor;
 import com.thoughtworks.turtlemock.Mock;
 import com.thoughtworks.turtlemock.Turtle;
 import junit.framework.TestCase;
@@ -30,6 +31,12 @@ public class ShadowSummaryTreeNodeTest extends TestCase {
         maxSize = new Integer(1);
         config.ifCall("maxSize").willReturn(maxSize);
         node = new ShadowSummaryTreeNode((FireworksConfig) config.mockTarget());
+    }
+
+    public void testShouldDoNothingWhenAcceptAShadowVisitor() throws Exception {
+        node.accept(new SimpleShadowVisitor());
+        config.assertDidNothing();
+        assertEquals("0 Test Class", node.label());
     }
 
     public void testParentShouldBeNull() throws Exception {

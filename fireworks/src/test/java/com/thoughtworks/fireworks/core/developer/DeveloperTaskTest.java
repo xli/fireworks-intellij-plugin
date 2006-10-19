@@ -33,7 +33,7 @@ public class DeveloperTaskTest extends TestCase {
     }
 
     public void testShouldConsiderRunningTask() throws Exception {
-        thought.ifCall("isWorking").willReturn(Boolean.FALSE);        
+        thought.ifCall("isWorking").willReturn(Boolean.FALSE);
         developerTask.run();
         task.assertDid("run");
     }

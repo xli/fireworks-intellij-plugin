@@ -51,9 +51,7 @@ public class ShadowClassTreeNode extends BaseShadowTreeNode {
     public void visitTestClassName(String testClassName) {
         int index = testClassName.lastIndexOf(".");
         className = testClassName.substring(index + 1);
-        if (index >= 0) {
-            packageName = testClassName.substring(0, index);
-        }
+        packageName = index >= 0 ? testClassName.substring(0, index) : "";
     }
 
     public void visitTestMethodName(String testMethodName) {

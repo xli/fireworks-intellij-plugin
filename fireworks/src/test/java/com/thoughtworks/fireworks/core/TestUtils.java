@@ -20,13 +20,13 @@ import com.thoughtworks.shadow.ant.AntSunshine;
 import junit.framework.Assert;
 import junit.framework.TestResult;
 
-import java.net.URL;
 import java.io.File;
+import java.net.URL;
 
 public class TestUtils {
 
     public static String baseDir() {
-        if(new File("fireworks").isDirectory()) {
+        if (new File("fireworks").isDirectory()) {
             return "fireworks/";
         }
         return "";

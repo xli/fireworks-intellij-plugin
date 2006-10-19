@@ -21,9 +21,9 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreePath;
 
 public class TestTreeModelListener implements TreeModelListener {
-    private final JTree tree;
+    private final TestTree tree;
 
-    public TestTreeModelListener(JTree tree) {
+    public TestTreeModelListener(TestTree tree) {
         this.tree = tree;
     }
 
@@ -31,7 +31,7 @@ public class TestTreeModelListener implements TreeModelListener {
     }
 
     public void treeNodesInserted(TreeModelEvent e) {
-        tree.expandPath(new TreePath(tree.getModel().getRoot()));
+        tree.expandRootNode();
     }
 
     public void treeNodesRemoved(TreeModelEvent e) {
