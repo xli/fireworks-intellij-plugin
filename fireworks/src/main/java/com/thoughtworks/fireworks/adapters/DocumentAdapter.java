@@ -15,34 +15,25 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiClass;
+import com.thoughtworks.fireworks.adapters.psi.PsiClassAdapter;
+import com.thoughtworks.fireworks.adapters.psi.PsiFileAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
-import com.thoughtworks.fireworks.core.FireworksConfig;
 import com.thoughtworks.shadow.Sunshine;
-import com.thoughtworks.shadow.Utils;
-import junit.framework.Test;
-import junit.framework.TestCase;
 
 import java.io.FileNotFoundException;
-
 
 public class DocumentAdapter implements DocumentAdaptee {
     private final ProjectAdapter project;
     private final Document document;
-    private final FireworksConfig config;
 
-    public DocumentAdapter(Document document, ProjectAdapter project, FireworksConfig config) {
+    public DocumentAdapter(Document document, ProjectAdapter project) {
         if (document == null) {
             throw new DocumentAdapterException("Document(" + document + ") should not be null");
         }
         this.document = document;
         this.project = project;
-        this.config = config;
     }
 
     public boolean isWritable() {
@@ -51,85 +42,38 @@ public class DocumentAdapter implements DocumentAdaptee {
 
     public boolean isJavaFile() {
         try {
-            return getFileIndex().isJavaSourceFile(getFile());
+            return VirtualFileAdapter.getFile(document, project).isJavaSourceFile();
         } catch (FileNotFoundException e) {
             return false;
         }
     }
 
     public boolean isExpectedJUnitTestCase() {
-        VirtualFile file;
         try {
-            file = getFile();
+            return new PsiClassAdapter(getPsiClass()).isJUnitTestCase(project);
         } catch (FileNotFoundException e) {
             return false;
         }
-        if (!file.getNameWithoutExtension().matches(config.expectedTestCaseNameRegex())) {
-            return false;
-        }
-        PsiClass psiClass = getPsiClass(file);
-        return isExpectedJUnitTestCase(psiClass);
-    }
-
-    public boolean isExpectedJUnitTestCase(PsiClass psiClass) {
-        if (psiClass == null || !psiClass.getQualifiedName().matches(config.expectedTestCaseNameRegex())) {
-            return false;
-        }
-
-        return isTest(psiClass);
-    }
-
-    private boolean isTest(PsiClass psiClass) {
-        PsiMethod[] methods = psiClass.getMethods();
-        for (int i = 0; i < methods.length; i++) {
-            if (hasAnnotationOfOrgJunitTest(methods[i])) {
-                return true;
-            }
-        }
-
-        return psiClass.isInheritor(getTestCasePsiClass(), true);
-    }
-
-    private boolean hasAnnotationOfOrgJunitTest(PsiMethod method) {
-        return AnnotationUtil.isAnnotated(method, org.junit.Test.class.getName(), true);
-    }
-
-    private PsiClass getTestCasePsiClass() {
-        String packageName = TestCase.class.getPackage().getName();
-        return getTestCasePsiClassFromPackage(getPsiManager().findPackage(packageName));
     }
 
     public Sunshine getSunshine() {
-        final VirtualFile file;
         try {
-            file = getFile();
+            return VirtualFileAdapter.getFile(document, project).createSunshine();
         } catch (FileNotFoundException e) {
             return null;
         }
-        return new Sunshine() {
-            public Test shine(String testClassName) {
-                return project.getSunshine(file).shine(testClassName);
-            }
-        };
     }
 
     public String getJavaFileClassName() {
-        VirtualFile file;
         try {
-            file = getFile();
+            return VirtualFileAdapter.getFile(document, project).getJavaFileClassName();
         } catch (FileNotFoundException e) {
             return null;
         }
-        String packageName = getFileIndex().getPackageNameByDirectory(file.getParent());
-        String className = file.getNameWithoutExtension();
-        if (Utils.isEmpty(packageName)) {
-            return className;
-        }
-        return packageName + "." + className;
     }
 
-    public PsiElement getPsiClass() throws FileNotFoundException {
-        return getPsiClass(getFile());
+    public PsiClass getPsiClass() throws FileNotFoundException {
+        return VirtualFileAdapter.getFile(document, project).getPsiClass();
     }
 
     public boolean hasErrors() {
@@ -137,71 +81,18 @@ public class DocumentAdapter implements DocumentAdaptee {
     }
 
     public boolean isNotXml() {
-        return !"XML".equalsIgnoreCase(getLanguageId());
+        return new PsiFileAdapter(project, document).isNotXmlLanguage();
     }
 
     public boolean isNotDtd() {
-        return !"DTD".equalsIgnoreCase(getLanguageId());
-    }
-
-    private String getLanguageId() {
-        return getPsiFile().getLanguage().getID();
-    }
-
-    private PsiFile getPsiFile() {
-        return project.getPsiDocumentManager().getPsiFile(document);
+        return new PsiFileAdapter(project, document).isNotDtdLanguage();
     }
 
     public boolean isInSourceOrTestContent() {
-        VirtualFile file;
         try {
-            file = getFile();
+            return VirtualFileAdapter.getFile(document, project).isInSourceOrTestContent();
         } catch (FileNotFoundException e) {
             return false;
         }
-        return getFileIndex().isInSourceContent(file) || getFileIndex().isInTestSourceContent(file);
-    }
-
-    private PsiManager getPsiManager() {
-        return project.getPsiManager();
-    }
-
-    private PsiClass getTestCasePsiClassFromPackage(PsiPackage testCasePackage) {
-        if (testCasePackage != null) {
-            for (final PsiClass clazz : testCasePackage.getClasses()) {
-                if (TestCase.class.getName().equals(clazz.getQualifiedName())) {
-                    return clazz;
-                }
-            }
-        }
-        String errorMsg = "Can't find junit class \"" + TestCase.class + "\".";
-        throw new IllegalStateException(errorMsg);
-    }
-
-    private PsiClass getPsiClass(VirtualFile file) {
-        final PsiClass[] classes = getPsiJavaFile(file).getClasses();
-        final String fileName = file.getNameWithoutExtension();
-        for (final PsiClass aClass : classes) {
-            if (fileName.equals(aClass.getName())) {
-                return aClass;
-            }
-        }
-        return null;
-    }
-
-    private PsiJavaFile getPsiJavaFile(VirtualFile file) {
-        return (PsiJavaFile) getPsiManager().findFile(file);
-    }
-
-    private ProjectFileIndex getFileIndex() {
-        return project.getFileIndex();
-    }
-
-    private VirtualFile getFile() throws FileNotFoundException {
-        VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-        if (file == null) {
-            throw new FileNotFoundException();
-        }
-        return file;
     }
 }

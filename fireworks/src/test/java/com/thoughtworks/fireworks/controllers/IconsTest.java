@@ -37,7 +37,7 @@ public class IconsTest extends TestCase {
         try {
             Icons.createImageIcon("path", 0, 0);
             fail();
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertNotNull(e.getMessage());
         }
     }

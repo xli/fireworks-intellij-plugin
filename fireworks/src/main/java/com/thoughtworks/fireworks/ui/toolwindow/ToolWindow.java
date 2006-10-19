@@ -16,10 +16,10 @@
 package com.thoughtworks.fireworks.ui.toolwindow;
 
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
-import com.thoughtworks.fireworks.core.tree.TestStatusSummaryListener;
-import com.thoughtworks.fireworks.controllers.timer.TimerSchedulerListener;
-import com.thoughtworks.fireworks.controllers.timer.TimerScheduler;
 import com.thoughtworks.fireworks.controllers.Icons;
+import com.thoughtworks.fireworks.controllers.timer.TimerScheduler;
+import com.thoughtworks.fireworks.controllers.timer.TimerSchedulerListener;
+import com.thoughtworks.fireworks.core.tree.TestStatusSummaryListener;
 
 import javax.swing.*;
 import java.awt.*;

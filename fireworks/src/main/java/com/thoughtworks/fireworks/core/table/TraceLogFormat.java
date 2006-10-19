@@ -25,6 +25,6 @@ public class TraceLogFormat {
         if (splitIndex < 0) {
             return temp;
         }
-        return temp.substring(splitIndex) + temp.substring(0, splitIndex);        
+        return temp.substring(splitIndex) + temp.substring(0, splitIndex);
     }
 }

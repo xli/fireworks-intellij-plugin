@@ -30,7 +30,7 @@ public class TraceLogFilter {
     }
 
     private boolean isTraceLogOfJunitFramework(String traceLog) {
-        return traceLog.startsWith(TraceLog.toTraceLog("junit.framework")) ;
+        return traceLog.startsWith(TraceLog.toTraceLog("junit.framework"));
     }
 
     private boolean isTraceLogOfOrgJunit(String traceLog) {

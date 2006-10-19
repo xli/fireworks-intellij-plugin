@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.adapters;
+package com.thoughtworks.fireworks.adapters.psi;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
@@ -24,12 +24,24 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
+import com.thoughtworks.fireworks.adapters.ProjectAdapter;
 
 public class PsiFileAdapter {
+    public static final String XML_LANGUAGE_ID = "XML";
+    public static final String DTD_LANGUAGE_ID = "DTD";
+
     private PsiFile psiFile;
 
     public PsiFileAdapter(ProjectAdapter project, Document document) {
         psiFile = project.getPsiDocumentManager().getPsiFile(document);
+    }
+
+    public boolean isNotXmlLanguage() {
+        return !XML_LANGUAGE_ID.equalsIgnoreCase(psiFile.getLanguage().getID());
+    }
+
+    public boolean isNotDtdLanguage() {
+        return !DTD_LANGUAGE_ID.equalsIgnoreCase(psiFile.getLanguage().getID());
     }
 
     public boolean isCommentAt(int offset) {
@@ -73,4 +85,5 @@ public class PsiFileAdapter {
 
         return commentTokens.contains(elementType);
     }
+
 }

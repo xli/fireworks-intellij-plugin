@@ -19,9 +19,7 @@ import com.thoughtworks.turtlemock.Mock;
 import com.thoughtworks.turtlemock.Turtle;
 import junit.framework.TestCase;
 
-import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeModelListener;
-import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.TreePath;
 
 public class TestTreeModelListenerTest extends TestCase {

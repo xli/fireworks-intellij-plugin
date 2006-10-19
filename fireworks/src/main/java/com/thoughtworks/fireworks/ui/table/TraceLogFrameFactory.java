@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 
 public class TraceLogFrameFactory {
+    private static final String TRACE_LOG_FRAME_TITLE = "Trace Log";
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 600;
 
@@ -32,7 +33,7 @@ public class TraceLogFrameFactory {
     }
 
     public JFrame createTraceLogFrame(Component console) {
-        JFrame traceLogFrame = new JFrame("Trace Log");
+        JFrame traceLogFrame = new JFrame(TRACE_LOG_FRAME_TITLE);
         traceLogFrame.setIconImage(Icons.logo().getImage());
         traceLogFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         traceLogFrame.addWindowListener(listener);

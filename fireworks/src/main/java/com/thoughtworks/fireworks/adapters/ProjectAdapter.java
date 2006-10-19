@@ -16,7 +16,6 @@
 package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.execution.ExecutionManager;
-import com.intellij.execution.filters.OpenFileHyperlinkInfo;
 import com.intellij.execution.filters.TextConsoleBuidlerFactory;
 import com.intellij.openapi.compiler.CompileStatusNotification;
 import com.intellij.openapi.compiler.CompilerManager;
@@ -30,13 +29,17 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.WindowManager;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiPackage;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiSearchHelper;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.refactoring.listeners.RefactoringListenerManager;
 import com.thoughtworks.fireworks.adapters.compatibility.RunProcessWithProgressSyn;
 import com.thoughtworks.fireworks.adapters.document.MarkupAdapter;
+import com.thoughtworks.fireworks.adapters.psi.PsiClassAdapter;
+import com.thoughtworks.fireworks.adapters.psi.PsiPackageAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
 import com.thoughtworks.fireworks.core.FireworksConfig;
@@ -49,7 +52,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//todo: refactor
 public class ProjectAdapter {
     private final List<BuildListener> buildListeners = new ArrayList<BuildListener>();
 
@@ -70,10 +72,6 @@ public class ProjectAdapter {
         ToolWindow toolWindow = getToolWindowManager().registerToolWindow(id, component, ToolWindowAnchor.BOTTOM);
         toolWindow.setTitle(title);
         toolWindow.setIcon(icon);
-    }
-
-    private ToolWindowManager getToolWindowManager() {
-        return ToolWindowManager.getInstance(project);
     }
 
     public void unregisterToolWindow(String id) {
@@ -99,75 +97,15 @@ public class ProjectAdapter {
     }
 
     public void jumpToSource(String testClassName, String testMethodName) {
-        PsiClass aClass = findClass(testClassName);
-        if (aClass == null) {
-            return;
-        }
-        aClass = (PsiClass) aClass.getNavigationElement();
-        if (aClass == null) {
-            return;
-        }
-        PsiFile file = aClass.getContainingFile();
-        PsiMethod method = findMethod(aClass, testMethodName);
-
-        int lineNum = (method == null) ? getDeclareClassLineNum(file) : getDeclareMethodLineNum(file, method);
-
-        openFileInfo(file, lineNum).navigate(project);
-    }
-
-    private int getDeclareMethodLineNum(PsiFile file, PsiMethod method) {
-        int startOffset = method.getTextRange().getStartOffset();
-        String textBefore = file.getText().substring(0, startOffset);
-        return getLineSizeBefore(textBefore);
-    }
-
-    private PsiClass findClass(String testClassName) {
-        return getPsiManager().findClass(testClassName, GlobalSearchScope.allScope(project));
+        findClass(testClassName).jumpToMethod(testMethodName);
     }
 
     public PsiManager getPsiManager() {
         return PsiManager.getInstance(project);
     }
 
-    private OpenFileHyperlinkInfo openFileInfo(PsiFile file, int lineNum) {
-        return new OpenFileHyperlinkInfo(project, file.getVirtualFile(), lineNum);
-    }
-
-    private int getDeclareClassLineNum(PsiFile file) {
-        String text = file.getText();
-        return getLineSizeBefore(text.substring(0, text.indexOf("class ")));
-    }
-
-    private int getLineSizeBefore(String text) {
-        return text.split("\n").length;
-    }
-
-    private PsiMethod findMethod(PsiClass aClass, String testMethodName) {
-        if (testMethodName != null) {
-            PsiMethod[] methods = aClass.getMethods();
-            for (PsiMethod method : methods) {
-                if (method.getName().equals(testMethodName)) {
-                    return method;
-                }
-            }
-        }
-        return null;
-    }
-
     public DocumentAdaptee createDocumentAdaptee(Document document) {
-        return new DocumentAdapter(document, this, config);
-    }
-
-    public DocumentAdaptee createDocumentAdaptee(PsiFile psiFile) {
-        return createDocumentAdaptee(getPsiDocumentManager().getDocument(psiFile));
-    }
-
-    RefactoringListenerManager getRefactoringListenerManager() {
-        return RefactoringListenerManager.getInstance(project);
-    }
-
-    ProjectFileIndex getFileIndex() {
-        return ProjectRootManager.getInstance(project).getFileIndex();
+        return new DocumentAdapter(document, this);
     }
 
     public PsiDocumentManager getPsiDocumentManager() {
@@ -180,19 +118,6 @@ public class ProjectAdapter {
 
     public void addBuildListener(BuildListener listener) {
         this.buildListeners.add(listener);
-    }
-
-    Sunshine getSunshine(VirtualFile file) {
-        Module moduleForFile = getFileIndex().getModuleForFile(file);
-        AntSunshine sunshine = new ModuleAdapter(moduleForFile, config).antSunshine();
-        addBuildListeners(sunshine);
-        return progressIndicator.decorate(sunshine);
-    }
-
-    private void addBuildListeners(AntSunshine sunshine) {
-        for (int i = 0; i < buildListeners.size(); i++) {
-            sunshine.addBuildListener((BuildListener) buildListeners.get(i));
-        }
     }
 
     public void runProcessWithProgressSynchronously(Runnable process, String title, boolean canBeCanceled) {
@@ -224,5 +149,50 @@ public class ProjectAdapter {
 
     public ExecutionManager getExecutionManager() {
         return ExecutionManager.getInstance(project);
+    }
+
+    public PsiPackageAdapter getPackage(String packageName) {
+        PsiPackage aPackage = getPsiManager().findPackage(packageName);
+        return new PsiPackageAdapter(aPackage);
+    }
+
+    public boolean matchesExpectedTestCaseNameRegex(String name) {
+        if (name == null) {
+            return false;
+        }
+        return name.matches(config.expectedTestCaseNameRegex());
+    }
+
+    RefactoringListenerManager getRefactoringListenerManager() {
+        return RefactoringListenerManager.getInstance(project);
+    }
+
+    ProjectFileIndex getFileIndex() {
+        return ProjectRootManager.getInstance(project).getFileIndex();
+    }
+
+    Sunshine getSunshine(VirtualFile file) {
+        Module moduleForFile = getFileIndex().getModuleForFile(file);
+        AntSunshine sunshine = new ModuleAdapter(moduleForFile, config).antSunshine();
+        addBuildListeners(sunshine);
+        return progressIndicator.decorate(sunshine);
+    }
+
+    private PsiClassAdapter findClass(String testClassName) {
+        return new PsiClassAdapter(getPsiManager().findClass(testClassName, projectAllScope()));
+    }
+
+    private GlobalSearchScope projectAllScope() {
+        return GlobalSearchScope.allScope(project);
+    }
+
+    private ToolWindowManager getToolWindowManager() {
+        return ToolWindowManager.getInstance(project);
+    }
+
+    private void addBuildListeners(AntSunshine sunshine) {
+        for (int i = 0; i < buildListeners.size(); i++) {
+            sunshine.addBuildListener(buildListeners.get(i));
+        }
     }
 }

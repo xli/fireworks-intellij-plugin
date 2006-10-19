@@ -17,7 +17,7 @@ package com.thoughtworks.fireworks.adapters.document;
 
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
-import com.thoughtworks.fireworks.adapters.PsiFileAdapter;
+import com.thoughtworks.fireworks.adapters.psi.PsiFileAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 
 public class DocumentEventAdapter {

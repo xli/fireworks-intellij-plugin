@@ -17,9 +17,10 @@ package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.refactoring.listeners.RefactoringElementListener;
-import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 import com.thoughtworks.fireworks.core.TestShadowMap;
 import com.thoughtworks.shadow.Sunshine;
+
+import java.io.FileNotFoundException;
 
 public class RefactoringTestShadowListener implements RefactoringElementListener {
     private final Sunshine sunshine;
@@ -38,21 +39,29 @@ public class RefactoringTestShadowListener implements RefactoringElementListener
     }
 
     public void elementMoved(PsiElement newElement) {
-        refactorTestShadowMap(newDocument(newElement));
+        try {
+            refactorTestShadowMap(getFile(newElement));
+        } catch (FileNotFoundException e) {
+        }
     }
 
     public void elementRenamed(PsiElement newElement) {
-        refactorTestShadowMap(newDocument(newElement));
+        try {
+            refactorTestShadowMap(getFile(newElement));
+        } catch (FileNotFoundException e) {
+        }
     }
 
-    public void refactorTestShadowMap(DocumentAdaptee newDoc) {
-        Sunshine newSunshine = newDoc.getSunshine();
-        String newClassName = newDoc.getJavaFileClassName();
-        testShadowMap.removeTestShadow(sunshine, className);
-        testShadowMap.addTestShadow(newSunshine, newClassName);
+    public void refactorTestShadowMap(VirtualFileAdaptee file) {
+        if (file.isInSourceOrTestContent()) {
+            Sunshine newSunshine = file.createSunshine();
+            String newClassName = file.getJavaFileClassName();
+            testShadowMap.removeTestShadow(sunshine, className);
+            testShadowMap.addTestShadow(newSunshine, newClassName);
+        }
     }
 
-    private DocumentAdaptee newDocument(PsiElement newElement) {
-        return project.createDocumentAdaptee(newElement.getContainingFile());
+    private VirtualFileAdaptee getFile(PsiElement newElement) throws FileNotFoundException {
+        return VirtualFileAdapter.getFile(newElement, project);
     }
 }

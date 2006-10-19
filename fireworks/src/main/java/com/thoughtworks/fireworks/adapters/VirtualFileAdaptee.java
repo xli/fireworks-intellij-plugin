@@ -13,28 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.thoughtworks.fireworks.controllers.tree;
+package com.thoughtworks.fireworks.adapters;
 
-import javax.swing.event.TreeModelEvent;
-import javax.swing.event.TreeModelListener;
+import com.intellij.psi.PsiClass;
+import com.thoughtworks.shadow.Sunshine;
 
-public class TestTreeModelListener implements TreeModelListener {
-    private final TestTree tree;
+public interface VirtualFileAdaptee {
 
-    public TestTreeModelListener(TestTree tree) {
-        this.tree = tree;
-    }
+    public boolean isInSourceOrTestContent();
 
-    public void treeNodesChanged(TreeModelEvent e) {
-    }
+    public PsiClass getPsiClass();
 
-    public void treeNodesInserted(TreeModelEvent e) {
-        tree.expandRootNode();
-    }
+    public String getJavaFileClassName();
 
-    public void treeNodesRemoved(TreeModelEvent e) {
-    }
+    public Sunshine createSunshine();
 
-    public void treeStructureChanged(TreeModelEvent e) {
-    }
+    public boolean isJavaSourceFile();
+
+    public String getNameWithoutExtension();
 }

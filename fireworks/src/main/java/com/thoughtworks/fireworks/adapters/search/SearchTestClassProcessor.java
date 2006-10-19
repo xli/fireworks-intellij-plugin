@@ -16,12 +16,15 @@
 package com.thoughtworks.fireworks.adapters.search;
 
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.PsiElementProcessor;
 import com.thoughtworks.fireworks.adapters.ProgressIndicatorUtils;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
-import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
+import com.thoughtworks.fireworks.adapters.VirtualFileAdaptee;
+import com.thoughtworks.fireworks.adapters.VirtualFileAdapter;
+import com.thoughtworks.fireworks.adapters.psi.PsiClassAdapter;
 import com.thoughtworks.fireworks.core.TestCollection;
+
+import java.io.FileNotFoundException;
 
 public class SearchTestClassProcessor implements PsiElementProcessor<PsiClass> {
     private final ProjectAdapter project;
@@ -43,15 +46,26 @@ public class SearchTestClassProcessor implements PsiElementProcessor<PsiClass> {
         if (element.getQualifiedName() == null) {
             return true;
         }
-        PsiFile psiFile = element.getContainingFile();
-        DocumentAdaptee doc = project.createDocumentAdaptee(psiFile);
-
-        //todo refactor document
-        if (doc.isWritable() && doc.isExpectedJUnitTestCase(element)) {
+        if (element.isWritable() && getPsiClass(element).isJUnitTestCase(project)) {
             found++;
-            testCollection.add(doc.getSunshine(), element.getQualifiedName());
+            addIntoTestCollection(element);
         }
         return true;
+    }
+
+    private void addIntoTestCollection(PsiClass element) {
+        try {
+            testCollection.add(getFile(element).createSunshine(), element.getQualifiedName());
+        } catch (FileNotFoundException e) {
+        }
+    }
+
+    private PsiClassAdapter getPsiClass(PsiClass element) {
+        return new PsiClassAdapter(element);
+    }
+
+    private VirtualFileAdaptee getFile(PsiClass element) throws FileNotFoundException {
+        return VirtualFileAdapter.getFile(element, project);
     }
 
 }

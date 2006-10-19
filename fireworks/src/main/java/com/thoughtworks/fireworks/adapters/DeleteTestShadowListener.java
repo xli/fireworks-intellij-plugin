@@ -15,13 +15,13 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.intellij.openapi.vfs.VirtualFileAdapter;
 import com.intellij.openapi.vfs.VirtualFileEvent;
-import com.intellij.psi.PsiFile;
-import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 import com.thoughtworks.fireworks.core.TestShadowMap;
+import com.thoughtworks.shadow.Sunshine;
 
-public class DeleteTestShadowListener extends VirtualFileAdapter {
+import java.io.FileNotFoundException;
+
+public class DeleteTestShadowListener extends com.intellij.openapi.vfs.VirtualFileAdapter {
     private final TestShadowMap testShadowMap;
     private final ProjectAdapter project;
 
@@ -31,20 +31,16 @@ public class DeleteTestShadowListener extends VirtualFileAdapter {
     }
 
     public void beforeFileDeletion(final VirtualFileEvent event) {
-        PsiFile psiFile = project.getPsiManager().findFile(event.getFile());
-        if (psiFile != null) {
-            DocumentAdaptee doc = getDocument(psiFile);
-            if (doc != null) {
-                testShadowMap.removeTestShadow(doc.getSunshine(), doc.getJavaFileClassName());
-            }
-        }
-    }
-
-    private DocumentAdaptee getDocument(PsiFile psiFile) {
+        VirtualFileAdaptee file;
         try {
-            return project.createDocumentAdaptee(psiFile);
-        } catch (DocumentAdapterException e) {
-            return null;
+            file = VirtualFileAdapter.getFile(event.getFile(), project);
+        } catch (FileNotFoundException e) {
+            return;
+        }
+        if (file.isInSourceOrTestContent()) {
+            Sunshine sunshine = file.createSunshine();
+            String className = file.getJavaFileClassName();
+            testShadowMap.removeTestShadow(sunshine, className);
         }
     }
 }
