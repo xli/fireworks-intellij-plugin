@@ -17,11 +17,14 @@ package com.thoughtworks.fireworks.ui.toolwindow;
 
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
 import com.thoughtworks.fireworks.core.tree.TestStatusSummaryListener;
+import com.thoughtworks.fireworks.controllers.timer.TimerSchedulerListener;
+import com.thoughtworks.fireworks.controllers.timer.TimerScheduler;
+import com.thoughtworks.fireworks.controllers.Icons;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ToolWindow implements TestStatusSummaryListener {
+public class ToolWindow implements TestStatusSummaryListener, TimerSchedulerListener {
     private static final String TOOL_WINDOW_ID = "Fireworks";
     private static final String TOOL_WINDOW_TITLE = "Don't make me test.";
     private final ProjectAdapter project;
@@ -29,11 +32,12 @@ public class ToolWindow implements TestStatusSummaryListener {
     private Icon status;
     private boolean registered;
 
-    public ToolWindow(ProjectAdapter project, ActionPanel actionPanel, DetailPanel detailPanel) {
+    public ToolWindow(ProjectAdapter project, ActionPanel actionPanel, DetailPanel detailPanel, TimerScheduler timerScheduler) {
         this.project = project;
         panel = new JPanel(new BorderLayout());
         panel.add(detailPanel.getComponent(), BorderLayout.CENTER);
         panel.add(actionPanel, BorderLayout.NORTH);
+        timerScheduler.addListener(this);
     }
 
     public void summaryStatusChanged(Icon status) {
@@ -54,5 +58,13 @@ public class ToolWindow implements TestStatusSummaryListener {
     public void unregister() {
         registered = false;
         project.unregisterToolWindow(TOOL_WINDOW_ID);
+    }
+
+    public void taskScheduled() {
+        project.setToolWindowIcon(TOOL_WINDOW_ID, Icons.taskScheduled());
+    }
+
+    public void taskCanceled() {
+        project.setToolWindowIcon(TOOL_WINDOW_ID, status);
     }
 }

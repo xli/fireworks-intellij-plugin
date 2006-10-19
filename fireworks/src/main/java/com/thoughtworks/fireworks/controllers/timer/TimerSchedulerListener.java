@@ -15,29 +15,8 @@
  */
 package com.thoughtworks.fireworks.controllers.timer;
 
-import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
+public interface TimerSchedulerListener {
+    void taskScheduled();
 
-import java.util.TimerTask;
-
-public class TimerTaskManager {
-
-    private final TimerTaskFactory factory;
-    private TimerTask task;
-
-    public TimerTaskManager(TimerTaskFactory factory) {
-        this.factory = factory;
-    }
-
-    synchronized TimerTask getTask(ReschedulableTask reschedulableTask) {
-        cancelTask();
-        task = factory.createTimerTask(reschedulableTask);
-        return task;
-    }
-
-    synchronized boolean cancelTask() {
-        if (task != null) {
-            return task.cancel();
-        }
-        return false;
-    }
+    void taskCanceled();
 }

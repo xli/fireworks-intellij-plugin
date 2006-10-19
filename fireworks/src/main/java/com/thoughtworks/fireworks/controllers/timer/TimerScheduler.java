@@ -19,12 +19,15 @@ import com.thoughtworks.fireworks.controllers.ShadowCabinetControllerListener;
 import com.thoughtworks.fireworks.core.Chronograph;
 import com.thoughtworks.fireworks.core.developer.ReschedulableTask;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 
 public class TimerScheduler implements ShadowCabinetControllerListener {
     private final static int FIVE_SECONDS = 5000;
 
     private long delayTime = -1;
+    private final List<TimerSchedulerListener> listeners = new ArrayList<TimerSchedulerListener>();
     private final Chronograph chronograph = new Chronograph();
 
     private final TimerTaskManager taskManager;
@@ -33,23 +36,37 @@ public class TimerScheduler implements ShadowCabinetControllerListener {
         this.taskManager = taskManager;
     }
 
-    synchronized public void setDelayTime(long delayTime) {
+    synchronized void setDelayTime(long delayTime) {
         if (isInFiveSecondsAfterFireCabinetAction()) {
             return;
         }
         this.delayTime = delayTime;
     }
 
-    synchronized public void schedule(Timer timer, ReschedulableTask task) {
+    synchronized void schedule(Timer timer, ReschedulableTask task) {
         if (delayTime < 0) {
             return;
         }
         timer.schedule(taskManager.getTask(task), delayTime);
+        fireTaskScheduledEvent();
     }
 
-    public void cancelTasks() {
+    private void fireTaskScheduledEvent() {
+        for (int i = 0; i < listeners.size(); i++) {
+            listeners.get(i).taskScheduled();
+        }
+    }
+
+    void cancelTasks() {
         setDelayTime(-1);
         taskManager.cancelTask();
+        fireTaskCanceledEvent();
+    }
+
+    private void fireTaskCanceledEvent() {
+        for (int i = 0; i < listeners.size(); i++) {
+            listeners.get(i).taskCanceled();
+        }
     }
 
     public void actionStarted() {
@@ -62,5 +79,9 @@ public class TimerScheduler implements ShadowCabinetControllerListener {
 
     private boolean isInFiveSecondsAfterFireCabinetAction() {
         return chronograph.measurement() < FIVE_SECONDS;
+    }
+
+    public void addListener(TimerSchedulerListener listener) {
+        listeners.add(listener);
     }
 }

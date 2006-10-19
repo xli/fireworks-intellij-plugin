@@ -29,33 +29,53 @@ public class TimerSchedulerTest extends TestCase {
     private TimerTaskManager manager;
     private TimerScheduler scheduler;
     private Timer timer;
+    private ReschedulableTask taskMock;
 
     protected void setUp() throws Exception {
         task = Turtle.mock(ReschedulableTask.class);
+        taskMock = (ReschedulableTask) task.mockTarget();
+
         manager = new TimerTaskManager(TestUtils.createTimerTaskFactory());
         scheduler = new TimerScheduler(manager);
         timer = new Timer();
     }
 
+    public void testShouldFireTimerScheduledEventWhenScheduleATimerTask() throws Exception {
+        Mock listener = Turtle.mock(TimerSchedulerListener.class);
+        scheduler.addListener((TimerSchedulerListener) listener.mockTarget());
+        scheduler.setDelayTime(LONG_TIME);
+        scheduler.schedule(timer, taskMock);
+        listener.assertDid("taskScheduled");
+    }
+
+    public void testShouldFireTimerCanceledEventWhenCancelATimerTask() throws Exception {
+        Mock listener = Turtle.mock(TimerSchedulerListener.class);
+        scheduler.addListener((TimerSchedulerListener) listener.mockTarget());
+        scheduler.setDelayTime(LONG_TIME);
+        scheduler.schedule(timer, taskMock);
+        scheduler.cancelTasks();
+        listener.assertDid("taskCanceled");
+    }
+
     public void testShouldSetDelayTimeFirstBeforeSchedule() throws Exception {
-        scheduler.schedule(timer, (ReschedulableTask) task.mockTarget());
+        scheduler.schedule(timer, taskMock);
         assertFalse(manager.cancelTask());
 
         scheduler.setDelayTime(LONG_TIME);
-        scheduler.schedule(timer, (ReschedulableTask) task.mockTarget());
+        scheduler.schedule(timer, taskMock);
         assertTrue(manager.cancelTask());
     }
 
     public void testShouldNotScheduleTaskDirectlyAfterCabinetActionFired() throws Exception {
         scheduler.actionFinished();
         scheduler.setDelayTime(LONG_TIME);
-        scheduler.schedule(timer, (ReschedulableTask) task.mockTarget());
+        scheduler.schedule(timer, taskMock);
         assertFalse(manager.cancelTask());
     }
 
     public void testShouldCancelTasksWhenActionStarted() throws Exception {
         scheduler.setDelayTime(LONG_TIME);
-        scheduler.schedule(timer, (ReschedulableTask) task.mockTarget());
+        scheduler.schedule(timer, taskMock);
         scheduler.actionStarted();
 
         assertFalse(manager.cancelTask());
@@ -63,13 +83,13 @@ public class TimerSchedulerTest extends TestCase {
 
     public void testShouldNotScheduleTaskIfDelayTimeIsLessThanZero() throws Exception {
         scheduler.setDelayTime(-100);
-        scheduler.schedule(timer, (ReschedulableTask) task.mockTarget());
+        scheduler.schedule(timer, taskMock);
         assertFalse(manager.cancelTask());
     }
 
     public void testCancelTasksInTaskManager() throws Exception {
         scheduler.setDelayTime(LONG_TIME);
-        scheduler.schedule(timer, (ReschedulableTask) task.mockTarget());
+        scheduler.schedule(timer, taskMock);
         scheduler.cancelTasks();
 
         assertFalse(manager.cancelTask());

@@ -18,7 +18,7 @@ package com.thoughtworks.fireworks.plugin;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 import com.thoughtworks.fireworks.controllers.CabinetController;
-import com.thoughtworks.fireworks.controllers.timer.TimerTaskManager;
+import com.thoughtworks.fireworks.controllers.timer.ConfiguredTimer;
 import com.thoughtworks.fireworks.core.TestShadowMap;
 
 public class FireworksProject extends FireworksConfigurationImpl implements ProjectComponent {
@@ -72,12 +72,12 @@ public class FireworksProject extends FireworksConfigurationImpl implements Proj
             getListenersForAutoRunTask().enableListenersForAutoRunTask();
         } else {
             getListenersForAutoRunTask().disableListenersForAutoRunTask();
-            getTimerTaskManager().cancelTask();
+            getConfiguredTimer().cancelTasks();
         }
     }
 
-    private TimerTaskManager getTimerTaskManager() {
-        return container.getInstance(TimerTaskManager.class);
+    private ConfiguredTimer getConfiguredTimer() {
+        return container.getInstance(ConfiguredTimer.class);
     }
 
     private AutoRunTaskListeners getListenersForAutoRunTask() {

@@ -30,16 +30,16 @@ public class CabinetControllerActionTimer {
         this.reschedulableTask = new ReschedulableTaskAdapter(this, controller);
     }
 
-    public void schedule(long delayTime) {
+    void schedule(long delayTime) {
         scheduler.setDelayTime(delayTime);
         scheduler.schedule(timer, reschedulableTask);
     }
 
-    public void reschedule() {
+    void reschedule() {
         scheduler.schedule(timer, reschedulableTask);
     }
 
-    public void cancelTasks() {
+    void cancelTasks() {
         scheduler.cancelTasks();
     }
 }

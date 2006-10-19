@@ -32,11 +32,10 @@ public class Icons {
         return createImageIcon(path, BIG_ICON_LENGTH, BIG_ICON_LENGTH);
     }
 
-    private static ImageIcon createImageIcon(String path, int height, int width) {
+    static ImageIcon createImageIcon(String path, int height, int width) {
         URL icon = Icons.class.getResource(path);
         if (icon == null) {
             String msg = "couldn't find file: " + path;
-            JOptionPane.showMessageDialog(null, "fireworks: " + msg);
             throw new IllegalArgumentException(msg);
         }
         ImageIcon imageIcon = new ImageIcon(icon);
@@ -46,7 +45,7 @@ public class Icons {
         return greenImage(imageIcon, height, width);
     }
 
-    public static ImageIcon greenImage(ImageIcon original, int height, int width) {
+    private static ImageIcon greenImage(ImageIcon original, int height, int width) {
         Image img = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
         img.getGraphics().drawImage(original.getImage(), 0, 0, height, width, new Color(0, 255, 0, 0), null);
         return new ImageIcon(img);
@@ -64,6 +63,7 @@ public class Icons {
     private static ImageIcon runTestListButtonF = createSmallImageIcon("/run_test_list_button_f.png");
     private static ImageIcon runAllTestsButton = createSmallImageIcon("/run_all_tests_button.png");
     private static ImageIcon runAllTestsButtonF = createSmallImageIcon("/run_all_tests_button_f.png");
+    private static ImageIcon taskScheduled = createSmallImageIcon("/task_scheduled.png");
 
     public static ImageIcon logo() {
         return logo;
@@ -107,5 +107,9 @@ public class Icons {
 
     public static Icon runAllTestsButtonF() {
         return runAllTestsButtonF;
+    }
+
+    public static Icon taskScheduled() {
+        return taskScheduled;
     }
 }
