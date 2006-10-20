@@ -21,9 +21,12 @@ import junit.framework.TestSuite;
 import java.util.*;
 
 public class ShadowCabinet implements Cabinet {
-    private final List listeners = new ArrayList();
-    private final LinkedList shadows = new LinkedList();
-    private int maxSize = 5;
+
+    private static final int DEFAULT_MAX_SIZE = 5;
+
+    private final List<ShadowCabinetListener> listeners = new ArrayList<ShadowCabinetListener>();
+    private final LinkedList<ComparableTestShadow> shadows = new LinkedList<ComparableTestShadow>();
+    private int maxSize = DEFAULT_MAX_SIZE;
 
     public void add(ComparableTestShadow testShadow) {
         if (maxSize == 0) {
@@ -90,25 +93,25 @@ public class ShadowCabinet implements Cabinet {
 
     private void fireAfterAddTestEvent(ComparableTestShadow test) {
         for (int i = 0; i < listeners.size(); i++) {
-            ((ShadowCabinetListener) listeners.get(i)).afterAddTest(test);
+            listeners.get(i).afterAddTest(test);
         }
     }
 
     private void fireAfterRemoveTestEvent(ComparableTestShadow test) {
         for (int i = 0; i < listeners.size(); i++) {
-            ((ShadowCabinetListener) listeners.get(i)).afterRemoveTest(test);
+            listeners.get(i).afterRemoveTest(test);
         }
     }
 
     private void fireEndActionEvent() {
         for (int i = 0; i < listeners.size(); i++) {
-            ((ShadowCabinetListener) listeners.get(i)).endAction();
+            listeners.get(i).endAction();
         }
     }
 
     private void fireStartActionEvent() {
         for (int i = 0; i < listeners.size(); i++) {
-            ((ShadowCabinetListener) listeners.get(i)).startAction();
+            listeners.get(i).startAction();
         }
     }
 }

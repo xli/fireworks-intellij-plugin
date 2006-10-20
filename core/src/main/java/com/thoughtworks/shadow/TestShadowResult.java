@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestShadowResult extends TestResult {
-    private int ignoreCount = 0;
-    private List<TestListener> listeners = new ArrayList();
+    private List<TestListener> listeners = new ArrayList<TestListener>();
+    private int ignoreCount;
 
     public int ignoreCount() {
         return ignoreCount;

@@ -25,7 +25,7 @@ We all know about the following steps :
 <br/>
 
 <p>It's great that we have time to run all tests continuously. But more tests we wrote, more time costs.
-It was to much cost for me to run all tests in almost every real project.
+It was too much cost for me to run all tests in almost every real project before.
 So it's better that I just run tests about which are cared recently continuously and run all tests
 when I finish a task or need to commit code.
 </p>
@@ -49,90 +49,15 @@ If there is a test failed after we run all tests by pressing hot key, it will be
 and it provides supporting both <b>JUnit3.8</b> and <b>JUnit4.1</b> which are used widely (I don't test it in other version of JUnit :p ).
 So if you still use IntelliJ 5, <b>Fireworks</b> will be a good tool to run Test of <b>JUnit4.1</b> directly in <b>IntelliJ 5</b>.
 </p>
-
-<p>I am still considering to add new feature of running all tests automatically
-and finding better way to trigger task of running tests in the "recent test list".
-</p>
-<b><p>So any suggestions or feedback from you who like the idea above will be great for me.
-Contract me:) swing1979@gmail.com</p></b>
-
-<br>
-<br>
-
-<ul><u><b>Fireworks Configuration</b></u>
-    <li>Enable fireworks
-        <ul>
-        <li>default value:  checked</li>
-        <li>description:    disable/enable Fireworks</li>
-        </ul>
-    </li>
-    <li>Enable auto run fireworks task
-        <ul>
-        <li>default value:  checked</li>
-        <li>description:    disable/enable Fireworks task of running recent test list automatically</li>
-        </ul>
-    </li>
-    <li>Run tests max memory
-        <ul>
-        <li>default value:  empty, default of JVM</li>
-        <li>description:    Set max memory of running tests(all/recent test list). See property "maxmemory" of ant task "java".</li>
-        </ul>
-    </li>
-    <li>Test class name regex(jdk1.4)
-        <ul>
-        <li>default value:  .*Test</li>
-        <li>description:    Is regex of Java1.4 version. Any test name of which matches this regex will can be added into "recent test list" and will be run as JUnit Test.</li>
-        </ul>
-    </li>
-    <li>Max size of recent test list
-        <ul>
-        <li>default value:  5</li>
-        <li>description:    Max size of "recent test list". When a new test will be added into "recent test list" and the size of list is equal with max size, Fireworks will remove a test, failed times of which is lest if there is no test success or success times of which is largest.</li>
-        </ul>
-    </li>
-    <li>Delay time(millisecond)
-        <ul>
-        <li>default value:  4000</li>
-        <li>description:    Set value to -1 to disable running tests in the "recent test list" automatically. Otherwise, the value will be period time in milliseconds between running tests in the "recent test list" automatically.</li>
-        </ul>
-    </li>
-    <li>JVM arguments for the tests
-        <ul>
-        <li>default value:  empty</li>
-        <li>description:    Set up JVM arguments for the tests that will be ran by Fireworks, for example: "-Dkey1=value1 -Dkey2=value2"</li>
-        </ul>
-    </li>
-</ul>
-<br>
-<ul><u><b>Hot keys</b></u>
-    <li>shift alt K:
-        <ul>
-        <li>action: Run Recent Test List</li>
-        <li>menu: Run-Run Recent Test List</li>
-        <li>keymap: default</li>
-        </ul>
-    </li>
-    <li>shift alt L
-        <ul>
-        <li>action: Run all tests matched with test class name regex and in the test source folders</li>
-        <li>menu: Run-Run All Tests</li>
-        <li>keymap: default</li>
-        </ul>
-    </li>
-    <li>shift alt A
-        <ul>
-        <li>action: disable/enable task of running recent test list automatically</li>
-        <li>menu: Run-Enable/disable auto run fireworks task</li>
-        <li>keymap: default</li>
-        </ul>
-    </li>
-</ul>
 ]]>
     </description>
     <change-notes>
         <![CDATA[
         <ul><u><b>Version 1.08 changes</b></u>
+            <li>new feature: The icon of Fireworks tool window will change to a funny fruit when task of running tests is scheduled.</li>
             <li>change: Time period of triggering task of running test twice reduced to 5 seconds.</li>
+            <li>change: Task of running tests will be rescheduled when there is document in source or test folder has error marked.</li>
+            <li>fix: Fireworks will cancel task of running tests when disable scheduling task of run tests automatically now.</li>
         </ul>
         <ul><u><b>Version 1.07 changes</b></u>
             <li>new feature: new configuration "Enable auto run fireworks task"</li>

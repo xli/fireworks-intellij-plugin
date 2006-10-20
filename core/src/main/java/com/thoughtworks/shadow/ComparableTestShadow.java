@@ -64,8 +64,12 @@ public class ComparableTestShadow implements TestShadow, Comparable {
     }
 
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         final ComparableTestShadow that = (ComparableTestShadow) o;
 

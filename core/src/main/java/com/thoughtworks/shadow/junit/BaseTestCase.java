@@ -23,8 +23,8 @@ import junit.framework.TestResult;
 
 public class BaseTestCase implements TestShadow {
     private final Protectable protectable;
-    protected final String testClassName;
-    protected final String testMethodName;
+    private final String testClassName;
+    private final String testMethodName;
 
     public BaseTestCase(String testClassName, String testMethodName, Protectable protectable) {
         this.testClassName = testClassName;
@@ -56,8 +56,12 @@ public class BaseTestCase implements TestShadow {
     }
 
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || (!(o instanceof BaseTestCase))) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || (!(o instanceof BaseTestCase))) {
+            return false;
+        }
 
         final BaseTestCase that = (BaseTestCase) o;
 

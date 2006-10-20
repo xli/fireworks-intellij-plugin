@@ -1,10 +1,7 @@
+* cancel task scheduled by hot key
 * 待完成时，不能触发
-* timer package test
 * check JUnit, if there is no JUnit exist, disable fireworks
 * build.xml: checkstyle
-! show timer schedule status
-! ant build.xml for fireworks and shadow
-! should cancel timer when disable task of auto run test
 
 * there is unexpected info in the ant executing log:
     [verbose] dropping C:\C from path as it doesn't exist
@@ -26,6 +23,11 @@
 ? remember selected tab
 ? remove TestTreeNode(What to do?).
 ? remove failure msg in the table after test case was deleted
+==============================2006.10.20====================================
+! show timer schedule status
+! should cancel timer when disable task of auto run test
+! timer package test
+! ant build.xml for fireworks and shadow
 ==============================2006.10.15====================================
 ! listening all mouse event
 ! add refactor feature doc

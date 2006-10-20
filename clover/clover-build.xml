@@ -1,4 +1,4 @@
-<project default="jar" name="clover" basedir=".">
+<project name="clover" basedir=".">
 	<property name="ant.commons.dir" value="./../ant"/>
 	<import file="${ant.commons.dir}/commons-build.xml"/>
 
