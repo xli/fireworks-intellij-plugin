@@ -148,7 +148,7 @@ So if you still use IntelliJ 5, <b>Fireworks</b> will be a good tool to run Test
         ]]>
     </change-notes>
     <version>1.08</version>
-    <vendor email="swing1979@gmail.com" url="http://code.google.com/p/dontmakemetest/"
+    <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/fireworks"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000" until-build="5766"/>
 
