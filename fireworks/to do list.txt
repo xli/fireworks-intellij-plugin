@@ -1,3 +1,6 @@
+* bug: should not schedule task when delete comments
+* bug: if test has not run,  refactor the test class name will not remove test from cabinet.
+
 * cancel task scheduled by hot key
 * 待完成时，不能触发
 * check JUnit, if there is no JUnit exist, disable fireworks

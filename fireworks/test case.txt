@@ -3,12 +3,11 @@
 3. reschedule task:
     1) mouse move
     2) keyboard action
-    3) inputs comments
-    4) find class/file
-    5) Live Template is working
-    6) there is error in document which is in source or test folder and not xml or dtd.
-    7) code completion is working
-    8) developer try to select a menu.
+    3) find class/file
+    4) Live Template is working
+    5) there is error in document which is in source or test folder and not xml or dtd.
+    6) code completion is working
+    7) developer try to select a menu.
 
 4. refactor test name(class, method)
 5. delete test
@@ -23,6 +22,7 @@
     2) twice in 5 seconds period.
     3) document has error marked and it is not xml or dtd
     3) document has error marked and it is not in source or test folder
+    4) inputs comments
 
 9. Fireworks will not fire action twice when cabinet is empty
 10. status bar should show test result summary after run all tests
