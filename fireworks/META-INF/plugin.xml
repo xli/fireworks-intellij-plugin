@@ -3,56 +3,62 @@
     <name>fireworks</name>
     <description>
         <![CDATA[
-We all know about the following steps :
-<ul>
-    <li>Quickly add a test.</li>
-    <li>Run all tests and see the new one fail.</li>
-    <li>Make a little change.</li>
-    <li>Run all tests and see them all succeed.</li>
-    <li>Refactor to remove duplication.</li>
-</ul>
-<b>How about these?
-<ul>
-    <li>Quickly add a test.</li>
-    <li>Take a break or review the code.</li>
-    <li>IDE tells me that there is new test fail.</li>
-    <li>Make a little change.</li>
-    <li>Take a break or review the code.</li>
-    <li>IDE tells me all tests succeed.</li>
-    <li>Refactor to remove duplication.</li>
-    <li>Take a drink of coffee and IDE tells me there is no broken test.</li>
-</ul></b>
-<br/>
+				We all know about the following steps :
+				<ul>
+					<li>Quickly add a test.</li>
+					<li>Run all tests and see the new one fail.</li>
+					<li>Make a little change.</li>
+					<li>Run all tests and see them all succeed.</li>
+					<li>Refactor to remove duplication.</li>
+				</ul>
+				<b>How about these?
+				<ul>
+					<li>Quickly add a test.</li>
+					<li>Take a break or review the code.</li>
+					<li>IDE tells me that there is new test fail.</li>
+					<li>Make a little change.</li>
+					<li>Take a break or review the code.</li>
+					<li>IDE tells me all tests succeed.</li>
+					<li>Refactor to remove duplication.</li>
+					<li>Take a drink of coffee and IDE tells me there is no broken test.</li>
+				</ul></b>
+				<br/>
 
-<p>It's great that we have time to run all tests continuously. But more tests we wrote, more time costs.
-It was too much cost for me to run all tests in almost every real project before.
-So it's better that I just run tests about which are cared recently continuously and run all tests
-when I finish a task or need to commit code.
-</p>
+				<p>It's great that we have time to run all tests continuously. But more tests we wrote, more time costs.
+				It was too much cost for me to run all tests in almost every real project before.
+				So it's better that I just run tests about which are cared recently continuously and run all tests
+				when I finish a task or need to commit code.
+				</p>
 
-<p><b>Fireworks</b> is such a plugin for helping TDDers to make more pleasure in process of test-driven development
-by spending more time on writing code.
-The configuration of "Delay time" is key of when to schedule task of running tests about which are cared
-after document changed and no error.
-It's a normal way to trigger a task after a delay time when there is no action performed by keyboard
-or mouse and all documents have no error marked during period of delay time.
-Yes, it's not good enough. I am still working on powup it. Yuo can read the changes of version to find
-what have been improved.
-</p>
+				<p><b>Fireworks</b> is such a plugin for helping TDDers to make more pleasure in process of test-driven development
+				by spending more time on writing code.
+				The configuration of "Delay time" is key of when to schedule task of running tests about which are cared
+				after document changed and no error.
+				It's a normal way to trigger a task after a delay time when there is no action performed by keyboard
+				or mouse and all documents have no error marked during period of delay time.
+				Yes, it's not good enough. I am still working on powup it. Yuo can read the changes of version to find
+				what have been improved.
+				</p>
 
-<p>There is a "recent test list" for collecting test about which are cared. JUnit TestCase will be added into "recent test list"
-when we open or edit it. And there is a regex of test class name for helping us to filter test we don't want to care recently.
-If there is a test failed after we run all tests by pressing hot key, it will be added into "recent test list" too.
-</p>
+				<p>There is a "recent test list" for collecting test about which are cared. JUnit TestCase will be added into "recent test list"
+				when we open or edit it. And there is a regex of test class name for helping us to filter test we don't want to care recently.
+				If there is a test failed after we run all tests by pressing hot key, it will be added into "recent test list" too.
+				</p>
 
-<p><b>Fireworks</b> is developed on <b>IntelliJ 5.1 build#4155</b> and has been tested on <b>IntelliJ 6.0 build#5766</b>,
-and it provides supporting both <b>JUnit3.8</b> and <b>JUnit4.1</b> which are used widely (I don't test it in other version of JUnit :p ).
-So if you still use IntelliJ 5, <b>Fireworks</b> will be a good tool to run Test of <b>JUnit4.1</b> directly in <b>IntelliJ 5</b>.
-</p>
-]]>
+				<p><b>Fireworks</b> is developed on <b>IntelliJ 5.1 build#4155</b> and has been tested on <b>IntelliJ 6.0 build#5766</b>,
+				and it provides supporting both <b>JUnit3.8</b> and <b>JUnit4.1</b> which are used widely (I don't test it in other version of JUnit :p ).
+				So if you still use IntelliJ 5, <b>Fireworks</b> will be a good tool to run Test of <b>JUnit4.1</b> directly in <b>IntelliJ 5</b>.
+				</p>
+			]]>
     </description>
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.09 changes</b></u>
+            <li>fix bug: should not schedule task of running test when delete comments at end of line.</li>
+            <li>fix bug: should not schedule task of running test when type in '/' for comment.</li>
+            <li>fix bug: should schedule task when type space in a string in the java code.</li>
+            <li>fix bug: ClassCastException is throwed when editing a non-java file.</li>
+        </ul>
         <ul><u><b>Version 1.08 changes</b></u>
             <li>new feature: The icon of Fireworks tool window will change to a funny fruit when task of running tests is scheduled.</li>
             <li>change: Time period of triggering task of running test twice reduced to 5 seconds.</li>
@@ -147,7 +153,7 @@ So if you still use IntelliJ 5, <b>Fireworks</b> will be a good tool to run Test
         </ul>
         ]]>
     </change-notes>
-    <version>1.08</version>
+    <version>1.09</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/fireworks"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000" until-build="5766"/>

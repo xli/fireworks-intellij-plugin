@@ -17,7 +17,6 @@ package com.thoughtworks.fireworks.adapters.document;
 
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
-import com.thoughtworks.fireworks.adapters.psi.PsiFileAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 
 public class DocumentEventAdapter {
@@ -27,21 +26,6 @@ public class DocumentEventAdapter {
     public DocumentEventAdapter(DocumentEvent event, ProjectAdapter project) {
         this.event = event;
         this.project = project;
-    }
-
-    public boolean documentContentChangedExcludeComment() {
-        return isContentChanged() && isCommentChanged();
-    }
-
-    private boolean isCommentChanged() {
-        PsiFileAdapter file = new PsiFileAdapter(project, event.getDocument());
-        return !file.isCommentAt(event.getOffset());
-    }
-
-    private boolean isContentChanged() {
-        String newFragment = event.getNewFragment().toString().trim();
-        String oldFragment = event.getOldFragment().toString().trim();
-        return (newFragment.length() > 0 || oldFragment.length() > 0);
     }
 
     public boolean documentInSourceOrTestContent() {

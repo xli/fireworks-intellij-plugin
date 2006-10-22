@@ -70,7 +70,7 @@
     <option name="maxMemory" value="" />
     <option name="maxSize" value="5" />
     <option name="enable" value="true" />
-    <option name="enableAutoTask" value="true" />
+    <option name="enableAutoTask" value="false" />
     <option name="autoRunTestsDelayTime" value="3000" />
     <option name="jvmArgs" value="" />
   </component>

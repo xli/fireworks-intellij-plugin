@@ -17,6 +17,7 @@ package com.thoughtworks.fireworks.adapters.psi;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
@@ -41,7 +42,11 @@ public class PsiUtils {
     }
 
     public static PsiClass getPsiClass(ProjectAdapter project, VirtualFile file) {
-        final PsiClass[] classes = getPsiJavaFile(project, file).getClasses();
+        PsiJavaFile psiJavaFile = getPsiJavaFile(project, file);
+        if (psiJavaFile == null) {
+            return null;
+        }
+        final PsiClass[] classes = psiJavaFile.getClasses();
         final String fileName = file.getNameWithoutExtension();
         for (final PsiClass aClass : classes) {
             if (fileName.equals(aClass.getName())) {
@@ -52,7 +57,11 @@ public class PsiUtils {
     }
 
     private static PsiJavaFile getPsiJavaFile(ProjectAdapter project, VirtualFile file) {
-        return (PsiJavaFile) project.getPsiManager().findFile(file);
+        PsiFile psiFile = project.getPsiManager().findFile(file);
+        if (psiFile instanceof PsiJavaFile) {
+            return (PsiJavaFile) psiFile;
+        }
+        return null;
     }
 
 }
