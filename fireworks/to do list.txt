@@ -1,9 +1,4 @@
-* bug: should not schedule task when delete comments
-* bug: if test has not run,  refactor the test class name will not remove test from cabinet.
-
-* cancel task scheduled by hot key
-* 待完成时，不能触发
-* check JUnit, if there is no JUnit exist, disable fireworks
+? check JUnit, if there is no JUnit exist, disable fireworks
 * build.xml: checkstyle
 
 * there is unexpected info in the ant executing log:
@@ -14,19 +9,21 @@
             at java.util.Vector.elementAt(Vector.java:432)
             at javax.swing.tree.DefaultMutableTreeNode.getChildAt(DefaultMutableTreeNode.java:230)
 
-? create action listener adapter, TestResultFactory should be there not in the ShadowCabinetController
+? cancel task scheduled by hot key
 ? Shadow failed times:
     ? run all tests
     ? rename test
 ? log system output
 
-* site for fireworks
-
 ? rename IntellijShadowCabinetTest&IntellijShadowCabinet
 ? remember selected tab
 ? remove TestTreeNode(What to do?).
 ? remove failure msg in the table after test case was deleted
+
 ==============================2006.10.20====================================
+! bug: if test has not run,  refactor the test class name will not remove test from cabinet.
+==============================2006.10.20====================================
+! bug: should not schedule task when delete comments
 ! show timer schedule status
 ! should cancel timer when disable task of auto run test
 ! timer package test

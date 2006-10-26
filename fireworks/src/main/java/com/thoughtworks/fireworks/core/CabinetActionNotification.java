@@ -17,10 +17,8 @@ package com.thoughtworks.fireworks.core;
 
 import com.thoughtworks.shadow.Cabinet;
 import junit.framework.TestResult;
-import org.apache.log4j.Logger;
 
 public class CabinetActionNotification implements CompileStatusNotificationAdaptee {
-    private static final Logger LOG = Logger.getLogger(CabinetActionNotification.class);
     private final Cabinet cabinet;
     private final TestResult result;
 
@@ -30,11 +28,9 @@ public class CabinetActionNotification implements CompileStatusNotificationAdapt
     }
 
     public void finished(boolean aborted, int errors, int warnings) {
-        LOG.info("aborted: " + aborted + "; errors: " + errors);
         if (aborted || errors > 0) {
             return;
         }
-        LOG.info("cabinet action");
         cabinet.action(result);
     }
 }

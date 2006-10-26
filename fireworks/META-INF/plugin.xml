@@ -1,5 +1,5 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
+<idea-plugin url="http://swing1979.googlepages.com/fireworks">
     <name>fireworks</name>
     <description>
         <![CDATA[
@@ -53,6 +53,9 @@
     </description>
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.10 changes</b></u>
+            <li>fix bug: rename or remove test class name will not remove original test class from recent test list after rename or remove once correctly.</li>
+        </ul>
         <ul><u><b>Version 1.09 changes</b></u>
             <li>fix bug: should not schedule task of running test when delete comments at end of line.</li>
             <li>fix bug: should not schedule task of running test when type in '/' for comment.</li>
@@ -153,7 +156,7 @@
         </ul>
         ]]>
     </change-notes>
-    <version>1.09</version>
+    <version>1.10</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/fireworks"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000" until-build="5766"/>

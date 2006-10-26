@@ -23,8 +23,8 @@ import com.thoughtworks.shadow.Sunshine;
 import java.io.FileNotFoundException;
 
 public class RefactoringTestShadowListener implements RefactoringElementListener {
-    private final Sunshine sunshine;
-    private final String className;
+    private Sunshine sunshine;
+    private String className;
     private final ProjectAdapter project;
     private final TestShadowMap testShadowMap;
 
@@ -58,6 +58,8 @@ public class RefactoringTestShadowListener implements RefactoringElementListener
             String newClassName = file.getJavaFileClassName();
             testShadowMap.removeTestShadow(sunshine, className);
             testShadowMap.addTestShadow(newSunshine, newClassName);
+            sunshine = newSunshine;
+            className = newClassName;
         }
     }
 

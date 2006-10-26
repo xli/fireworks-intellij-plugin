@@ -140,7 +140,7 @@ public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCab
         fireTreeNodeInsertedEvent(createTreeModelEvent(child));
     }
 
-    private void fireTreeNodeRemovedEvent(TreeModelEvent event) {
+    private void fireTreeNodeRemovedEvent(final TreeModelEvent event) {
         for (TreeModelListener listener : listeners) {
             listener.treeNodesRemoved(event);
         }

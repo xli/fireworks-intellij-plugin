@@ -47,7 +47,7 @@ public class TestResultMonitor implements RunListenerAdaptee {
 
     private void fireEvent() {
         for (int i = 0; i < listeners.size(); i++) {
-            ((ResultOfTestEndListener) listeners.get(i)).testEnd(result);
+            listeners.get(i).testEnd(result);
         }
     }
 
