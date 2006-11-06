@@ -49,7 +49,11 @@ public class PsiClassAdapter {
                 return true;
             }
         }
-        return psiClass.isInheritor(PsiUtils.getTestCasePsiClass(project), true);
+        try {
+            return psiClass.isInheritor(PsiUtils.getTestCasePsiClass(project), true);
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 
     private boolean hasAnnotationOfOrgJunitTest(PsiMethod method) {

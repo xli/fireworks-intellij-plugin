@@ -25,7 +25,7 @@ public class PsiPackageAdapter {
         this.psiPackage = psiPackage;
     }
 
-    public PsiClass getPsiClass(Class<?> aClass) {
+    public PsiClass getPsiClass(Class<?> aClass) throws ClassNotFoundException {
         if (psiPackage != null) {
             for (final PsiClass clazz : psiPackage.getClasses()) {
                 if (aClass.getName().equals(clazz.getQualifiedName())) {
@@ -33,6 +33,6 @@ public class PsiPackageAdapter {
                 }
             }
         }
-        throw new IllegalStateException("Can't find class \"" + aClass + "\".");
+        throw new ClassNotFoundException("Can't find class \"" + aClass + "\".");
     }
 }

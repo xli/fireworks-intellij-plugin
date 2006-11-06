@@ -53,6 +53,9 @@
     </description>
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.11 changes</b></u>
+            <li>fix bug: if the project which is opened during opening IntelliJ has not included junit lib, fireworks can't be installed.(Thank johnny.pu for reporting the bug).</li>
+        </ul>
         <ul><u><b>Version 1.10 changes</b></u>
             <li>fix bug: rename or remove test class name will not remove original test class from recent test list after rename or remove once correctly.</li>
         </ul>

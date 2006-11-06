@@ -36,7 +36,7 @@ public class PsiUtils {
         return null;
     }
 
-    public static PsiClass getTestCasePsiClass(ProjectAdapter project) {
+    public static PsiClass getTestCasePsiClass(ProjectAdapter project) throws ClassNotFoundException {
         String packageName = TestCase.class.getPackage().getName();
         return project.getPackage(packageName).getPsiClass(TestCase.class);
     }
