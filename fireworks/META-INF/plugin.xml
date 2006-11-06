@@ -54,112 +54,15 @@
     <change-notes>
         <![CDATA[
         <ul><u><b>Version 1.11 changes</b></u>
-            <li>fix bug: if the project which is opened during opening IntelliJ has not included junit lib, fireworks can't be installed.(Thank johnny.pu for reporting the bug).</li>
-        </ul>
-        <ul><u><b>Version 1.10 changes</b></u>
-            <li>fix bug: rename or remove test class name will not remove original test class from recent test list after rename or remove once correctly.</li>
-        </ul>
-        <ul><u><b>Version 1.09 changes</b></u>
-            <li>fix bug: should not schedule task of running test when delete comments at end of line.</li>
-            <li>fix bug: should not schedule task of running test when type in '/' for comment.</li>
-            <li>fix bug: should schedule task when type space in a string in the java code.</li>
-            <li>fix bug: ClassCastException is throwed when editing a non-java file.</li>
-        </ul>
-        <ul><u><b>Version 1.08 changes</b></u>
-            <li>new feature: The icon of Fireworks tool window will change to a funny fruit when task of running tests is scheduled.</li>
-            <li>change: Time period of triggering task of running test twice reduced to 5 seconds.</li>
-            <li>change: Task of running tests will be rescheduled when there is document in source or test folder has error marked.</li>
-            <li>fix: Fireworks will cancel task of running tests when disable scheduling task of run tests automatically now.</li>
-        </ul>
-        <ul><u><b>Version 1.07 changes</b></u>
-            <li>new feature: new configuration "Enable auto run fireworks task"</li>
-            <li>new feature: new hot key "shift alt A", enable/disable task of running recent test list automatically.</li>
-            <li>change: listen all of mouse event, any action of mouse will make Fireworks reschedule task of running tests.</li>
-            <li>power up: fireworks will cancel task of running recent test list when document in editor opened has errors, except:
-                <ul>
-                    <li>document is not in source or test folder.</li>
-                    <li>language of document is xml or dtd.</li>
-                </ul>
-            </li>
-            <li>power up: fireworks will not cancel task of running recent test list, when:
-                <ul>
-                    <li>text inputted is comment of Language or Java Doc</li>
-                    <li>IntelliJ execute "Run" action.</li>
-                    <li>IntelliJ is waiting for typing in name of class/file which is developer want to find.</li>
-                </ul>
+            <li>fix bug: if the project which is opened during opening IntelliJ has not included junit lib, fireworks can't be installed.(Thank johnny.pu for reporting the bug).
+            I still have no idea about how to handle project without JUnit lib included, so I just always return false when identify a JUnit TestCase.
+            I am considering to give a message in the configuration UI and disable fireworks when there is no JUnit lib included.
             </li>
         </ul>
-        <ul><u><b>Version 1.06 changes</b></u>
-            <li>power up: fireworks will not trigger task of running tests when:
-                <ul>
-                    <li>code completion is working.</li>
-                    <li>the document changed is not in source folders and test source folders.</li>
-                    <li>there is a document has error marked.</li>
-                    <li>developer is selecting a menu.</li>
-                    <li>trigger again during 10 seconds.</li>
-                </ul>
-            </li>
-            <li>change: Fireworks will not trigger task of running tests twice when "recent test list" is empty.</li>
-        </ul>
-        <br>
-        <ul><u><b>Version 1.05 changes</b></u>
-            <li>new feature: provide supporting <b>IntelliJIDEA 6.0</b>, tested on <b>IntelliJIDEA build 5766</b></li>
-            <li>change: event of cell(jumping to source and open a frame to show trace log) in the table of test result
-                    will be triggered by mouse clicking or pressing "enter" key.</li>
-        </ul>
-        <br>
-        <ul><u><b>Version 1.04 changes</b></u>
-            <li>new feature: mouse event will reschedule the task of running "recent test list"</li>
-            <li>change: set default value of Delay time to 4000 millisecond</li>
-            <li>change: the description of plugin</li>
-            <li>change: reselect summary node of tests tree after remove a test class from tests tree</li>
-            <li>fix bug: log of test node which is removed is still in the log of its parent.</li>
-        </ul>
-        <br>
-        <ul><u><b>Version 1.03 changes</b></u>
-            <li>new feature: set up JVM arguments for the tests by Fireworks Configuration</li>
-            <li>fix bug: can not cancel process of running tests by <b>Fireworks</b></li>
-            <li>fix bug: tree node does not display full text info of test added in the "recent test list"</li>
-        </ul>
-        <br>
-        <ul><u><b>Version 1.02 changes</b></u>
-            <li>new feature: provides supporting junit4.1.</li>
-            <li>change: The high of trace log frame is increased to 600px</li>
-            <li>fix bug: Test does not run correctly after Module setting changed.</li>
-            <li>fix bug: When the root tree node is selected, console text will not be updated after run tests</li>
-        </ul>
-        <br>
-        <ul><u><b>Version 1.01 changes</b></u>
-            <li>new feature: test name displayed in the tree of recent test list will be renamed when developer rename the name of test.</li>
-            <li>new feature: test will be remove from tree of recent test list when test file is deleted.</li>
-            <li>fix bug: Remove a test when opening a JUnit TestCase and the size of recent test list is full.</li>
-            <li>fix bug: Inner class of JUnit TestCase would be as JUnit TestCase when running all tests.</li>
-        </ul>
-        <br>
-        <ul><u><b>Version 1.00 features</b></u>
-            <li>Add the Fireworks tool window when opening a Project.</li>
-            <li>There is a tests list organized as a tree and named "recent test list" in the Fireworks tool window.</li>
-            <li>Enable/disable running tests in the "recent test list" automatically.
-                <ul>
-                <li>To enable it, you should set value of "Delay time(millisecond)" in the Fireworks configuration form larger than zero.</li>
-                <li>To disable it, you should set value of "Delay time(millisecond)" to less than 0.</li>
-                </ul>
-            </li>
-            <li>The test result is organized by a table which will pick out the key summary of the test result.
-            The table will only display failed tests result.</li>
-            <li>Add TestCase which is opening or editing into "recent test list".</li>
-            <li>Set up filter regex for filtering TestCase by name, which can be added into "recent test list".</li>
-            <li>Press hot key or button to run all tests of the project, which are found by "test class name regex" in the test source folder of the module.</li>
-            <li>Press hot key or button to run tests in the "recent test list".</li>
-            <li>The state of every test in the "recent test list" is showed by icon.</li>
-            <li>The icon of Fireworks tool window will show whether there are tests failed in the "recent test list".</li>
-            <li>Disable/enable Fireworks, Fireworks tool window will be removed and hot key of running tests will be disabled.</li>
-            <li>If there is no test in the "recent test list", Fireworks will be failure state.</li>
-            <li>The result of running tests(all/recent test list) will be displayed in the status bar.</li>
-        </ul>
+        The complete change-notes is available <a href="http://swing1979.googlepages.com/fireworkschangenotes">here</a>
         ]]>
     </change-notes>
-    <version>1.10</version>
+    <version>1.11</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/fireworks"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000" until-build="5766"/>
