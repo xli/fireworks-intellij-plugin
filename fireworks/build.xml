@@ -27,6 +27,7 @@ can go to folder "core" to build it.
             <include name="lib/log4j.jar"/>
             <include name="lib/jdom.jar"/>
             <include name="lib/picocontainer.jar"/>
+            <include name="lib/idea.jar"/>
         </fileset>
     </path>
 

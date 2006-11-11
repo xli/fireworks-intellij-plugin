@@ -1,3 +1,6 @@
+
+* should cancel fireworks after undo changes after last fireworks build.
+
 ? check JUnit, if there is no JUnit exist, disable fireworks
 * build.xml: checkstyle
 

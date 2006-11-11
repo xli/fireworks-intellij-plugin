@@ -15,6 +15,7 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
+import com.intellij.codeInsight.template.TemplateManager;
 import com.intellij.execution.ExecutionManager;
 import com.intellij.execution.filters.TextConsoleBuidlerFactory;
 import com.intellij.openapi.compiler.CompileStatusNotification;
@@ -194,5 +195,9 @@ public class ProjectAdapter {
         for (int i = 0; i < buildListeners.size(); i++) {
             sunshine.addBuildListener(buildListeners.get(i));
         }
+    }
+
+    public TemplateManager getTemplateManager() {
+        return TemplateManager.getInstance(project);
     }
 }

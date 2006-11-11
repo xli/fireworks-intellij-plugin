@@ -119,6 +119,7 @@ public class FireworksContainer {
         container.registerComponentImplementation(CodeCompletionAdapter.class);
         container.registerComponentImplementation(GoToFileOrClassAdapter.class);
         container.registerComponentImplementation(MenuSelectionAdapter.class);
+        container.registerComponentImplementation(LiveTemplateAdapter.class);
     }
 
     public void start() {
