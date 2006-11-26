@@ -1,4 +1,3 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="http://swing1979.googlepages.com/fireworks">
     <name>fireworks</name>
     <description>
@@ -51,8 +50,12 @@
 				</p>
 			]]>
     </description>
+
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.13 changes</b></u>
+            <li>new feature: user can send feedbacks from Fireworks configuration form to Li Xiao(author of Fireworks) directly.</li>
+        </ul>
         <ul><u><b>Version 1.12 changes</b></u>
             <li>power up: fireworks will not trigger task of running tests when there is a live template working in editor focused.</li>
         </ul>
@@ -65,8 +68,9 @@
         The complete change-notes is available <a href="http://swing1979.googlepages.com/fireworkschangenotes">here</a>
         ]]>
     </change-notes>
-    <version>1.12</version>
-    <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/fireworks"
+
+    <version>1.13</version>
+    <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
     <idea-version since-build="3000" until-build="5784"/>
 

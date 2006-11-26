@@ -15,6 +15,8 @@
  */
 package com.thoughtworks.fireworks.plugin.configuration;
 
+import com.thoughtworks.fireworks.mail.FeedbacksActionListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.MessageFormat;
@@ -39,7 +41,7 @@ public class ConfigurationUI {
         autoRunTestsDelayTime = new JTextField();
         jvmArgs = new JTextField();
 
-        pane = new JPanel(new GridLayout(7, 2));
+        pane = new JPanel(new GridLayout(8, 2));
         pane.add(new Label("Enable fireworks: "));
         pane.add(enable);
         pane.add(new Label("Enable auto run task: "));
@@ -54,6 +56,11 @@ public class ConfigurationUI {
         pane.add(autoRunTestsDelayTime);
         pane.add(new Label("JVM arguments for the tests: "));
         pane.add(jvmArgs);
+
+        pane.add(new Label("Just ten seconds, please help me, "));
+        JButton feedbacks = new JButton("click me to response feedbacks.");
+        feedbacks.addActionListener(new FeedbacksActionListener());
+        pane.add(feedbacks);
     }
 
     public JComponent getRootComponent() {
