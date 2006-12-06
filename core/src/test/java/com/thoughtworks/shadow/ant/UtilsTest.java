@@ -18,10 +18,26 @@ package com.thoughtworks.shadow.ant;
 import junit.framework.TestCase;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Arrays;
+import java.io.File;
+
+import org.apache.tools.ant.types.Path;
 
 public class UtilsTest extends TestCase {
     public void testShouldReturnNullIfPathStrsIsNullOrEmpty() throws Exception {
         assertNull(AntUtils.toPath(null, (URL[]) null));
         assertNull(AntUtils.toPath(null, new URL[0]));
+    }
+
+    public void testToPath() throws Exception {
+        String[] files = new String[]{"file:/c:/file0", "file:/e:/file1"};
+        URL[] urls = new URL[]{new URL(files[0]), new URL(files[1])};
+        Path path = AntUtils.toPath(null, urls);
+
+        assertTrue(path.toString().contains("c:"));
+        assertTrue(path.toString().contains("file0"));
+        assertTrue(path.toString().contains("e:"));
+        assertTrue(path.toString().contains("file1"));
     }
 }

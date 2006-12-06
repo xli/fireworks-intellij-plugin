@@ -19,16 +19,21 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
 
 import java.net.URL;
+import java.io.File;
 
 public class AntUtils {
     public static Path toPath(Project antProject, URL[] pathURLs) {
         if (pathURLs == null || pathURLs.length == 0) {
             return null;
         }
-        Path path = new Path(antProject, pathURLs[0].getFile());
+        Path path = new Path(antProject, getPath(pathURLs[0]));
         for (int i = 1; i < pathURLs.length; i++) {
-            path.append(new Path(antProject, pathURLs[i].getFile()));
+            path.append(new Path(antProject, getPath(pathURLs[i])));
         }
         return path;
+    }
+
+    private static String getPath(URL url) {
+        return new File(url.getFile()).getPath();
     }
 }

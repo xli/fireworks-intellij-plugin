@@ -53,6 +53,9 @@
 
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.14 changes</b></u>
+            <li>fix bug: Fireworks can't work when project libs are not at C driver in IntelliJ 6.(Thank Krieg Adam for reporting the bug:)</li>
+        </ul>
         <ul><u><b>Version 1.13 changes</b></u>
             <li>new feature: user can send feedbacks from Fireworks configuration form to Li Xiao(author of Fireworks) directly.</li>
         </ul>
@@ -69,9 +72,10 @@
         ]]>
     </change-notes>
 
-    <version>1.13</version>
+    <version>1.14</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/"
-            logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao</vendor>
+            logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao
+    </vendor>
     <idea-version since-build="3000" until-build="5784"/>
 
     <project-components>

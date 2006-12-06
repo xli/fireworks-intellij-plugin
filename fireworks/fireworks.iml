@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module version="4" relativePaths="true" type="PLUGIN_MODULE">
+<module version="4" relativePaths="false" type="PLUGIN_MODULE">
   <component name="DevKit.ModuleBuildProperties" url="file://$MODULE_DIR$/META-INF/plugin.xml" />
   <component name="ModuleRootManager" />
-  <component name="NewModuleRootManager">
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -17,18 +17,18 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../core/target/classes" />
+          <root url="file://C:/Documents and Settings/xli/My Documents/ThoughtWorks/workspace/dontmakemetest/trunk/core/target/classes" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../core/src/main/java" />
+          <root url="file://C:/Documents and Settings/xli/My Documents/ThoughtWorks/workspace/dontmakemetest/trunk/core/src/main/java" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../dependent-libs/junit-4.1.jar!/" />
+          <root url="jar://C:/Documents and Settings/xli/My Documents/ThoughtWorks/workspace/dontmakemetest/trunk/dependent-libs/junit-4.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,7 +37,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../dependent-libs/turtlemock-1.0-SNAPSHOT.jar!/" />
+          <root url="jar://C:/Documents and Settings/xli/My Documents/ThoughtWorks/workspace/dontmakemetest/trunk/dependent-libs/turtlemock-1.0-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -46,7 +46,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../dependent-libs/ant-1.6.5.jar!/" />
+          <root url="jar://C:/Documents and Settings/xli/My Documents/ThoughtWorks/workspace/dontmakemetest/trunk/dependent-libs/ant-1.6.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -55,7 +55,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../dependent-libs/javamail-1.4.jar!/" />
+          <root url="jar://C:/Documents and Settings/xli/My Documents/ThoughtWorks/workspace/dontmakemetest/trunk/dependent-libs/javamail-1.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -64,7 +64,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../dependent-libs/activation-1.1.jar!/" />
+          <root url="jar://C:/Documents and Settings/xli/My Documents/ThoughtWorks/workspace/dontmakemetest/trunk/dependent-libs/activation-1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
