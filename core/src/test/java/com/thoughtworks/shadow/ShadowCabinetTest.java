@@ -15,10 +15,8 @@
  */
 package com.thoughtworks.shadow;
 
-import com.thoughtworks.shadow.tests.AllTypes;
-import com.thoughtworks.shadow.tests.Err;
-import com.thoughtworks.shadow.tests.Failure;
-import com.thoughtworks.shadow.tests.Success;
+import com.thoughtworks.shadow.tests.*;
+import com.thoughtworks.shadow.ant.AntSunshine;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
@@ -34,6 +32,16 @@ public class ShadowCabinetTest extends TestCase {
         successTestShadow = new ComparableTestShadow(new Success());
         failureTestShadow = new ComparableTestShadow(new Failure());
         errorTestShadow = new ComparableTestShadow(new Err());
+    }
+
+    public void testParseExceptions() throws Exception {
+        ShineTestClassShadow test = new ShineTestClassShadow(ErrExceptionCausedByAnother.class.getName(), TestUtils.sunshine());
+        cabinet.add(new ComparableTestShadow(test));
+        TestResult result = new TestResult();
+        cabinet.action(result);
+        assertEquals(1, result.runCount());
+        assertEquals(0, result.failureCount());
+        assertEquals(1, result.errorCount());
     }
 
     public void testShouldRunAllTestClassAddedWhenAction() throws Exception {

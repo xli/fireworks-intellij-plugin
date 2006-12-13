@@ -33,7 +33,6 @@ public abstract class TestTraceLog {
         testMethodName = testNameInfo.substring(0, testNameInfo.indexOf("("));
 
         trace = log.substring(testNameEndIndex).trim();
-
         msg = getMessage(log, testNameEndIndex);
     }
 
@@ -42,17 +41,8 @@ public abstract class TestTraceLog {
         if (testNameEndIndex < firstLineEndIndex) {
             return log.substring(testNameEndIndex, firstLineEndIndex);
         } else {
-            return getMessageFromTrace();
+            return new ExceptionTraceParser(trace).getMessageFromTrace();
         }
-    }
-
-    private String getMessageFromTrace() {
-        String splitStr = ": ";
-        int index = trace.indexOf(splitStr);
-        if (index < 0) {
-            return trace.substring(0, trace.indexOf(Utils.LINE_SEP));
-        }
-        return trace.substring(index + splitStr.length(), trace.indexOf(Utils.LINE_SEP));
     }
 
     public Test testCase() {
