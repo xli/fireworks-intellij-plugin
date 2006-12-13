@@ -27,4 +27,6 @@ public interface FireworksConfig {
     String jvmArgs();
 
     void setMaxSize(int maxSize);
+
+    boolean clearLogConsole();
 }

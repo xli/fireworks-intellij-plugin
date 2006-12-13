@@ -30,6 +30,7 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
     public boolean enableAutoTask = true;
     public int autoRunTestsDelayTime = 4000;
     public String jvmArgs;
+    public boolean clearLogConsole = true;
 
     public void apply() throws ConfigurationException {
         enable = getConfigurationUI().isEnable();
@@ -43,6 +44,7 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
         setMaxSize(getConfigurationUI().maxSize());
         autoRunTestsDelayTime = getConfigurationUI().autoRunTestsDelayTime();
         jvmArgs = getConfigurationUI().jvmArgs();
+        clearLogConsole = getConfigurationUI().getClearLogConsole();
     }
 
     public void reset() {
@@ -53,6 +55,7 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
         getConfigurationUI().setMaxSize(maxSize());
         getConfigurationUI().setAutoRunTestsDelayTime(autoRunTestsDelayTime());
         getConfigurationUI().setJvmArgs(jvmArgs());
+        getConfigurationUI().setClearLogConsole(clearLogConsole());
     }
 
     public void changeAutoTaskEnabled() {
@@ -100,5 +103,9 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
 
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
+    }
+
+    public boolean clearLogConsole() {
+        return clearLogConsole;
     }
 }

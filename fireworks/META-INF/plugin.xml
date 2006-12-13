@@ -53,6 +53,9 @@
 
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.15 changes</b></u>
+            <li>fix bug: Fireworks can't work when project libs or classpaths are not at C driver.(Thank Krieg Adam for reporting the bug:)</li>
+        </ul>
         <ul><u><b>Version 1.14 changes</b></u>
             <li>fix bug: Fireworks can't work when project libs or classpaths are not at C driver.(Thank Krieg Adam for reporting the bug:)</li>
         </ul>

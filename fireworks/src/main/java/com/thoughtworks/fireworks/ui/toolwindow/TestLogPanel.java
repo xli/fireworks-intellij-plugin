@@ -16,7 +16,9 @@
 package com.thoughtworks.fireworks.ui.toolwindow;
 
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
+import com.thoughtworks.fireworks.core.ApplicationAdaptee;
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
+import com.thoughtworks.fireworks.core.FireworksConfig;
 import com.thoughtworks.fireworks.core.Utils;
 import com.thoughtworks.shadow.ComparableTestShadow;
 import com.thoughtworks.shadow.ShadowCabinetListener;
@@ -24,16 +26,20 @@ import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 import java.util.Date;
 
 public class TestLogPanel extends JPanel implements BuildListener, ShadowCabinetListener {
     private ConsoleViewAdaptee console;
     private long time;
+    private FireworksConfig config;
+    private ApplicationAdaptee app;
 
-    public TestLogPanel(ProjectAdapter projectAdapter) {
+    public TestLogPanel(ProjectAdapter projectAdapter, FireworksConfig config, ApplicationAdaptee app) {
         super(new BorderLayout());
+        this.config = config;
+        this.app = app;
         console = projectAdapter.createTextConsoleBuilder();
         add(console.getComponent(), BorderLayout.CENTER);
         projectAdapter.addBuildListener(this);
@@ -110,6 +116,23 @@ public class TestLogPanel extends JPanel implements BuildListener, ShadowCabinet
 
     public void startAction() {
         time = System.currentTimeMillis();
+        if (config.clearLogConsole()) {
+            clearConsoleAndOutput();
+        } else {
+            outputStartActionLog();
+        }
+    }
+
+    private void clearConsoleAndOutput() {
+        app.invokeLater(new Runnable() {
+            public void run() {
+                console.clear();
+                outputStartActionLog();
+            }
+        });
+    }
+
+    private void outputStartActionLog() {
         console.printlnSystemOutput("***************************************************");
         console.printlnSystemOutput("* start action at: " + new Date(time));
         console.printlnSystemOutput("***************************************************");

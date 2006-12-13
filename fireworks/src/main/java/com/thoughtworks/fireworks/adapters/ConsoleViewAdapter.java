@@ -20,7 +20,7 @@ import com.intellij.execution.ui.ConsoleViewContentType;
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
 import com.thoughtworks.shadow.Utils;
 
-import javax.swing.*;
+import javax.swing.JComponent;
 
 public class ConsoleViewAdapter implements ConsoleViewAdaptee {
     private final ConsoleView console;
@@ -35,7 +35,7 @@ public class ConsoleViewAdapter implements ConsoleViewAdaptee {
         return component;
     }
 
-    public void cleanAndPrint(String text) {
+    public void clearAndPrint(String text) {
         clear();
         printButFilterEmptyAndNull(text, ConsoleViewContentType.NORMAL_OUTPUT);
     }

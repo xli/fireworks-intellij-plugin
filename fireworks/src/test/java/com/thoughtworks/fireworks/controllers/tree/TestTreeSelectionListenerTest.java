@@ -33,10 +33,10 @@ public class TestTreeSelectionListenerTest extends TestCase implements Log, Cons
     }
 
     public void output(ConsoleViewAdaptee consoleView) {
-        consoleView.cleanAndPrint(log);
+        consoleView.clearAndPrint(log);
     }
 
-    public void cleanAndPrint(String text) {
+    public void clearAndPrint(String text) {
         outputed = text;
     }
 

@@ -33,7 +33,7 @@ public class ConsoleViewBuffer implements ConsoleViewAdaptee {
         return null;
     }
 
-    public void cleanAndPrint(String text) {
+    public void clearAndPrint(String text) {
         if (Utils.isEmpty(text)) {
             return;
         }

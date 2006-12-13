@@ -36,7 +36,7 @@ public class DialogTraceLogViewer implements TraceLogViewer {
 
     private JComponent getConsoleComp(Throwable t) {
         ConsoleViewAdaptee console = project.createTextConsoleBuilder();
-        console.cleanAndPrint(Utils.toString(t));
+        console.clearAndPrint(Utils.toString(t));
         return console.getComponent();
     }
 

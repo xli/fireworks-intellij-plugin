@@ -29,6 +29,7 @@ public class ConfigurationUI {
     private JTextField maxSize;
     private JTextField autoRunTestsDelayTime;
     private JTextField jvmArgs;
+    private Checkbox clearLogConsole;
 
     private JPanel pane;
 
@@ -40,8 +41,9 @@ public class ConfigurationUI {
         maxSize = new JTextField();
         autoRunTestsDelayTime = new JTextField();
         jvmArgs = new JTextField();
+        clearLogConsole = new Checkbox();
 
-        pane = new JPanel(new GridLayout(8, 2));
+        pane = new JPanel(new GridLayout(9, 2));
         pane.add(new Label("Enable fireworks: "));
         pane.add(enable);
         pane.add(new Label("Enable auto run task: "));
@@ -56,6 +58,8 @@ public class ConfigurationUI {
         pane.add(autoRunTestsDelayTime);
         pane.add(new Label("JVM arguments for the tests: "));
         pane.add(jvmArgs);
+        pane.add(new Label("Clear log console: "));
+        pane.add(clearLogConsole);
 
         pane.add(new Label("Just ten seconds, please help me, "));
         JButton feedbacks = new JButton("click me to response feedbacks.");
@@ -131,5 +135,13 @@ public class ConfigurationUI {
 
     public void setAutoTaskEnabled(boolean enableAutoTask) {
         this.enableAutoTask.setState(enableAutoTask);
+    }
+
+    public boolean getClearLogConsole() {
+        return clearLogConsole.getState();
+    }
+
+    public void setClearLogConsole(boolean clearLogConsole) {
+        this.clearLogConsole.setState(clearLogConsole);
     }
 }

@@ -20,7 +20,7 @@ import javax.swing.*;
 public interface ConsoleViewAdaptee {
     JComponent getComponent();
 
-    void cleanAndPrint(String text);
+    void clearAndPrint(String text);
 
     void dispose();
 

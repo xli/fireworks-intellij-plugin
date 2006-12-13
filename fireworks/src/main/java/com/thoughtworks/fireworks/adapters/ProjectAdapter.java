@@ -18,6 +18,7 @@ package com.thoughtworks.fireworks.adapters;
 import com.intellij.codeInsight.template.TemplateManager;
 import com.intellij.execution.ExecutionManager;
 import com.intellij.execution.filters.TextConsoleBuidlerFactory;
+import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.compiler.CompileStatusNotification;
 import com.intellij.openapi.compiler.CompilerManager;
 import com.intellij.openapi.editor.Document;
@@ -82,7 +83,8 @@ public class ProjectAdapter {
     }
 
     public ConsoleViewAdaptee createTextConsoleBuilder() {
-        ConsoleViewAdapter consoleViewAdapter = new ConsoleViewAdapter(TextConsoleBuidlerFactory.getInstance().createBuilder(project).getConsole());
+        ConsoleView view = TextConsoleBuidlerFactory.getInstance().createBuilder(project).getConsole();
+        ConsoleViewAdapter consoleViewAdapter = new ConsoleViewAdapter(view);
         consoles.add(consoleViewAdapter);
         return consoleViewAdapter;
     }

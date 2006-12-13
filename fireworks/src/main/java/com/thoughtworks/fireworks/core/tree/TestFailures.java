@@ -79,7 +79,7 @@ public class TestFailures {
         for (Throwable t : failures) {
             buffer.append(Utils.toString(t));
         }
-        consoleView.cleanAndPrint(buffer.toString());
+        consoleView.clearAndPrint(buffer.toString());
     }
 
     private final Map<Shadow, Throwable> buffer = new HashMap<Shadow, Throwable>();

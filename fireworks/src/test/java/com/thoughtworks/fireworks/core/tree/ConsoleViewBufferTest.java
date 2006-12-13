@@ -30,7 +30,7 @@ public class ConsoleViewBufferTest extends TestCase {
     }
 
     public void testShouldBufferLog() throws Exception {
-        console.cleanAndPrint("text");
+        console.clearAndPrint("text");
         assertEquals("text" + Utils.LINE_SEP, writer.toString());
     }
 
@@ -39,8 +39,8 @@ public class ConsoleViewBufferTest extends TestCase {
     }
 
     public void testShouldIgnoreNullOrEmptyText() throws Exception {
-        console.cleanAndPrint("");
-        console.cleanAndPrint(null);
+        console.clearAndPrint("");
+        console.clearAndPrint(null);
         assertEquals("", writer.toString());
     }
 }
