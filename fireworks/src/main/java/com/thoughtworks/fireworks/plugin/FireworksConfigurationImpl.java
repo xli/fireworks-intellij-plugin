@@ -46,13 +46,13 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
     }
 
     public void reset() {
-        getConfigurationUI().setEnable(enable);
-        getConfigurationUI().setAutoTaskEnabled(enableAutoTask);
-        getConfigurationUI().setMaxMemory(maxMemory);
-        getConfigurationUI().setExpectedTestCaseNameRegex(expectedTestCaseNameRegex);
-        getConfigurationUI().setMaxSize(maxSize);
-        getConfigurationUI().setAutoRunTestsDelayTime(autoRunTestsDelayTime);
-        getConfigurationUI().setJvmArgs(jvmArgs);
+        getConfigurationUI().setEnable(isEnable());
+        getConfigurationUI().setAutoTaskEnabled(isAutoTaskEnabled());
+        getConfigurationUI().setMaxMemory(maxMemory());
+        getConfigurationUI().setExpectedTestCaseNameRegex(expectedTestCaseNameRegex());
+        getConfigurationUI().setMaxSize(maxSize());
+        getConfigurationUI().setAutoRunTestsDelayTime(autoRunTestsDelayTime());
+        getConfigurationUI().setJvmArgs(jvmArgs());
     }
 
     public void changeAutoTaskEnabled() {
