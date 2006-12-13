@@ -48,8 +48,10 @@ import com.thoughtworks.shadow.Sunshine;
 import com.thoughtworks.shadow.ant.AntSunshine;
 import org.apache.tools.ant.BuildListener;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +94,15 @@ public class ProjectAdapter {
     public void setToolWindowIcon(final String id, final Icon icon) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                getToolWindowManager().getToolWindow(id).setIcon(icon);
+                ToolWindowManager twm = getToolWindowManager();
+                if (twm == null) {
+                    return;
+                }
+                ToolWindow window = twm.getToolWindow(id);
+                if (window == null) {
+                    return;
+                }
+                window.setIcon(icon);
             }
         });
     }
