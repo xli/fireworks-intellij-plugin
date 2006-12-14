@@ -31,7 +31,9 @@
           <root url="jar://C:/Documents and Settings/xli/My Documents/ThoughtWorks/workspace/dontmakemetest/trunk/dependent-libs/junit-4.1.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://C:/Documents and Settings/xli/My Documents/Downloads/java/junit4.1/junit-4.1-src.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">

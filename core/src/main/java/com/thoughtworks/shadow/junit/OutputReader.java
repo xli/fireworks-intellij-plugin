@@ -75,7 +75,7 @@ public class OutputReader {
                 throw new TestRunnerError("the output string does not contain test time info line.");
             }
             if (line.isTimeInfo()) {
-                return line.distillNum();
+                return line.distillTimeInfo();
             }
         }
     }

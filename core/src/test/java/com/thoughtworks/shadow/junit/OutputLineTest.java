@@ -17,9 +17,30 @@ package com.thoughtworks.shadow.junit;
 
 import junit.framework.TestCase;
 
+import java.text.NumberFormat;
+
 public class OutputLineTest extends TestCase {
     public void testToString() throws Exception {
         OutputLine line = new OutputLine("line");
         assertEquals("OutputLine: line", line.toString());
+    }
+    
+    public void testIsTimeInfo() throws Exception {
+        String t = NumberFormat.getInstance().format((double) 1000000 / 1000);
+        long a = NumberFormat.getInstance().parse(t).longValue();
+        System.out.println(a);
+        OutputLine[] timeLines = new OutputLine[]{new OutputLine("Time: 1"),
+                new OutputLine("Time: 2,031"), new OutputLine("Time: 123,123,031"), new OutputLine("Time: 123,031.12")};
+        for (int i = 0; i < timeLines.length; i++) {
+            OutputLine timeLine = timeLines[i];
+            assertTrue(timeLine.isTimeInfo());
+        }
+
+        String[] expected = new String[]{"1", "2,031", "123,123,031", "123,031.12"};
+        for (int i = 0; i < timeLines.length; i++) {
+            OutputLine timeLine = timeLines[i];
+            assertEquals(expected[i], timeLine.distillTimeInfo());
+        }
+
     }
 }

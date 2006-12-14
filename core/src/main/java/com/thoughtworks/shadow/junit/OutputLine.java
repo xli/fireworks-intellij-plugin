@@ -18,10 +18,10 @@ package com.thoughtworks.shadow.junit;
 import com.thoughtworks.shadow.Utils;
 
 public class OutputLine {
-    private static final String TIME_INFO_REGEX = "^Time: [\\d]+(\\.[\\d]+)?$";
+    private static final String TIME_INFO_REGEX = "^Time: [,\\d]+(\\.[\\d]+)?$";
     private static final String ERROR_TRACE_LOG_REGEX = "^There (was|were) \\d+ errors?:";
     private static final String FAILURE_TRACE_LOG_REGEX = "^There (was|were) \\d+ failures?:";
-    private static final String DISTILL_NUM_SPLIT_REGEX = "[^\\d]+";
+    private static final String DISTILL_NUM_SPLIT_REGEX = "Time:[ ]*";
 
     private final String line;
 
@@ -33,8 +33,8 @@ public class OutputLine {
         buffer.append(line + Utils.LINE_SEP);
     }
 
-    public String distillNum() {
-        return line.split(DISTILL_NUM_SPLIT_REGEX)[1];
+    public String distillTimeInfo() {
+        return line.split(DISTILL_NUM_SPLIT_REGEX)[1].trim();
     }
 
     public boolean isEnd() {

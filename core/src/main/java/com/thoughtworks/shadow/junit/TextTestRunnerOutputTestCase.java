@@ -18,6 +18,9 @@ package com.thoughtworks.shadow.junit;
 import junit.framework.Test;
 import junit.framework.TestResult;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 public class TextTestRunnerOutputTestCase implements Test {
 
     private final long time;
@@ -42,6 +45,10 @@ public class TextTestRunnerOutputTestCase implements Test {
     }
 
     public long elapsedTimeAsLong(String runTime) {
-        return (long) (1000 * Double.parseDouble(runTime));
+        try {
+            return 1000 * NumberFormat.getInstance().parse(runTime).longValue();
+        } catch (ParseException e) {
+            return 0;
+        }
     }
 }
