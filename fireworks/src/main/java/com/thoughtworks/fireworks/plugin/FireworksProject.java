@@ -18,7 +18,6 @@ package com.thoughtworks.fireworks.plugin;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 import com.thoughtworks.fireworks.controllers.CabinetController;
-import com.thoughtworks.fireworks.controllers.timer.ConfiguredTimer;
 import com.thoughtworks.fireworks.core.TestShadowMap;
 
 public class FireworksProject extends FireworksConfigurationImpl implements ProjectComponent {
@@ -46,12 +45,11 @@ public class FireworksProject extends FireworksConfigurationImpl implements Proj
     public void projectOpened() {
         setMaxSize(maxSize);
         resetEnableFireworks();
-        resetAutoTaskEnabled();
+        fireAutoRunTestConfigurationListener();
     }
 
     public void projectClosed() {
         container.stop();
-        getListenersForAutoRunTask().disableListenersForAutoRunTask();
     }
 
     public void setMaxSize(int maxSize) {
@@ -60,28 +58,11 @@ public class FireworksProject extends FireworksConfigurationImpl implements Proj
     }
 
     protected void resetEnableFireworks() {
-        if (isEnable()) {
+        if (isEnabled()) {
             container.start();
         } else {
             container.stop();
         }
-    }
-
-    protected void resetAutoTaskEnabled() {
-        if (isEnable() && isAutoTaskEnabled()) {
-            getListenersForAutoRunTask().enableListenersForAutoRunTask();
-        } else {
-            getListenersForAutoRunTask().disableListenersForAutoRunTask();
-            getConfiguredTimer().cancelTasks();
-        }
-    }
-
-    private ConfiguredTimer getConfiguredTimer() {
-        return container.getInstance(ConfiguredTimer.class);
-    }
-
-    private AutoRunTaskListeners getListenersForAutoRunTask() {
-        return container.getInstance(AutoRunTaskListeners.class);
     }
 
     public CabinetController getCabinetController() {

@@ -29,4 +29,12 @@ public interface FireworksConfig {
     void setMaxSize(int maxSize);
 
     boolean clearLogConsole();
+
+    boolean isAutoRunTestsEnabled();
+
+    boolean isEnabled();
+
+    void switchAutoRunTestsConfiguration();
+
+    void addAutoRunTestConfigurationListener(AutoRunTestConfigurationListener listener);
 }

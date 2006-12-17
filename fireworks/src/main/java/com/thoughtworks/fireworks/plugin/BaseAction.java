@@ -22,7 +22,7 @@ import com.intellij.openapi.project.Project;
 
 public abstract class BaseAction extends AnAction {
     public void update(AnActionEvent e) {
-        e.getPresentation().setEnabled(fireworksProject(e).isEnable());
+        e.getPresentation().setEnabled(fireworksProject(e).isEnabled());
     }
 
     protected FireworksProject fireworksProject(AnActionEvent e) {

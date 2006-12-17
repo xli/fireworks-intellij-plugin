@@ -15,15 +15,17 @@
  */
 package com.thoughtworks.fireworks.controllers.timer;
 
+import com.thoughtworks.fireworks.core.AutoRunTestConfigurationListener;
 import com.thoughtworks.fireworks.core.FireworksConfig;
 
-public class ConfiguredTimer {
+public class ConfiguredTimer implements AutoRunTestConfigurationListener {
     private final FireworksConfig config;
     private final CabinetControllerActionTimer timer;
 
     public ConfiguredTimer(FireworksConfig config, CabinetControllerActionTimer timer) {
         this.config = config;
         this.timer = timer;
+        config.addAutoRunTestConfigurationListener(this);
     }
 
     public void schedule() {
@@ -36,5 +38,12 @@ public class ConfiguredTimer {
 
     public void cancelTasks() {
         timer.cancelTasks();
+    }
+
+    public void change() {
+        if (config.isEnabled() && config.isAutoRunTestsEnabled()) {
+            return;
+        }
+        cancelTasks();
     }
 }

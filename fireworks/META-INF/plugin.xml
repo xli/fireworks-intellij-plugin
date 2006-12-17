@@ -53,8 +53,11 @@
 
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.17 changes</b></u>
+            <li>new feature: add a checkbox into Fireworks Tool Window for showing and switching configuration of autorun tests</li>
+        </ul>
         <ul><u><b>Version 1.16 changes</b></u>
-            <li>fix bug: When a test costs more than 1000 secs, Fireworks can't display test result correctly.</li>
+            <li>fix bug: When a test costs more than 1000 secs, Fireworks can't display test result correctly.(Thank you, Michael Postmann)</li>
         </ul>
         <ul><u><b>Version 1.15 changes</b></u>
             <li>fix bug:when disable fireworks on Intellij6, there is a NullPointerException threw in the ProjectAdapter</li>
@@ -69,7 +72,7 @@
         ]]>
     </change-notes>
 
-    <version>1.16</version>
+    <version>1.17</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao
     </vendor>

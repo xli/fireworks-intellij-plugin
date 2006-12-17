@@ -18,30 +18,31 @@ package com.thoughtworks.fireworks.plugin.configuration;
 import com.thoughtworks.fireworks.mail.FeedbacksActionListener;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
+import java.awt.Label;
 import java.text.MessageFormat;
 
 public class ConfigurationUI {
-    private Checkbox enable;
-    private Checkbox enableAutoTask;
+    private JCheckBox enable;
+    private JCheckBox enableAutoTask;
     private JTextField maxMemory;
     private JTextField expectedTestCaseNameRegex;
     private JTextField maxSize;
     private JTextField autoRunTestsDelayTime;
     private JTextField jvmArgs;
-    private Checkbox clearLogConsole;
+    private JCheckBox clearLogConsole;
 
     private JPanel pane;
 
     public ConfigurationUI() {
-        enable = new Checkbox();
-        enableAutoTask = new Checkbox();
+        enable = new JCheckBox();
+        enableAutoTask = new JCheckBox();
         maxMemory = new JTextField();
         expectedTestCaseNameRegex = new JTextField();
         maxSize = new JTextField();
         autoRunTestsDelayTime = new JTextField();
         jvmArgs = new JTextField();
-        clearLogConsole = new Checkbox();
+        clearLogConsole = new JCheckBox();
 
         pane = new JPanel(new GridLayout(9, 2));
         pane.add(new Label("Enable fireworks: "));
@@ -72,7 +73,7 @@ public class ConfigurationUI {
     }
 
     public boolean isEnable() {
-        return enable.getState();
+        return enable.isSelected();
     }
 
     public String maxMemory() {
@@ -84,7 +85,7 @@ public class ConfigurationUI {
     }
 
     public void setEnable(boolean enable) {
-        this.enable.setState(enable);
+        this.enable.setSelected(enable);
     }
 
     public void setExpectedTestCaseNameRegex(String expectedTestCaseNameRegex) {
@@ -130,18 +131,18 @@ public class ConfigurationUI {
     }
 
     public boolean isAutoTaskEnabled() {
-        return enableAutoTask.getState();
+        return enableAutoTask.isSelected();
     }
 
     public void setAutoTaskEnabled(boolean enableAutoTask) {
-        this.enableAutoTask.setState(enableAutoTask);
+        this.enableAutoTask.setSelected(enableAutoTask);
     }
 
     public boolean getClearLogConsole() {
-        return clearLogConsole.getState();
+        return clearLogConsole.isSelected();
     }
 
     public void setClearLogConsole(boolean clearLogConsole) {
-        this.clearLogConsole.setState(clearLogConsole);
+        this.clearLogConsole.setSelected(clearLogConsole);
     }
 }

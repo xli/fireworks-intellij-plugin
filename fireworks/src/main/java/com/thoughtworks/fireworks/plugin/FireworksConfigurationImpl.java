@@ -16,8 +16,12 @@
 package com.thoughtworks.fireworks.plugin;
 
 import com.intellij.openapi.options.ConfigurationException;
+import com.thoughtworks.fireworks.core.AutoRunTestConfigurationListener;
 import com.thoughtworks.fireworks.core.FireworksConfig;
 import com.thoughtworks.shadow.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class FireworksConfigurationImpl extends FireworksConfiguration implements FireworksConfig {
 
@@ -31,13 +35,14 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
     public int autoRunTestsDelayTime = 4000;
     public String jvmArgs;
     public boolean clearLogConsole = true;
+    private List<AutoRunTestConfigurationListener> listeners = new ArrayList<AutoRunTestConfigurationListener>();
 
     public void apply() throws ConfigurationException {
         enable = getConfigurationUI().isEnable();
         resetEnableFireworks();
 
         enableAutoTask = getConfigurationUI().isAutoTaskEnabled();
-        resetAutoTaskEnabled();
+        fireAutoRunTestConfigurationListener();
 
         maxMemory = getConfigurationUI().maxMemory();
         expectedTestCaseNameRegex = getConfigurationUI().expectedTestCaseNameRegex();
@@ -48,8 +53,8 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
     }
 
     public void reset() {
-        getConfigurationUI().setEnable(isEnable());
-        getConfigurationUI().setAutoTaskEnabled(isAutoTaskEnabled());
+        getConfigurationUI().setEnable(isEnabled());
+        getConfigurationUI().setAutoTaskEnabled(isAutoRunTestsEnabled());
         getConfigurationUI().setMaxMemory(maxMemory());
         getConfigurationUI().setExpectedTestCaseNameRegex(expectedTestCaseNameRegex());
         getConfigurationUI().setMaxSize(maxSize());
@@ -58,20 +63,28 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
         getConfigurationUI().setClearLogConsole(clearLogConsole());
     }
 
-    public void changeAutoTaskEnabled() {
+    public void switchAutoRunTestsConfiguration() {
         enableAutoTask = !enableAutoTask;
-        resetAutoTaskEnabled();
+        fireAutoRunTestConfigurationListener();
     }
 
-    protected abstract void resetAutoTaskEnabled();
+    protected void fireAutoRunTestConfigurationListener() {
+        for (int i = 0; i < listeners.size(); i++) {
+            listeners.get(i).change();
+        }
+    }
+
+    public void addAutoRunTestConfigurationListener(AutoRunTestConfigurationListener listener) {
+        listeners.add(listener);
+    }
 
     protected abstract void resetEnableFireworks();
 
-    public boolean isEnable() {
+    public boolean isEnabled() {
         return enable;
     }
 
-    public boolean isAutoTaskEnabled() {
+    public boolean isAutoRunTestsEnabled() {
         return enableAutoTask;
     }
 

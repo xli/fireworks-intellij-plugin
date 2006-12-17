@@ -17,29 +17,55 @@ package com.thoughtworks.fireworks.ui.toolwindow;
 
 import com.thoughtworks.fireworks.controllers.Icons;
 import com.thoughtworks.fireworks.controllers.TestResultSummaryBgColorListener;
+import com.thoughtworks.fireworks.core.AutoRunTestConfigurationListener;
+import com.thoughtworks.fireworks.core.FireworksConfig;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ActionPanel extends JPanel implements TestResultSummaryBgColorListener {
+public class ActionPanel extends JPanel implements TestResultSummaryBgColorListener, AutoRunTestConfigurationListener {
     private static final String RUN_TEST_LIST_BUTTON_TEXT = "Run(Alt-Shift-K)";
+    private static final String RUN_ALL_TESTS_BUTTON_TEXT = "Run all tests(Alt-Shift-L)";
+    private static final String AUTO_RUN_TEST_BUTTON_TEXT = "Enable/disable autorun tests(Alt-Shift-A)";
+
     private JButton runTestListButton;
     private JButton runAllTestsButton;
-    private static final String RUN_ALL_TESTS_BUTTON_TEXT = "Run all tests(Alt-Shift-L)";
+    private JCheckBox autorunTestsCheckBox;
+    private FireworksConfig config;
 
-    public ActionPanel(TestResultSummary resultSummary) {
+    public ActionPanel(TestResultSummary resultSummary, final FireworksConfig config) {
         super(new FlowLayout(FlowLayout.LEADING, 4, 3));
+        this.config = config;
         runTestListButton = new FancyButton(Icons.runTestListButton(), Icons.runTestListButtonF());
         runTestListButton.setToolTipText(RUN_TEST_LIST_BUTTON_TEXT);
 
         runAllTestsButton = new FancyButton(Icons.runAllTestsButton(), Icons.runAllTestsButtonF());
         runAllTestsButton.setToolTipText(RUN_ALL_TESTS_BUTTON_TEXT);
 
+        ActionListener listener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                config.switchAutoRunTestsConfiguration();
+            }
+        };
+        autorunTestsCheckBox = new FancyCheckBox(Icons.disableAutorunTestsButton(), AUTO_RUN_TEST_BUTTON_TEXT,
+                Icons.enableAutorunTestsButton(), config.isAutoRunTestsEnabled(), listener);
+
+        config.addAutoRunTestConfigurationListener(this);
         add(runTestListButton);
         add(runAllTestsButton);
+        add(autorunTestsCheckBox);
         add(resultSummary);
         setBorder(BorderFactory.createLineBorder(Color.BLUE));
+    }
+
+    public void change() {
+        autorunTestsCheckBox.setSelected(config.isAutoRunTestsEnabled());
     }
 
     public void removeAllActionListeners() {

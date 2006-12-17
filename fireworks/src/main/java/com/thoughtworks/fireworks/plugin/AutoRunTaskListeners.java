@@ -19,25 +19,31 @@ import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
 import com.thoughtworks.fireworks.adapters.RunContentListenerTimerAdapter;
+import com.thoughtworks.fireworks.core.AutoRunTestConfigurationListener;
+import com.thoughtworks.fireworks.core.FireworksConfig;
+import org.picocontainer.Startable;
 
-import java.awt.*;
+import java.awt.AWTEvent;
+import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 
-public class AutoRunTaskListeners {
+public class AutoRunTaskListeners implements Startable {
     private final ProjectAdapter project;
     private final DocumentListener documentListener;
     private final AWTEventListener awtListener;
     private final RunContentListenerTimerAdapter timerAdapter;
+    private FireworksConfig config;
     private boolean enable;
 
-    public AutoRunTaskListeners(ProjectAdapter project, DocumentListener documentListener, AWTEventListener awtListener, RunContentListenerTimerAdapter timerAdapter) {
+    public AutoRunTaskListeners(ProjectAdapter project, DocumentListener documentListener, AWTEventListener awtListener, RunContentListenerTimerAdapter timerAdapter, FireworksConfig config) {
         this.project = project;
         this.documentListener = documentListener;
         this.awtListener = awtListener;
         this.timerAdapter = timerAdapter;
+        this.config = config;
     }
 
-    synchronized public void enableListenersForAutoRunTask() {
+    synchronized private void enableListenersForAutoRunTask() {
         if (enable) {
             return;
         }
@@ -50,7 +56,7 @@ public class AutoRunTaskListeners {
         project.getExecutionManager().getContentManager().addRunContentListener(timerAdapter);
     }
 
-    synchronized public void disableListenersForAutoRunTask() {
+    synchronized private void disableListenersForAutoRunTask() {
         if (!enable) {
             return;
         }
@@ -58,5 +64,22 @@ public class AutoRunTaskListeners {
         Toolkit.getDefaultToolkit().removeAWTEventListener(awtListener);
         EditorFactory.getInstance().getEventMulticaster().removeDocumentListener(documentListener);
         project.getExecutionManager().getContentManager().removeRunContentListener(timerAdapter);
+    }
+
+    public void start() {
+        config.addAutoRunTestConfigurationListener(new AutoRunTestConfigurationListener() {
+            public void change() {
+                if (config.isAutoRunTestsEnabled() && config.isEnabled()) {
+                    enableListenersForAutoRunTask();
+                } else {
+                    disableListenersForAutoRunTask();
+                }
+            }
+        });
+
+    }
+
+    public void stop() {
+        disableListenersForAutoRunTask();
     }
 }

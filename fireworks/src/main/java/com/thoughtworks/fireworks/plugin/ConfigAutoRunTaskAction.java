@@ -19,6 +19,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 
 public class ConfigAutoRunTaskAction extends BaseAction {
     public void actionPerformed(AnActionEvent e) {
-        fireworksProject(e).changeAutoTaskEnabled();
+        fireworksProject(e).switchAutoRunTestsConfiguration();
     }
 }

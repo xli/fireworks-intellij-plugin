@@ -15,8 +15,10 @@
  */
 package com.thoughtworks.fireworks.controllers;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
@@ -64,6 +66,8 @@ public class Icons {
     private static ImageIcon runAllTestsButton = createSmallImageIcon("/run_all_tests_button.png");
     private static ImageIcon runAllTestsButtonF = createSmallImageIcon("/run_all_tests_button_f.png");
     private static ImageIcon taskScheduled = createSmallImageIcon("/task_scheduled.png");
+    private static ImageIcon enableAutorunTestsButton = createSmallImageIcon("/enable_autorun_button.png");
+    private static ImageIcon disableAutorunTestsButton = createSmallImageIcon("/disable_autorun_button.png");
 
     public static ImageIcon logo() {
         return logo;
@@ -111,5 +115,13 @@ public class Icons {
 
     public static Icon taskScheduled() {
         return taskScheduled;
+    }
+
+    public static Icon enableAutorunTestsButton() {
+        return enableAutorunTestsButton;
+    }
+
+    public static Icon disableAutorunTestsButton() {
+        return disableAutorunTestsButton;
     }
 }
