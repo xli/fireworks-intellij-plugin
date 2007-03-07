@@ -59,8 +59,8 @@ public class ActionPanel extends JPanel implements TestResultSummaryBgColorListe
         config.addAutoRunTestConfigurationListener(this);
         add(runTestListButton);
         add(runAllTestsButton);
-        add(autorunTestsCheckBox);
         add(resultSummary);
+        add(autorunTestsCheckBox);
         setBorder(BorderFactory.createLineBorder(Color.BLUE));
     }
 

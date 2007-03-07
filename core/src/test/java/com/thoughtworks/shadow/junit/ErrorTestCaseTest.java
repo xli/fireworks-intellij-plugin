@@ -26,8 +26,8 @@ public class ErrorTestCaseTest extends TestCase {
         Mock visitor = Turtle.mock(ShadowVisitor.class);
         TestShadow shadow = new ErrorTestCase("name", null);
         shadow.accept((ShadowVisitor) visitor.mockTarget());
-        visitor.assertNotDid("visitTestClassName");
-        visitor.assertNotDid("visitTestMethodName");
-        visitor.assertNotDid("end");
+        visitor.assertDid("visitTestClassName").with("name");
+        visitor.assertDid("visitTestMethodName").with("");
+        visitor.assertDid("end");
     }
 }

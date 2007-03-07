@@ -42,7 +42,7 @@ public class ProgressIndicatorUtils {
         return false;
     }
 
-    private static ProgressIndicator getProgressIndicator() {
+    public static ProgressIndicator getProgressIndicator() {
         return ProgressManager.getInstance().getProgressIndicator();
     }
 }

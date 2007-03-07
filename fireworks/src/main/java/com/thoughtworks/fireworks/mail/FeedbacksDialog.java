@@ -56,7 +56,6 @@ public class FeedbacksDialog extends JDialog {
     private String[] quickMessages() {
         return new String[]{
                 "I love it.",
-                "It's ok, I use it sometimes.",
                 "Idea is cool, but it works bad.",
                 "The task of auto run test is always triggered at wrong time.",
                 "I like to run test by hotkeys.",

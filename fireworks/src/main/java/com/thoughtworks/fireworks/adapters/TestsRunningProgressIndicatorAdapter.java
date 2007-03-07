@@ -15,12 +15,94 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
+import com.intellij.openapi.progress.ProgressIndicator;
 import com.thoughtworks.fireworks.core.ResultOfTestEndListener;
 import com.thoughtworks.shadow.*;
+import com.thoughtworks.shadow.junit.ErrorTestCase;
+import com.thoughtworks.shadow.junit.ProtectableFactory;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 
 public class TestsRunningProgressIndicatorAdapter implements ResultOfTestEndListener, ShadowCabinetListener, RunListenerAdaptee, ShadowVisitor {
+
+    private static class CancelableSunshine implements Sunshine {
+
+        private Test test;
+        private Object key = new Object();
+        private final Sunshine sunshine;
+
+        public CancelableSunshine(Sunshine sunshine) {
+            this.sunshine = sunshine;
+        }
+
+        public Test shine(final String testClassName) {
+            ProgressIndicatorUtils.displayAsText2(testClassName);
+            final ProgressIndicator pi = ProgressIndicatorUtils.getProgressIndicator();
+            final Thread shiningThread = new Thread(new Runnable() {
+                public void run() {
+                    testShined(sunshine.shine(testClassName));
+                    notifyWaitingThread();
+                }
+            });
+
+            Thread monitorThread = new Thread(new Runnable() {
+                public void run() {
+                    while (true) {
+                        if (pi.isRunning() && pi.isCanceled()) {
+                            shiningThread.interrupt();
+                            notifyWaitingThread();
+                            break;
+                        }
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            break;
+                        }
+                    }
+                }
+            });
+
+            monitorThread.start();
+            shiningThread.start();
+
+            waitUntilTestShined();
+            
+            synchronized (monitorThread) {
+                if (monitorThread.isAlive()) {
+                    monitorThread.interrupt();
+                }
+            }
+
+            if (test == null) {
+                Exception ie = new InterruptedException("Running test class(" + testClassName + ") is interrupted!");
+                return new ErrorTestCase(testClassName, ProtectableFactory.protectable(ie));
+            }
+
+            return test;
+        }
+
+        private void testShined(Test test) {
+            this.test = test;
+        }
+
+        private void waitUntilTestShined() {
+            synchronized (key) {
+                try {
+                    key.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        private void notifyWaitingThread() {
+            synchronized (key) {
+                key.notify();
+            }
+        }
+    }
+
+
     private TestResultStatus status;
     private String testClassName;
     private String testMethodName;
@@ -80,12 +162,7 @@ public class TestsRunningProgressIndicatorAdapter implements ResultOfTestEndList
     }
 
     public Sunshine decorate(final Sunshine sunshine) {
-        return new Sunshine() {
-            public Test shine(String testClassName) {
-                ProgressIndicatorUtils.displayAsText2(testClassName);
-                return sunshine.shine(testClassName);
-            }
-        };
+        return new CancelableSunshine(sunshine);
     }
 
     private void displaySummaryAsText() {

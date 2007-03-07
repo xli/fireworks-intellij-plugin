@@ -68,6 +68,7 @@
     <option name="enableAutoTask" value="false" />
     <option name="autoRunTestsDelayTime" value="3000" />
     <option name="jvmArgs" value="" />
+    <option name="clearLogConsole" value="true" />
   </component>
   <component name="GUI Designer component loader factory" />
   <component name="IdProvider" IDEtalkID="B4CD3FA6B986306CE1AD72D96A28F5C2" />

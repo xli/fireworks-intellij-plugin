@@ -19,10 +19,16 @@ import com.thoughtworks.shadow.ShadowVisitor;
 import junit.framework.Protectable;
 
 public class ErrorTestCase extends BaseTestCase {
+    private String testName;
+
     public ErrorTestCase(String testName, Protectable protectable) {
         super(testName, null, protectable);
+        this.testName = testName;
     }
 
     public void accept(ShadowVisitor visitor) {
+        visitor.visitTestMethodName("");
+        visitor.visitTestClassName(testName);
+        visitor.end();
     }
 }
