@@ -16,10 +16,10 @@
 package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.codeInsight.template.TemplateManager;
+import com.intellij.compiler.CompilerWorkspaceConfiguration;
 import com.intellij.execution.ExecutionManager;
 import com.intellij.execution.filters.TextConsoleBuidlerFactory;
 import com.intellij.execution.ui.ConsoleView;
-import com.intellij.openapi.compiler.CompileStatusNotification;
 import com.intellij.openapi.compiler.CompilerManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.module.Module;
@@ -38,11 +38,13 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiSearchHelper;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.refactoring.listeners.RefactoringListenerManager;
+import com.thoughtworks.fireworks.adapters.compatibility.CompileStatusNotificationAdapter;
 import com.thoughtworks.fireworks.adapters.compatibility.RunProcessWithProgressSyn;
 import com.thoughtworks.fireworks.adapters.document.MarkupAdapter;
 import com.thoughtworks.fireworks.adapters.psi.PsiClassAdapter;
 import com.thoughtworks.fireworks.adapters.psi.PsiPackageAdapter;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
+import com.thoughtworks.fireworks.core.CompileStatusNotificationAdaptee;
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
 import com.thoughtworks.fireworks.core.FireworksConfig;
 import com.thoughtworks.shadow.Sunshine;
@@ -137,8 +139,26 @@ public class ProjectAdapter {
         runProcessWithProgressSyn.execute(process, title, canBeCanceled, project);
     }
 
-    public void make(CompileStatusNotification compileStatusNotification) {
-        CompilerManager.getInstance(project).make(compileStatusNotification);
+    public void make(final CompileStatusNotificationAdaptee compileStatusNotification) {
+        final boolean autoShowErrorsInEditor = CompilerWorkspaceConfiguration.getInstance(project).AUTO_SHOW_ERRORS_IN_EDITOR;
+        CompilerWorkspaceConfiguration.getInstance(project).AUTO_SHOW_ERRORS_IN_EDITOR = config.autoShowErrorsInEditorAfterCompile();
+        CompileStatusNotificationAdapter compileStatusNotificationAdapter = new CompileStatusNotificationAdapter(new CompileStatusNotificationAdaptee() {
+            public void finished(boolean aborted, int errors, int warnings) {
+                compileStatusNotification.finished(aborted, errors, warnings);
+                Thread t = new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        CompilerWorkspaceConfiguration.getInstance(project).AUTO_SHOW_ERRORS_IN_EDITOR = autoShowErrorsInEditor;
+                    }
+                });
+                t.start();
+            }
+        });
+        CompilerManager.getInstance(project).make(compileStatusNotificationAdapter);
     }
 
     public void dispose() {

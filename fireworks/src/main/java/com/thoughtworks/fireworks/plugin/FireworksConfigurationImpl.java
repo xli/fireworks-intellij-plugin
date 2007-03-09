@@ -35,6 +35,8 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
     public int autoRunTestsDelayTime = 4000;
     public String jvmArgs;
     public boolean clearLogConsole = true;
+    public boolean autoShowErrorsInEditorAfterCompile = true;
+
     private List<AutoRunTestConfigurationListener> listeners = new ArrayList<AutoRunTestConfigurationListener>();
 
     public void apply() throws ConfigurationException {
@@ -50,6 +52,7 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
         autoRunTestsDelayTime = getConfigurationUI().autoRunTestsDelayTime();
         jvmArgs = getConfigurationUI().jvmArgs();
         clearLogConsole = getConfigurationUI().getClearLogConsole();
+        autoShowErrorsInEditorAfterCompile = getConfigurationUI().getAutoShowErrorsInEditorAfterCompile();
     }
 
     public void reset() {
@@ -61,6 +64,7 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
         getConfigurationUI().setAutoRunTestsDelayTime(autoRunTestsDelayTime());
         getConfigurationUI().setJvmArgs(jvmArgs());
         getConfigurationUI().setClearLogConsole(clearLogConsole());
+        getConfigurationUI().setAutoShowErrorsInEditorAfterCompile(autoShowErrorsInEditorAfterCompile());
     }
 
     public void switchAutoRunTestsConfiguration() {
@@ -76,6 +80,10 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
 
     public void addAutoRunTestConfigurationListener(AutoRunTestConfigurationListener listener) {
         listeners.add(listener);
+    }
+
+    public boolean autoShowErrorsInEditorAfterCompile() {
+        return autoShowErrorsInEditorAfterCompile;
     }
 
     protected abstract void resetEnableFireworks();

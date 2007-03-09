@@ -35,7 +35,7 @@ public class CompilerManagerAdapter implements CompilerManagerAdaptee {
                 run(process(aborted, errors, warnings, compileStatusNotification));
             }
         };
-        project.make(new CompileStatusNotificationAdapter(notification));
+        project.make(notification);
     }
 
     private Runnable process(final boolean aborted,

@@ -51,8 +51,15 @@ public class TestFailureTest extends TestCase {
         assertEmptyShadow(ShadowTableModel.MESSAGE);
     }
 
-    public void testShadowOfClassWhichShouldDoNothingWhenItAcceptsAVisitor() throws Exception {
-        assertEmptyShadow(ShadowTableModel.TEST_CLASS);
+    public void testShadowOfClassWhichVisitTestClassNameWhenItAcceptsAVisitor() throws Exception {
+        Mock visitor = Turtle.mock(ShadowVisitor.class);
+
+        Shadow shadow = failure.getShadow(ShadowTableModel.TEST_CLASS);
+        shadow.accept((ShadowVisitor) visitor.mockTarget());
+
+        visitor.assertNotDid("visitTestMethodName");
+        visitor.assertDid("visitTestClassName").with(FailureTestShadow.class.getName());
+        visitor.assertDid("end");
     }
 
     public void testShadowOfTraceLogWhichShouldDoNothingWhenItAcceptsAVisitor() throws Exception {

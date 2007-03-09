@@ -53,26 +53,22 @@
 
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.18 changes</b></u>
+            <li>fix bug: when a test runs into an endless loop, idea is blocked and have to manually kill  the junit-java-task using Task Manager to continue coding.</li>
+            <li>new feature: when the compilation fails, the editor will not switches to the class with errors in it if you uncheck configuration 'auto-show-errors-in-editor-after-compile'.</li>
+            <li>thanks Simon for giving feedback</li>
+        </ul>
         <ul><u><b>Version 1.17 changes</b></u>
             <li>new feature: add a checkbox into Fireworks Tool Window for showing and switching configuration of autorun tests</li>
         </ul>
         <ul><u><b>Version 1.16 changes</b></u>
             <li>fix bug: When a test costs more than 1000 secs, Fireworks can't display test result correctly.(Thank you, Michael Postmann)</li>
         </ul>
-        <ul><u><b>Version 1.15 changes</b></u>
-            <li>fix bug:when disable fireworks on Intellij6, there is a NullPointerException threw in the ProjectAdapter</li>
-            <li>fix bug: can't parse exception which has no ':' at first line of trace</li>
-            <li>new feature: add new configuration for clearing log console before Fireworks start run tests action, the default value of it is true</li>
-            <li>change: display default value of configuration 'Test class name regex' which is '.*Test' when user does not set its value.</li>
-        </ul>
-        <ul><u><b>Version 1.14 changes</b></u>
-            <li>fix bug: Fireworks can't work when project libs or classpaths are not at C driver.(Thank Krieg Adam for reporting the bug:)</li>
-        </ul>
         The complete change-notes is available <a href="http://swing1979.googlepages.com/fireworkschangenotes">here</a>
         ]]>
     </change-notes>
 
-    <version>1.17</version>
+    <version>1.18</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao
     </vendor>

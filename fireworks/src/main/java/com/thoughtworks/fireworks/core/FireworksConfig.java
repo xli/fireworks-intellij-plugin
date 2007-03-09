@@ -37,4 +37,6 @@ public interface FireworksConfig {
     void switchAutoRunTestsConfiguration();
 
     void addAutoRunTestConfigurationListener(AutoRunTestConfigurationListener listener);
+
+    boolean autoShowErrorsInEditorAfterCompile();
 }

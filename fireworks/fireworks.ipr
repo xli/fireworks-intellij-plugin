@@ -65,10 +65,11 @@
     <option name="maxMemory" value="" />
     <option name="maxSize" value="44" />
     <option name="enable" value="true" />
-    <option name="enableAutoTask" value="false" />
+    <option name="enableAutoTask" value="true" />
     <option name="autoRunTestsDelayTime" value="3000" />
     <option name="jvmArgs" value="" />
     <option name="clearLogConsole" value="true" />
+    <option name="autoShowErrorsInEditorAfterCompile" value="true" />
   </component>
   <component name="GUI Designer component loader factory" />
   <component name="IdProvider" IDEtalkID="B4CD3FA6B986306CE1AD72D96A28F5C2" />

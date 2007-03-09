@@ -35,7 +35,7 @@ public class TestFailure implements ShadowVisitor {
     }
 
     public void visitTestClassName(String testClassName) {
-        columnValues[ShadowTableModel.TEST_CLASS] = new EmptyStrShadow(testClassName);
+        columnValues[ShadowTableModel.TEST_CLASS] = new JumpToClassShadow(testClassName);
     }
 
     public void visitTestMethodName(String testMethodName) {

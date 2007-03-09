@@ -31,6 +31,7 @@ public class ConfigurationUI {
     private JTextField autoRunTestsDelayTime;
     private JTextField jvmArgs;
     private JCheckBox clearLogConsole;
+    private JCheckBox autoShowErrorsInEditorAfterCompile;
 
     private JPanel pane;
 
@@ -43,8 +44,9 @@ public class ConfigurationUI {
         autoRunTestsDelayTime = new JTextField();
         jvmArgs = new JTextField();
         clearLogConsole = new JCheckBox();
+        autoShowErrorsInEditorAfterCompile = new JCheckBox();
 
-        pane = new JPanel(new GridLayout(9, 2));
+        pane = new JPanel(new GridLayout(10, 2));
         pane.add(new Label("Enable fireworks: "));
         pane.add(enable);
         pane.add(new Label("Enable auto run task: "));
@@ -61,6 +63,8 @@ public class ConfigurationUI {
         pane.add(jvmArgs);
         pane.add(new Label("Clear log console: "));
         pane.add(clearLogConsole);
+        pane.add(new Label("Show errors in editor after compile: "));
+        pane.add(autoShowErrorsInEditorAfterCompile);
 
         pane.add(new Label("Just ten seconds, please help me, "));
         JButton feedbacks = new JButton("click me to response feedbacks.");
@@ -144,5 +148,13 @@ public class ConfigurationUI {
 
     public void setClearLogConsole(boolean clearLogConsole) {
         this.clearLogConsole.setSelected(clearLogConsole);
+    }
+
+    public boolean getAutoShowErrorsInEditorAfterCompile() {
+        return autoShowErrorsInEditorAfterCompile.isSelected();
+    }
+
+    public void setAutoShowErrorsInEditorAfterCompile(boolean autoShowErrorsInEditorAfterCompile) {
+        this.autoShowErrorsInEditorAfterCompile.setSelected(autoShowErrorsInEditorAfterCompile);
     }
 }
