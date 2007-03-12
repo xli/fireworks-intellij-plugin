@@ -25,6 +25,8 @@ public class FireworksProject extends FireworksConfigurationImpl implements Proj
     private Project project;
     private FireworksContainer container;
 
+    private boolean projectIsOpened = false;
+
     public FireworksProject(Project project) {
         this.project = project;
     }
@@ -43,6 +45,7 @@ public class FireworksProject extends FireworksConfigurationImpl implements Proj
     }
 
     public void projectOpened() {
+        projectIsOpened = true;
         setMaxSize(maxSize);
         resetEnableFireworks();
         fireAutoRunTestConfigurationListener();
@@ -50,6 +53,8 @@ public class FireworksProject extends FireworksConfigurationImpl implements Proj
 
     public void projectClosed() {
         container.stop();
+        projectIsOpened = false;
+        clearConfigurationListeners();
     }
 
     public void setMaxSize(int maxSize) {
@@ -58,6 +63,9 @@ public class FireworksProject extends FireworksConfigurationImpl implements Proj
     }
 
     protected void resetEnableFireworks() {
+        if (!projectIsOpened) {
+            return;
+        }
         if (isEnabled()) {
             container.start();
         } else {

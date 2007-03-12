@@ -78,6 +78,10 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
         }
     }
 
+    protected void clearConfigurationListeners() {
+        listeners.clear();
+    }
+
     public void addAutoRunTestConfigurationListener(AutoRunTestConfigurationListener listener) {
         listeners.add(listener);
     }
