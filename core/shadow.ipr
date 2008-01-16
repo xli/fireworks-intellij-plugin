@@ -59,10 +59,11 @@
     <option name="maxMemory" value="" />
     <option name="maxSize" value="5" />
     <option name="enable" value="true" />
-    <option name="enableAutoTask" value="true" />
+    <option name="enableAutoTask" value="false" />
     <option name="autoRunTestsDelayTime" value="4000" />
     <option name="jvmArgs" value="" />
     <option name="clearLogConsole" value="true" />
+    <option name="autoShowErrorsInEditorAfterCompile" value="true" />
   </component>
   <component name="GUI Designer component loader factory" />
   <component name="IdProvider" IDEtalkID="BD15D24795CE5645F92B6E421787C0A2" />
@@ -268,7 +269,7 @@
       <module fileurl="file://$PROJECT_DIR$/shadow.iml" filepath="$PROJECT_DIR$/shadow.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="IDEA 5766" project-jdk-type="IDEA JDK" />
   <component name="ProjectRunConfigurationManager" />
   <component name="RAILS_PROJECT_VIEW_PANE" />
   <component name="RUBY_DOC_SETTINGS">

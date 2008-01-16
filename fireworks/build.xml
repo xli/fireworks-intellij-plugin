@@ -2,7 +2,7 @@
     <property name="clover.dir" value="./../clover"/>
     <property name="shadow.lib.dir" value="./../core/target/"/>
     <property name="resources.dir" value="src/main/images"/>
-    <property name="idea_home" value="C:/Program Files/JetBrains/IntelliJ IDEA 5.0/"/>
+    <property name="idea_home" value="C:/Program Files/JetBrains/IntelliJ IDEA 7.0.2/"/>
 	<echo>
 This build script(fireworks/build.xml) is used to compile, test  fireworks project and 
 build jar of fireworks project. If you want to build fireworks plugin for deployment, 

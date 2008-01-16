@@ -22,7 +22,7 @@
 ? remove failure msg in the table after test case was deleted
 
 ==============================================================================
-! there is unexpected info in the ant executing log:-----it's a but, fixed
+! there is unexpected info in the ant executing log:-----it's a bug, fixed
     [verbose] dropping C:\C from path as it doesn't exist
 ==============================2006.10.20====================================
 ! bug: if test has not run,  refactor the test class name will not remove test from cabinet.

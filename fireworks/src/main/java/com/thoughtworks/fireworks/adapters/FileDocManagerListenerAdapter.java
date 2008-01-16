@@ -30,7 +30,7 @@ public class FileDocManagerListenerAdapter extends FileDocumentManagerAdapter {
         this.project = project;
     }
 
-    public void beforeDocumentSaving(Document document) throws VetoDocumentSavingException {
+    public void beforeDocumentSaving(Document document) {
         listener.checkDocument(document(document));
     }
 

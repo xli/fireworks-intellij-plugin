@@ -49,25 +49,25 @@ public class Icons {
 
     private static ImageIcon greenImage(ImageIcon original, int height, int width) {
         Image img = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
-        img.getGraphics().drawImage(original.getImage(), 0, 0, height, width, new Color(0, 255, 0, 0), null);
-        return new ImageIcon(img);
+        img.getGraphics().drawImage(original.getImage(), 0, 0, height, width, new Color(255, 255, 255, 255), null);
+        return new ImageIcon(original.getImage());
     }
 
-    private static ImageIcon logo = createBigImageIcon("/logo.png");
+    private static ImageIcon logo = createBigImageIcon("/logo-32.png");
 
     private static ImageIcon successIcon = createSmallImageIcon("/green.png");
     private static ImageIcon failedIcon = createSmallImageIcon("/red.png");
-    private static ImageIcon ignoredIcon = createSmallImageIcon("/ignored.png");
+    private static ImageIcon ignoredIcon = createSmallImageIcon("/ignored-16.png");
     private static ImageIcon compileFailedIcon = createSmallImageIcon("/compile_fialed.png");
-    private static ImageIcon pending = createSmallImageIcon("/pending.png");
-    private static ImageIcon actionPending = createSmallImageIcon("/action_pending.png");
-    private static ImageIcon runTestListButton = createSmallImageIcon("/run_test_list_button.png");
-    private static ImageIcon runTestListButtonF = createSmallImageIcon("/run_test_list_button_f.png");
-    private static ImageIcon runAllTestsButton = createSmallImageIcon("/run_all_tests_button.png");
-    private static ImageIcon runAllTestsButtonF = createSmallImageIcon("/run_all_tests_button_f.png");
-    private static ImageIcon taskScheduled = createSmallImageIcon("/task_scheduled.png");
-    private static ImageIcon enableAutorunTestsButton = createSmallImageIcon("/enable_autorun_button.png");
-    private static ImageIcon disableAutorunTestsButton = createSmallImageIcon("/disable_autorun_button.png");
+    private static ImageIcon pending = createSmallImageIcon("/pending-16.png");
+    private static ImageIcon actionPending = createSmallImageIcon("/action_pending-16.png");
+    private static ImageIcon runTestListButton = createSmallImageIcon("/run_test_list_button-16.png");
+    private static ImageIcon runTestListButtonF = createSmallImageIcon("/run_test_list_button_f-16.png");
+    private static ImageIcon runAllTestsButton = createSmallImageIcon("/run_all_tests_button-16.png");
+    private static ImageIcon runAllTestsButtonF = createSmallImageIcon("/run_all_tests_button_f-16.png");
+    private static ImageIcon taskScheduled = createSmallImageIcon("/task_scheduled-16.png");
+    private static ImageIcon enableAutorunTestsButton = createSmallImageIcon("/enable_autorun_button-16.png");
+    private static ImageIcon disableAutorunTestsButton = createSmallImageIcon("/disable_autorun_button-16.png");
 
     public static ImageIcon logo() {
         return logo;
