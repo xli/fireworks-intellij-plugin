@@ -2,7 +2,18 @@
     <name>fireworks</name>
     <description>
         <![CDATA[
-				We all know about the following steps :
+				<b>Features:
+				<ul>
+					<li>Auto run tests</li>
+					<li>Track tests edited, and run them</li>
+					<li>Run all tests and track failure/error tests</li>
+					<li>Better UI for test failures/errors</li>
+				</ul>
+				</b>
+				
+				<br/>
+
+			    Do you know about the following steps? 
 				<ul>
 					<li>Quickly add a test.</li>
 					<li>Run all tests and see the new one fail.</li>
@@ -29,7 +40,7 @@
 				when I finish a task or need to commit code.
 				</p>
 
-				<p><b>Fireworks</b> is such a plugin for helping TDDers to make more pleasure in process of test-driven development
+				<p><b>Fireworks</b> is such a plugin for helping TDDers to have more pleasure in process of test-driven development
 				by spending more time on writing code.
 				The configuration of "Delay time" is key of when to schedule task of running tests about which are cared
 				after document changed and no error.
@@ -42,11 +53,6 @@
 				<p>There is a "recent test list" for collecting test about which are cared. JUnit TestCase will be added into "recent test list"
 				when we open or edit it. And there is a regex of test class name for helping us to filter test we don't want to care recently.
 				If there is a test failed after we run all tests by pressing hot key, it will be added into "recent test list" too.
-				</p>
-
-				<p><b>Fireworks</b> is developed on <b>IntelliJ 5.1 build#4155</b> and has been tested on <b>IntelliJ 6.0.1 build #5784</b>,
-				and it provides supporting both <b>JUnit3.8</b> and <b>JUnit4.1</b> which are used widely (I don't test it in other version of JUnit :p ).
-				So if you still use IntelliJ 5, <b>Fireworks</b> will be a good tool to run Test of <b>JUnit4.1</b> directly in <b>IntelliJ 5</b>.
 				</p>
 			]]>
     </description>
@@ -66,9 +72,6 @@
         </ul>
         <ul><u><b>Version 1.17 changes</b></u>
             <li>new feature: add a checkbox into Fireworks Tool Window for showing and switching configuration of autorun tests</li>
-        </ul>
-        <ul><u><b>Version 1.16 changes</b></u>
-            <li>fix bug: When a test costs more than 1000 secs, Fireworks can't display test result correctly.(Thank you, Michael Postmann)</li>
         </ul>
         The complete change-notes is available <a href="http://swing1979.googlepages.com/fireworkschangenotes">here</a>
         ]]>
