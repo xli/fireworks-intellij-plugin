@@ -81,11 +81,11 @@
         ]]>
     </change-notes>
 
-    <version>1.20</version>
+    <version>1.21</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao
     </vendor>
-    <idea-version since-build="3000"/>
+    <idea-version since-build="7590"/>
 
     <project-components>
         <component>
