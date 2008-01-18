@@ -59,6 +59,10 @@
 
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.21 changes</b></u>
+            <li>Compiled with JDK1.5.0_13 for Mac(thanks Gregor Féng for giving feedback)</li>
+            <li>Upgraded JUnit lib to 4.4 version</li>
+        </ul>
         <ul><u><b>Version 1.20 changes</b></u>
             <li>fixed working on IDEA 7.0.2(thanks Simon Schlachter for giving feedback)</li>
         </ul>

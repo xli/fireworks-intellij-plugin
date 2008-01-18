@@ -5,7 +5,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
 import org.junit.Ignore;
-import org.junit.internal.runners.TestIntrospector;
+import org.junit.internal.runners.TestClass;
 import org.junit.runner.JUnitCore;
 
 import java.lang.reflect.Method;
@@ -51,7 +51,7 @@ public class JUnitAdapter {
     }
 
     private Method[] getJUnit4TestMethods() {
-        return toArray(new TestIntrospector(testClass).getTestMethods(getClassFromClassLoaderOfTestClass(org.junit.Test.class)));
+        return toArray(new TestClass(testClass).getAnnotatedMethods(getClassFromClassLoaderOfTestClass(org.junit.Test.class)));
     }
 
     private Class getClassFromClassLoaderOfTestClass(Class target) {
