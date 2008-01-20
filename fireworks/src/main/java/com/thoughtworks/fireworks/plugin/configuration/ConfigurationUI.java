@@ -18,8 +18,8 @@ package com.thoughtworks.fireworks.plugin.configuration;
 import com.thoughtworks.fireworks.mail.FeedbacksActionListener;
 
 import javax.swing.*;
-import java.awt.GridLayout;
-import java.awt.Label;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.text.MessageFormat;
 
 public class ConfigurationUI {
@@ -47,26 +47,27 @@ public class ConfigurationUI {
         autoShowErrorsInEditorAfterCompile = new JCheckBox();
 
         pane = new JPanel(new GridLayout(10, 2));
-        pane.add(new Label("Enable fireworks: "));
+        pane.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        pane.add(new JLabel("Enable fireworks: "));
         pane.add(enable);
-        pane.add(new Label("Enable auto run task: "));
+        pane.add(new JLabel("Enable auto run task: "));
         pane.add(enableAutoTask);
-        pane.add(new Label("Run tests max memory: "));
+        pane.add(new JLabel("Run tests max memory: "));
         pane.add(maxMemory);
-        pane.add(new Label("Test class name regex(jdk1.4): "));
+        pane.add(new JLabel("Test class name regex(jdk1.4): "));
         pane.add(expectedTestCaseNameRegex);
-        pane.add(new Label("Max size of recent test list: "));
+        pane.add(new JLabel("Max size of recent test list: "));
         pane.add(maxSize);
-        pane.add(new Label("Delay time(millisecond): "));
+        pane.add(new JLabel("Delay time(millisecond): "));
         pane.add(autoRunTestsDelayTime);
-        pane.add(new Label("JVM arguments for the tests: "));
+        pane.add(new JLabel("JVM arguments for the tests: "));
         pane.add(jvmArgs);
-        pane.add(new Label("Clear log console: "));
+        pane.add(new JLabel("Clear log console: "));
         pane.add(clearLogConsole);
-        pane.add(new Label("Show errors in editor after compile: "));
+        pane.add(new JLabel("Show errors in editor after compile: "));
         pane.add(autoShowErrorsInEditorAfterCompile);
 
-        pane.add(new Label("Just ten seconds, please help me, "));
+        pane.add(new JLabel("Just ten seconds, please help me, "));
         JButton feedbacks = new JButton("click me to response feedbacks.");
         feedbacks.addActionListener(new FeedbacksActionListener());
         pane.add(feedbacks);
