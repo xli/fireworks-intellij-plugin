@@ -10,9 +10,10 @@
 					<li>Better UI for test failures/errors</li>
 				</ul>
 				</b>
-				
+
 				<br/>
 
+        <p>
 			    Do you know about the following steps? 
 				<ul>
 					<li>Quickly add a test.</li>
@@ -32,6 +33,7 @@
 					<li>Refactor to remove duplication.</li>
 					<li>Take a drink of coffee and IDE tells me there is no broken test.</li>
 				</ul></b>
+			  </p>
 				<br/>
 
 				<p>It's great that we have time to run all tests continuously. But more tests we wrote, more time costs.
@@ -59,6 +61,9 @@
 
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.22 changes</b></u>
+            <li>Fixed: configuration dialog has no labels on Mac</li>
+        </ul>
         <ul><u><b>Version 1.21 changes</b></u>
             <li>Compiled with JDK1.5.0_13 for Mac(thanks Gregor Féng for giving feedback)</li>
             <li>Upgraded JUnit lib to 4.4 version</li>
@@ -69,19 +74,11 @@
         <ul><u><b>Version 1.19 changes</b></u>
             <li>fix bug: can't change settings of Fireworks when there is no project opened.(thanks buptyw@gmail.com for giving feedback)</li>
         </ul>
-        <ul><u><b>Version 1.18 changes</b></u>
-            <li>fix bug: when a test runs into an endless loop, idea is blocked and have to manually kill  the junit-java-task using Task Manager to continue coding.</li>
-            <li>new feature: when the compilation fails, the editor will not switches to the class with errors in it if you uncheck configuration 'auto-show-errors-in-editor-after-compile'.</li>
-            <li>thanks Simon for giving feedback</li>
-        </ul>
-        <ul><u><b>Version 1.17 changes</b></u>
-            <li>new feature: add a checkbox into Fireworks Tool Window for showing and switching configuration of autorun tests</li>
-        </ul>
         The complete change-notes is available <a href="http://swing1979.googlepages.com/fireworkschangenotes">here</a>
         ]]>
     </change-notes>
 
-    <version>1.21</version>
+    <version>1.22</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao
     </vendor>
