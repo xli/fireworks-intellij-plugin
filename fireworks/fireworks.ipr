@@ -70,7 +70,7 @@
     <option name="maxMemory" value="" />
     <option name="maxSize" value="46" />
     <option name="enable" value="true" />
-    <option name="enableAutoTask" value="false" />
+    <option name="enableAutoTask" value="true" />
     <option name="autoRunTestsDelayTime" value="3000" />
     <option name="jvmArgs" value="" />
     <option name="clearLogConsole" value="true" />
@@ -258,6 +258,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/fireworks.iml" filepath="$PROJECT_DIR$/fireworks.iml" />
+      <module fileurl="file:///Users/xli/code/fireworks/core/shadow.iml" filepath="/Users/xli/code/fireworks/core/shadow.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK" />
@@ -285,6 +286,7 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
+    <mapping directory="/Users/xli/code/fireworks/core" vcs="Git" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="com.intellij.jsf.UserDefinedFacesConfigs">

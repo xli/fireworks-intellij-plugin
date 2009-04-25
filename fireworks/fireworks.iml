@@ -23,15 +23,7 @@
         <jarDirectory url="file:///Users/xli/code/fireworks/dependent-libs" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file:///Users/xli/code/fireworks/core/target/classes" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="module" module-name="shadow" />
   </component>
 </module>
 
