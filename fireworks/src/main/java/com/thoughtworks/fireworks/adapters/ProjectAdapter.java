@@ -42,7 +42,6 @@ import com.intellij.psi.search.searches.AllClassesSearch;
 import com.intellij.refactoring.listeners.RefactoringListenerManager;
 import com.intellij.util.Query;
 import com.thoughtworks.fireworks.adapters.compatibility.CompileStatusNotificationAdapter;
-import com.thoughtworks.fireworks.adapters.compatibility.RunProcessWithProgressSyn;
 import com.thoughtworks.fireworks.adapters.document.MarkupAdapter;
 import com.thoughtworks.fireworks.adapters.psi.PsiClassAdapter;
 import com.thoughtworks.fireworks.adapters.psi.PsiPackageAdapter;
@@ -63,16 +62,12 @@ public class ProjectAdapter {
     private final List<BuildListener> buildListeners = new ArrayList<BuildListener>();
 
     private final Project project;
-    private final TestsRunningProgressIndicatorAdapter progressIndicator;
     private final FireworksConfig config;
     private List<ConsoleViewAdapter> consoles = new ArrayList<ConsoleViewAdapter>();
-    private RunProcessWithProgressSyn runProcessWithProgressSyn;
 
-    public ProjectAdapter(Project project, FireworksConfig config, TestsRunningProgressIndicatorAdapter progressIndicator) {
+    public ProjectAdapter(Project project, FireworksConfig config) {
         this.config = config;
         this.project = project;
-        this.progressIndicator = progressIndicator;
-        this.runProcessWithProgressSyn = new RunProcessWithProgressSyn();
     }
 
     public void registerToolWindow(String id, String title, JComponent component, Icon icon) {
@@ -136,13 +131,11 @@ public class ProjectAdapter {
         this.buildListeners.add(listener);
     }
 
-    public void runProcessWithProgressSynchronously(Runnable process, String title, boolean canBeCanceled) {
-        runProcessWithProgressSyn.execute(process, title, canBeCanceled, project);
-    }
-
     public void make(final CompileStatusNotificationAdaptee compileStatusNotification) {
         final boolean autoShowErrorsInEditor = CompilerWorkspaceConfiguration.getInstance(project).AUTO_SHOW_ERRORS_IN_EDITOR;
+        final boolean compileInBackground = CompilerWorkspaceConfiguration.getInstance(project).COMPILE_IN_BACKGROUND;
         CompilerWorkspaceConfiguration.getInstance(project).AUTO_SHOW_ERRORS_IN_EDITOR = config.autoShowErrorsInEditorAfterCompile();
+        CompilerWorkspaceConfiguration.getInstance(project).COMPILE_IN_BACKGROUND = true;
         CompileStatusNotificationAdapter compileStatusNotificationAdapter = new CompileStatusNotificationAdapter(new CompileStatusNotificationAdaptee() {
             public void finished(boolean aborted, int errors, int warnings) {
                 compileStatusNotification.finished(aborted, errors, warnings);
@@ -154,6 +147,7 @@ public class ProjectAdapter {
                             e.printStackTrace();
                         }
                         CompilerWorkspaceConfiguration.getInstance(project).AUTO_SHOW_ERRORS_IN_EDITOR = autoShowErrorsInEditor;
+                        CompilerWorkspaceConfiguration.getInstance(project).COMPILE_IN_BACKGROUND = compileInBackground;
                     }
                 });
                 t.start();
@@ -205,7 +199,7 @@ public class ProjectAdapter {
         Module moduleForFile = getFileIndex().getModuleForFile(file);
         AntSunshine sunshine = new ModuleAdapter(moduleForFile, config).antSunshine();
         addBuildListeners(sunshine);
-        return progressIndicator.decorate(sunshine);
+        return sunshine;
     }
 
     private PsiClassAdapter findClass(String testClassName) {

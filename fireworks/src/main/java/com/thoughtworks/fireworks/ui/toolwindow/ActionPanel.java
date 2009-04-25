@@ -17,15 +17,18 @@ package com.thoughtworks.fireworks.ui.toolwindow;
 
 import com.thoughtworks.fireworks.controllers.Icons;
 import com.thoughtworks.fireworks.controllers.TestResultSummaryBgColorListener;
+import com.thoughtworks.fireworks.controllers.ShadowCabinetControllerListener;
 import com.thoughtworks.fireworks.core.AutoRunTestConfigurationListener;
 import com.thoughtworks.fireworks.core.FireworksConfig;
+import com.thoughtworks.shadow.ShadowCabinetListener;
+import com.thoughtworks.shadow.ComparableTestShadow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ActionPanel extends JPanel implements TestResultSummaryBgColorListener, AutoRunTestConfigurationListener {
+public class ActionPanel extends JPanel implements TestResultSummaryBgColorListener, AutoRunTestConfigurationListener, ShadowCabinetControllerListener, ShadowCabinetListener {
     private static final String RUN_TEST_LIST_BUTTON_TEXT = "Run(Alt-Shift-K)";
     private static final String RUN_ALL_TESTS_BUTTON_TEXT = "Run all tests(Alt-Shift-L)";
     private static final String AUTO_RUN_TEST_BUTTON_TEXT = "Enable/disable autorun tests(Alt-Shift-A)";
@@ -82,5 +85,28 @@ public class ActionPanel extends JPanel implements TestResultSummaryBgColorListe
 
     public void addRunAllTestsActionListener(ActionListener listener) {
         runAllTestsButton.addActionListener(listener);
+    }
+
+    public void actionStarted() {
+        runTestListButton.setEnabled(false);
+        runAllTestsButton.setEnabled(false);
+    }
+
+    public void actionFinished() {
+    }
+
+    public void afterAddTest(ComparableTestShadow comparableTestShadow) {
+    }
+
+    public void afterRemoveTest(ComparableTestShadow comparableTestShadow) {
+    }
+
+    public void endAction() {
+        //TODO: when running test thread is interrupted, should still call endAction
+        runTestListButton.setEnabled(true);
+        runAllTestsButton.setEnabled(true);
+    }
+
+    public void startAction() {
     }
 }

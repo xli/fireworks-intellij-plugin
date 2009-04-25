@@ -26,11 +26,7 @@ public class TestCaseSearcher {
     }
 
     public void action(final TestCollection collection) {
-        project.runProcessWithProgressSynchronously(new Runnable() {
-            public void run() {
-                SearchTestClassProcessor processor = new SearchTestClassProcessor(project, collection);
-                project.searchAllCalsses().forEach(processor);
-            }
-        }, "Searching test class...", true);
+        SearchTestClassProcessor processor = new SearchTestClassProcessor(project, collection);
+        project.searchAllCalsses().forEach(processor);
     }
 }

@@ -62,6 +62,10 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <u><b>Version 1.40 changes</b></u>
+            <li>Run tests sliently. All tests running including compiling will be running at background now.</li>
+        </ul>
+        <ul>
             <u><b>Version 1.30 changes</b></u>
             <li>Works with IntelliJ IDEA8.1</li>
         </ul>
@@ -69,7 +73,7 @@
         ]]>
     </change-notes>
 
-    <version>1.30</version>
+    <version>1.40</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao
     </vendor>

@@ -33,6 +33,7 @@ public class RunAllTestsRunnerAdapter implements AllTestsRunner {
 
     public void run() {
         cabinet.init();
+        //TODO: search classes may take some time, need improve it later
         searcher.action(cabinet);
         cabinet.action(factory.createTestResult());
     }

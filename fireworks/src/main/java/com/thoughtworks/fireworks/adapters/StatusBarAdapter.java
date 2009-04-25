@@ -16,12 +16,13 @@
 package com.thoughtworks.fireworks.adapters;
 
 import com.thoughtworks.fireworks.core.ResultOfTestEndListener;
+import com.thoughtworks.fireworks.controllers.ShadowCabinetControllerListener;
 import com.thoughtworks.shadow.ComparableTestShadow;
 import com.thoughtworks.shadow.ShadowCabinetListener;
 import com.thoughtworks.shadow.TestResultStatus;
 import com.thoughtworks.shadow.TestShadowResult;
 
-public class StatusBarAdapter implements ResultOfTestEndListener, ShadowCabinetListener {
+public class StatusBarAdapter implements ResultOfTestEndListener, ShadowCabinetListener, ShadowCabinetControllerListener {
     private final ProjectAdapter project;
     private TestResultStatus status;
 
@@ -39,7 +40,9 @@ public class StatusBarAdapter implements ResultOfTestEndListener, ShadowCabinetL
     }
 
     public void afterRemoveTest(ComparableTestShadow test) {
-        project.setStatusBarInfo("Removed \"" + test + "\" from Fireworks");
+        //Do we really need this info?
+        //When running all tests, this info covered test result status which is much important.
+        //project.setStatusBarInfo("Removed \"" + test + "\" from Fireworks");
     }
 
     public void endAction() {
@@ -49,5 +52,12 @@ public class StatusBarAdapter implements ResultOfTestEndListener, ShadowCabinetL
     public void startAction() {
         status = new TestResultStatus(0, 0, 0, 0);
         project.setStatusBarInfo("Bang went the fireworks.");
+    }
+
+    public void actionStarted() {
+        project.setStatusBarInfo("Initializing fireworks.");
+    }
+
+    public void actionFinished() {
     }
 }

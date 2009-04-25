@@ -61,9 +61,9 @@
   <component name="FireworksProject">
     <option name="expectedTestCaseNameRegex" value=".*Test" />
     <option name="maxMemory" value="" />
-    <option name="maxSize" value="5" />
+    <option name="maxSize" value="23" />
     <option name="enable" value="true" />
-    <option name="enableAutoTask" value="true" />
+    <option name="enableAutoTask" value="false" />
     <option name="autoRunTestsDelayTime" value="4000" />
     <option name="jvmArgs" value="" />
     <option name="clearLogConsole" value="true" />

@@ -49,10 +49,7 @@ public class CompilerManagerAdapter implements CompilerManagerAdaptee {
     }
 
     private void run(final Runnable process) {
-        application.invokeLater(new Runnable() {
-            public void run() {
-                project.runProcessWithProgressSynchronously(process, "Running Tests...", true);
-            }
-        });
+        Thread thread = new Thread(process);
+        thread.start();
     }
 }

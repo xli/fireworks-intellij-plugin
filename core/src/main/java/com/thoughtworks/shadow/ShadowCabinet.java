@@ -45,12 +45,15 @@ public class ShadowCabinet implements Cabinet {
 
     public void action(TestResult result) {
         fireStartActionEvent();
-        TestSuite suite = new TestSuite();
-        for (Iterator iter = shadows.iterator(); iter.hasNext();) {
-            suite.addTest((ComparableTestShadow) iter.next());
+        try {
+            TestSuite suite = new TestSuite();
+            for (Iterator<ComparableTestShadow> iter = shadows.iterator(); iter.hasNext();) {
+                suite.addTest(iter.next());
+            }
+            suite.run(result);
+        } finally {
+            fireEndActionEvent();
         }
-        suite.run(result);
-        fireEndActionEvent();
     }
 
     public int maxSize() {
@@ -69,7 +72,7 @@ public class ShadowCabinet implements Cabinet {
     private void removeMaxPassTimesTests(int maxSize) {
         Collections.sort(shadows);
         while (size() > maxSize) {
-            fireAfterRemoveTestEvent((ComparableTestShadow) shadows.removeLast());
+            fireAfterRemoveTestEvent(shadows.removeLast());
         }
     }
 

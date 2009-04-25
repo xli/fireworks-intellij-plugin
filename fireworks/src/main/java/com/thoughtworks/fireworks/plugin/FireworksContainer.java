@@ -47,9 +47,7 @@ public class FireworksContainer {
 
     public FireworksContainer(FireworksProject fireworksProject, Project project) {
         container = new CachingPicoContainer();
-        TestsRunningProgressIndicatorAdapter progressIndicator = new TestsRunningProgressIndicatorAdapter();
-        projectAdapter = new ProjectAdapter(project, fireworksProject, progressIndicator);
-        container.registerComponentInstance(progressIndicator);
+        projectAdapter = new ProjectAdapter(project, fireworksProject);
         container.registerComponentInstance(fireworksProject);
         container.registerComponentInstance(projectAdapter);
         container.registerComponentImplementation(ApplicationAdapter.class);

@@ -26,6 +26,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCabinetListener, Log {
     private final List<TreeModelListener> listeners = new ArrayList<TreeModelListener>();
@@ -33,7 +34,7 @@ public class ShadowTreeModel implements TreeModel, RunListenerAdaptee, ShadowCab
     private final TreeNodesMap treeNodes;
     private final ShadowSummaryTreeNode root;
 
-    private List<Test> tests = new ArrayList<Test>();
+    private List<Test> tests = Collections.synchronizedList(new ArrayList<Test>());
     private TestFailures testFailures = new TestFailures();
 
     public ShadowTreeModel(ShadowSummaryTreeNode root) {
