@@ -18,7 +18,6 @@ package com.thoughtworks.fireworks.plugin.configuration;
 import com.thoughtworks.fireworks.mail.FeedbacksActionListener;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.text.MessageFormat;
 

@@ -58,7 +58,7 @@ public class ASTNodeAdapteeFactory {
     }
 
     private TokenSet getIgnoredLanguageTokenSet(ASTNode node) {
-        return ignoredTokenSet.getByLanguage(node.getPsi().getLanguage());
+        return ignoredTokenSet.getByLanguage(node.getPsi());
     }
 
 }

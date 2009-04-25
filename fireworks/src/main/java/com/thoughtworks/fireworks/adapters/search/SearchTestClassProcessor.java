@@ -17,6 +17,7 @@ package com.thoughtworks.fireworks.adapters.search;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.search.PsiElementProcessor;
+import com.intellij.util.Processor;
 import com.thoughtworks.fireworks.adapters.ProgressIndicatorUtils;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
 import com.thoughtworks.fireworks.adapters.VirtualFileAdaptee;
@@ -26,7 +27,7 @@ import com.thoughtworks.fireworks.core.TestCollection;
 
 import java.io.FileNotFoundException;
 
-public class SearchTestClassProcessor implements PsiElementProcessor<PsiClass> {
+public class SearchTestClassProcessor implements PsiElementProcessor<PsiClass>, Processor<PsiClass> {
     private final ProjectAdapter project;
     private final TestCollection testCollection;
 
@@ -36,6 +37,11 @@ public class SearchTestClassProcessor implements PsiElementProcessor<PsiClass> {
     public SearchTestClassProcessor(ProjectAdapter project, TestCollection testCollection) {
         this.project = project;
         this.testCollection = testCollection;
+    }
+
+
+    public boolean process(PsiClass element) {
+        return execute(element);
     }
 
     public boolean execute(PsiClass element) {
@@ -67,5 +73,4 @@ public class SearchTestClassProcessor implements PsiElementProcessor<PsiClass> {
     private VirtualFileAdaptee getFile(PsiClass element) throws FileNotFoundException {
         return VirtualFileAdapter.getFile(element, project);
     }
-
 }

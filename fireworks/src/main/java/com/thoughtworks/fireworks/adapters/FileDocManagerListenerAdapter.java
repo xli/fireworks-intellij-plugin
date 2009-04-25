@@ -17,7 +17,6 @@ package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManagerAdapter;
-import com.intellij.openapi.fileEditor.VetoDocumentSavingException;
 import com.thoughtworks.fireworks.controllers.DocumentAdaptee;
 import com.thoughtworks.fireworks.controllers.TestCaseOpenedListener;
 

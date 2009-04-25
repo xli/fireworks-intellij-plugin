@@ -16,7 +16,6 @@
 package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.EditorFactory;
 import com.thoughtworks.fireworks.core.developer.Thought;
 
 public class LiveTemplateAdapter implements Thought {
@@ -42,12 +41,9 @@ public class LiveTemplateAdapter implements Thought {
     }
 
     private EditorAdaptee activeEditor() {
-        Editor[] editors = EditorFactory.getInstance().getAllEditors();
-        for (int i = 0; i < editors.length; i++) {
-            Editor editor = editors[i];
-            if (!editor.isViewer() && editor.getContentComponent().isFocusOwner()) {
-                return new EditorAdapter(project, editor);
-            }
+        Editor editor = project.getFileEditorManager().getSelectedTextEditor();
+        if (editor != null) {
+            return new EditorAdapter(project, editor);
         }
         return EditorAdaptee.NULL;
     }

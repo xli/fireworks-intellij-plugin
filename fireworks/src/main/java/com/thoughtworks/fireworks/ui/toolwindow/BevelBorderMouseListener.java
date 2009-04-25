@@ -1,8 +1,6 @@
 package com.thoughtworks.fireworks.ui.toolwindow;
 
-import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
+import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 

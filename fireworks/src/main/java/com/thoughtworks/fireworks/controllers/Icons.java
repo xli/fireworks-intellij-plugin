@@ -15,10 +15,8 @@
  */
 package com.thoughtworks.fireworks.controllers;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import java.awt.Color;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 

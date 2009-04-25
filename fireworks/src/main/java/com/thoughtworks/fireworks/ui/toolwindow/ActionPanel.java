@@ -20,12 +20,8 @@ import com.thoughtworks.fireworks.controllers.TestResultSummaryBgColorListener;
 import com.thoughtworks.fireworks.core.AutoRunTestConfigurationListener;
 import com.thoughtworks.fireworks.core.FireworksConfig;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

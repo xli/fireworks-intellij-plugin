@@ -15,10 +15,8 @@
  */
 package com.thoughtworks.fireworks.ui.toolwindow;
 
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 
 public class FancyButton extends JButton {
 

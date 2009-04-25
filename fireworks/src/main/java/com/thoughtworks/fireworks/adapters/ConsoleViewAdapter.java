@@ -17,10 +17,11 @@ package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ConsoleViewContentType;
+import com.intellij.execution.ui.ConsoleViewWrapper;
 import com.thoughtworks.fireworks.core.ConsoleViewAdaptee;
 import com.thoughtworks.shadow.Utils;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 
 public class ConsoleViewAdapter implements ConsoleViewAdaptee {
     private final ConsoleView console;
@@ -47,7 +48,8 @@ public class ConsoleViewAdapter implements ConsoleViewAdaptee {
     }
 
     public void dispose() {
-        console.dispose();
+        if (console instanceof ConsoleViewWrapper)
+            ((ConsoleViewWrapper) console).dispose();
     }
 
     public void clear() {

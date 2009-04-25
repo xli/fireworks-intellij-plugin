@@ -16,7 +16,10 @@
 package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.ProjectJdk;
+import com.intellij.openapi.projectRoots.JavaSdk;
+import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.ProjectJdkTable;
+import com.intellij.openapi.roots.CompilerModuleExtension;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -51,7 +54,18 @@ public class ModuleAdapter {
     }
 
     private String jvm() {
-        return getJdk().getVMExecutablePath();
+        String jvm = JavaSdk.getInstance().getVMExecutablePath(getJdk());
+        if(new File(jvm).exists()) {
+            return jvm;
+        }
+        
+        for(Sdk sdk : ProjectJdkTable.getInstance().getAllJdks()) {
+            jvm = JavaSdk.getInstance().getVMExecutablePath(sdk);
+            if(new File(jvm).exists()) {
+                return jvm;
+            }
+        }
+        throw new IllegalStateException("Couldn't find out a java sdk vm executable path");
     }
 
     private URL[] classpaths() {
@@ -60,7 +74,7 @@ public class ModuleAdapter {
         for (int i = 0; i < files.length; i++) {
             fileURLs.add(Utils.toURL(files[i].getPresentableUrl()));
         }
-        VirtualFile test = manager().getCompilerOutputPathForTests();
+        VirtualFile test = CompilerModuleExtension.getInstance(module).getCompilerOutputPathForTests();
         if (test != null) {
             fileURLs.add(Utils.toURL(test.getPresentableUrl()));
         }
@@ -72,7 +86,7 @@ public class ModuleAdapter {
     }
 
     private String encoding() {
-        return CharsetToolkit.getIDEOptionsCharset().name();
+        return CharsetToolkit.getDefaultSystemCharset().name();
     }
 
     private String getModuleDir() {
@@ -83,8 +97,8 @@ public class ModuleAdapter {
         return parent.getPresentableUrl();
     }
 
-    private ProjectJdk getJdk() {
-        ProjectJdk jdk = manager().getJdk();
+    private Sdk getJdk() {
+        Sdk jdk = manager().getSdk();
         if (jdk == null) {
             jdk = ProjectRootManager.getInstance(module.getProject()).getProjectJdk();
         }

@@ -15,7 +15,6 @@
  */
 package com.thoughtworks.fireworks.adapters;
 
-import com.thoughtworks.fireworks.adapters.compatibility.CompileStatusNotificationAdapter;
 import com.thoughtworks.fireworks.core.ApplicationAdaptee;
 import com.thoughtworks.fireworks.core.CompileStatusNotificationAdaptee;
 import com.thoughtworks.fireworks.core.CompilerManagerAdaptee;

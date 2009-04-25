@@ -26,8 +26,8 @@ import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
 
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Date;
 
 public class TestLogPanel extends JPanel implements BuildListener, ShadowCabinetListener {

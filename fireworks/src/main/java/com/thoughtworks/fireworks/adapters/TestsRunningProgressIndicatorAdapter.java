@@ -66,7 +66,7 @@ public class TestsRunningProgressIndicatorAdapter implements ResultOfTestEndList
             shiningThread.start();
 
             waitUntilTestShined();
-            
+
             synchronized (monitorThread) {
                 if (monitorThread.isAlive()) {
                     monitorThread.interrupt();

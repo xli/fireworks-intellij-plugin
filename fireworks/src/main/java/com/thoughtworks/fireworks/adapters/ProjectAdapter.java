@@ -18,10 +18,11 @@ package com.thoughtworks.fireworks.adapters;
 import com.intellij.codeInsight.template.TemplateManager;
 import com.intellij.compiler.CompilerWorkspaceConfiguration;
 import com.intellij.execution.ExecutionManager;
-import com.intellij.execution.filters.TextConsoleBuidlerFactory;
+import com.intellij.execution.filters.TextConsoleBuilderFactory;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.compiler.CompilerManager;
 import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -31,13 +32,15 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiPackage;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.PsiSearchHelper;
 import com.intellij.psi.search.SearchScope;
+import com.intellij.psi.search.searches.AllClassesSearch;
 import com.intellij.refactoring.listeners.RefactoringListenerManager;
+import com.intellij.util.Query;
 import com.thoughtworks.fireworks.adapters.compatibility.CompileStatusNotificationAdapter;
 import com.thoughtworks.fireworks.adapters.compatibility.RunProcessWithProgressSyn;
 import com.thoughtworks.fireworks.adapters.document.MarkupAdapter;
@@ -51,10 +54,8 @@ import com.thoughtworks.shadow.Sunshine;
 import com.thoughtworks.shadow.ant.AntSunshine;
 import org.apache.tools.ant.BuildListener;
 
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import java.awt.Window;
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class ProjectAdapter {
     }
 
     public ConsoleViewAdaptee createTextConsoleBuilder() {
-        ConsoleView view = TextConsoleBuidlerFactory.getInstance().createBuilder(project).getConsole();
+        ConsoleView view = TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
         ConsoleViewAdapter consoleViewAdapter = new ConsoleViewAdapter(view);
         consoles.add(consoleViewAdapter);
         return consoleViewAdapter;
@@ -128,7 +129,7 @@ public class ProjectAdapter {
     }
 
     public SearchScope getProjectTestJavaFileScope() {
-        return GlobalSearchScope.projectTestScope(project, false);
+        return GlobalSearchScope.projectTestScope(project);
     }
 
     public void addBuildListener(BuildListener listener) {
@@ -176,16 +177,12 @@ public class ProjectAdapter {
         return new MarkupAdapter(document, project);
     }
 
-    public PsiSearchHelper getSearchHelper() {
-        return getPsiManager().getSearchHelper();
-    }
-
     public ExecutionManager getExecutionManager() {
         return ExecutionManager.getInstance(project);
     }
 
     public PsiPackageAdapter getPackage(String packageName) {
-        PsiPackage aPackage = getPsiManager().findPackage(packageName);
+        PsiPackage aPackage = psiFacade().findPackage(packageName);
         return new PsiPackageAdapter(aPackage);
     }
 
@@ -212,7 +209,7 @@ public class ProjectAdapter {
     }
 
     private PsiClassAdapter findClass(String testClassName) {
-        return new PsiClassAdapter(getPsiManager().findClass(testClassName, projectAllScope()));
+        return new PsiClassAdapter(psiFacade().findClass(testClassName, projectAllScope()));
     }
 
     private GlobalSearchScope projectAllScope() {
@@ -227,6 +224,18 @@ public class ProjectAdapter {
         for (int i = 0; i < buildListeners.size(); i++) {
             sunshine.addBuildListener(buildListeners.get(i));
         }
+    }
+
+    public JavaPsiFacade psiFacade() {
+        return JavaPsiFacade.getInstance(this.project);
+    }
+
+    public Query searchAllCalsses() {
+        return AllClassesSearch.search(this.projectAllScope(), project);
+    }
+
+    public FileEditorManager getFileEditorManager() {
+        return FileEditorManager.getInstance(project);
     }
 
     public TemplateManager getTemplateManager() {

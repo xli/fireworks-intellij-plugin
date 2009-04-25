@@ -15,7 +15,6 @@
  */
 package com.thoughtworks.fireworks.adapters.search;
 
-import com.intellij.psi.search.PsiSearchHelper;
 import com.thoughtworks.fireworks.adapters.ProjectAdapter;
 import com.thoughtworks.fireworks.core.TestCollection;
 
@@ -29,9 +28,8 @@ public class TestCaseSearcher {
     public void action(final TestCollection collection) {
         project.runProcessWithProgressSynchronously(new Runnable() {
             public void run() {
-                PsiSearchHelper searchHelper = project.getSearchHelper();
                 SearchTestClassProcessor processor = new SearchTestClassProcessor(project, collection);
-                searchHelper.processAllClasses(processor, project.getProjectTestJavaFileScope());
+                project.searchAllCalsses().forEach(processor);
             }
         }, "Searching test class...", true);
     }

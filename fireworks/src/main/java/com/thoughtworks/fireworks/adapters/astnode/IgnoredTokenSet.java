@@ -15,8 +15,10 @@
  */
 package com.thoughtworks.fireworks.adapters.astnode;
 
-import com.intellij.lang.Language;
+import com.intellij.extapi.psi.PsiFileBase;
+import com.intellij.lang.ParserDefinition;
 import com.intellij.psi.JavaDocTokenType;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
@@ -33,12 +35,16 @@ public class IgnoredTokenSet {
         return TokenSet.create(new IElementType[]{TokenType.WHITE_SPACE});
     }
 
-    public TokenSet getByLanguage(Language language) {
-        if (language.getParserDefinition() == null) {
+    public TokenSet getByLanguage(PsiElement element) {
+        if (!(element instanceof PsiFileBase)) {
             return defaultSet;
         }
-        TokenSet languageCommontTokens = language.getParserDefinition().getCommentTokens();
-        TokenSet languageWhitespaceTokens = language.getParserDefinition().getWhitespaceTokens();
+        ParserDefinition parserDef = ((PsiFileBase) element).getParserDefinition();
+        if (parserDef == null) {
+            return defaultSet;
+        }
+        TokenSet languageCommontTokens = parserDef.getCommentTokens();
+        TokenSet languageWhitespaceTokens = parserDef.getWhitespaceTokens();
         return TokenSet.orSet(new TokenSet[]{defaultSet, languageCommontTokens, languageWhitespaceTokens});
     }
 }

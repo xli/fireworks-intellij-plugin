@@ -61,6 +61,9 @@
 
     <change-notes>
         <![CDATA[
+        <ul><u><b>Version 1.30 changes</b></u>
+            <li>Works with IntelliJ IDEA8.1</li>
+        </ul>
         <ul><u><b>Version 1.22 changes</b></u>
             <li>Fixed: configuration dialog has no labels on Mac</li>
         </ul>
@@ -78,11 +81,11 @@
         ]]>
     </change-notes>
 
-    <version>1.22</version>
+    <version>1.30</version>
     <vendor email="swing1979@gmail.com" url="http://swing1979.googlepages.com/"
             logo="http://dontmakemetest.googlecode.com/svn/trunk/fireworks/src/main/images/logo.png">LiXiao
     </vendor>
-    <idea-version since-build="7590"/>
+    <idea-version since-build="9732"/>
 
     <project-components>
         <component>

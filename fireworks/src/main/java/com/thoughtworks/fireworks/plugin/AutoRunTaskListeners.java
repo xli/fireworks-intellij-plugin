@@ -23,8 +23,7 @@ import com.thoughtworks.fireworks.core.AutoRunTestConfigurationListener;
 import com.thoughtworks.fireworks.core.FireworksConfig;
 import org.picocontainer.Startable;
 
-import java.awt.AWTEvent;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.AWTEventListener;
 
 public class AutoRunTaskListeners implements Startable {

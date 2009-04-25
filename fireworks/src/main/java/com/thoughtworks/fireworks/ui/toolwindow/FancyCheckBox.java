@@ -1,11 +1,9 @@
 package com.thoughtworks.fireworks.ui.toolwindow;
 
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.JCheckBox;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class FancyCheckBox extends JCheckBox {
