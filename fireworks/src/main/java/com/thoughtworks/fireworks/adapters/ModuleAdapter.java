@@ -17,14 +17,14 @@ package com.thoughtworks.fireworks.adapters;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.projectRoots.JavaSdk;
-import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.ProjectJdkTable;
+import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.roots.CompilerModuleExtension;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.encoding.EncodingManager;
 import com.thoughtworks.fireworks.core.FireworksConfig;
 import com.thoughtworks.fireworks.core.Utils;
 import com.thoughtworks.shadow.ant.AntSunshine;
@@ -86,7 +86,7 @@ public class ModuleAdapter {
     }
 
     private String encoding() {
-        return CharsetToolkit.getDefaultSystemCharset().name();
+        return EncodingManager.getInstance().getDefaultCharsetName();
     }
 
     private String getModuleDir() {

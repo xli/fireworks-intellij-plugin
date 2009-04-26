@@ -56,7 +56,7 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
     <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" defaultCharsetForPropertiesFiles="UTF-8" />
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -68,10 +68,10 @@
   <component name="FireworksProject">
     <option name="expectedTestCaseNameRegex" value=".+Test" />
     <option name="maxMemory" value="" />
-    <option name="maxSize" value="46" />
+    <option name="maxSize" value="20" />
     <option name="enable" value="true" />
     <option name="enableAutoTask" value="true" />
-    <option name="autoRunTestsDelayTime" value="3000" />
+    <option name="autoRunTestsDelayTime" value="500" />
     <option name="jvmArgs" value="" />
     <option name="clearLogConsole" value="true" />
     <option name="autoShowErrorsInEditorAfterCompile" value="true" />
