@@ -18,6 +18,7 @@ package com.thoughtworks.fireworks.controllers;
 import com.thoughtworks.turtlemock.Executable;
 import com.thoughtworks.turtlemock.Mock;
 import com.thoughtworks.turtlemock.Turtle;
+import com.thoughtworks.fireworks.core.FireworksRunningStatus;
 import junit.framework.TestCase;
 
 import java.awt.event.ActionListener;
@@ -40,7 +41,8 @@ public class ShadowCabinetControllerTest extends TestCase {
                 new ShadowCabinetControllerListener[]{(ShadowCabinetControllerListener) controllerListener.mockTarget()},
                 (ShadowCabinetView) view.mockTarget(),
                 (AllTestsRunner) allTestsRunner.mockTarget(),
-                (RecentTestListRunner) recentTestListRunner.mockTarget());
+                (RecentTestListRunner) recentTestListRunner.mockTarget(),
+                new FireworksRunningStatus());
     }
 
     public void testFireRunAllTestsActionEvent() throws Exception {

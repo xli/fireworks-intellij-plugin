@@ -24,6 +24,7 @@ import com.thoughtworks.fireworks.controllers.timer.*;
 import com.thoughtworks.fireworks.core.AllTestShadowCabinet;
 import com.thoughtworks.fireworks.core.IntellijShadowCabinet;
 import com.thoughtworks.fireworks.core.TestResultFactory;
+import com.thoughtworks.fireworks.core.FireworksRunningStatus;
 import com.thoughtworks.fireworks.core.developer.Developer;
 import com.thoughtworks.fireworks.core.table.ShadowTableModel;
 import com.thoughtworks.fireworks.core.tree.ShadowSummaryTreeNode;
@@ -57,6 +58,7 @@ public class FireworksContainer {
         registerComponentsForAddingTestsIntoRecentTestList();
         registerComponentsForView();
 
+        container.registerComponentImplementation(FireworksRunningStatus.class);
         container.registerComponentImplementation(AutoRunTaskListeners.class);
         container.registerComponentImplementation(Listeners.class);
 

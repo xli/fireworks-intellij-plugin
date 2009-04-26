@@ -20,20 +20,25 @@ import org.picocontainer.Startable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.thoughtworks.fireworks.core.FireworksRunningStatus;
+
 public class ShadowCabinetController implements Startable, CabinetController {
     private final ShadowCabinetView view;
     private final AllTestsRunner runAllTests;
     private final RecentTestListRunner recentTestListRunner;
     private final ShadowCabinetControllerListener[] listeners;
+    private final FireworksRunningStatus status;
 
     public ShadowCabinetController(ShadowCabinetControllerListener[] listeners,
                                    ShadowCabinetView view,
                                    AllTestsRunner runAllTests,
-                                   RecentTestListRunner recentTestListRunner) {
+                                   RecentTestListRunner recentTestListRunner,
+                                   FireworksRunningStatus status) {
         this.listeners = listeners;
         this.view = view;
         this.runAllTests = runAllTests;
         this.recentTestListRunner = recentTestListRunner;
+        this.status = status;
     }
 
     public void start() {
@@ -55,13 +60,19 @@ public class ShadowCabinetController implements Startable, CabinetController {
         view.removeAllActionListeners();
     }
 
-    public void fireRunAllTestsActionEvent() {
+    public synchronized void fireRunAllTestsActionEvent() {
+        if (this.status.working()) {
+            return;
+        }
         fireActionStartedEvent();
         runAllTests.run();
         fireActionFinishedEvent();
     }
 
-    public void fireRunTestListActionEvent() {
+    public synchronized void fireRunTestListActionEvent() {
+        if (this.status.working()) {
+            return;
+        }
         fireActionStartedEvent();
         recentTestListRunner.run();
         fireActionFinishedEvent();
