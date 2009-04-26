@@ -22,7 +22,6 @@ public class IntellijShadowCabinet implements TestShadowMap, Cabinet {
     private final ShadowCabinet shadowCabinet = new ShadowCabinet();
     private final CompilerManagerAdaptee compilerManager;
     private final TestStateListener stateListener;
-    private boolean isEmptyCabinetPreActionTime;
 
     public IntellijShadowCabinet(ShadowCabinetListener[] listeners,
                                  CompilerManagerAdaptee compilerManager,
@@ -35,11 +34,7 @@ public class IntellijShadowCabinet implements TestShadowMap, Cabinet {
     }
 
     public void action(final TestResult result) {
-        if (isEmptyCabinetPreActionTime && isEmpty()) {
-            return;
-        }
         compilerManager.compile(new CabinetActionNotification(shadowCabinet, result));
-        isEmptyCabinetPreActionTime = result.runCount() == 0;
     }
 
     public void addTestShadow(Sunshine sunshine, String testClassName) {

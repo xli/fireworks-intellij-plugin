@@ -32,7 +32,7 @@ public abstract class FireworksConfigurationImpl extends FireworksConfiguration 
     public int maxSize = 5;
     public boolean enable = true;
     public boolean enableAutoTask = true;
-    public int autoRunTestsDelayTime = 4000;
+    public int autoRunTestsDelayTime = 1000;
     public String jvmArgs;
     public boolean clearLogConsole = true;
     public boolean autoShowErrorsInEditorAfterCompile = true;

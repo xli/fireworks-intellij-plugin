@@ -71,7 +71,7 @@
     <option name="maxSize" value="67" />
     <option name="enable" value="true" />
     <option name="enableAutoTask" value="true" />
-    <option name="autoRunTestsDelayTime" value="500" />
+    <option name="autoRunTestsDelayTime" value="1000" />
     <option name="jvmArgs" value="" />
     <option name="clearLogConsole" value="true" />
     <option name="autoShowErrorsInEditorAfterCompile" value="true" />

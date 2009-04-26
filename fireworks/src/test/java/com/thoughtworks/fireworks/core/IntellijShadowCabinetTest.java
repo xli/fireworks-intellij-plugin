@@ -46,16 +46,6 @@ public class IntellijShadowCabinetTest extends TestCase implements ShadowCabinet
         cabinet.addTestShadow(sunshine, Success.class.getName());
     }
 
-    public void testShouldNotFireActionAgainIfSizeOfTestIsZero() throws Exception {
-        Mock adaptee = Turtle.mock(CompilerManagerAdaptee.class);
-
-        cabinet = new IntellijShadowCabinet(listeners, (CompilerManagerAdaptee) adaptee.mockTarget(), this);
-        cabinet.action(new TestResult());
-        adaptee.assertDid("compile");
-        cabinet.action(new TestResult());
-        adaptee.assertNotDid("compile");
-    }
-
     public void testShouldAddTestStateListenerIntoShadow() throws Exception {
         cabinet.action(new TestResult());
         assertEquals(testAdded, endTestShadowEventShadow);

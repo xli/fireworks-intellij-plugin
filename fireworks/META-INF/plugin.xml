@@ -65,6 +65,7 @@
             <u><b>Version 1.40 changes</b></u>
             <li>Run tests sliently. All tests running including compiling will be running at background now.</li>
             <li>fixed file encoding always be set as system default encoding bug, now fireworks will get file encoding from IDE configuration</li>
+            <li>Changed auto running tests default delay time from 4 sec to 1 sec</li>
         </ul>
         <ul>
             <u><b>Version 1.30 changes</b></u>
