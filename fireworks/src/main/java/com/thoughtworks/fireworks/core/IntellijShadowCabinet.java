@@ -67,8 +67,4 @@ public class IntellijShadowCabinet implements TestShadowMap, Cabinet {
         shadowCabinet.removeListener(listener);
     }
 
-    private boolean isEmpty() {
-        return size() == 0;
-    }
-
 }

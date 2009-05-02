@@ -20,11 +20,9 @@ import com.thoughtworks.fireworks.core.CompileStatusNotificationAdaptee;
 import com.thoughtworks.fireworks.core.CompilerManagerAdaptee;
 
 public class CompilerManagerAdapter implements CompilerManagerAdaptee {
-    private final ApplicationAdaptee application;
     private final ProjectAdapter project;
 
-    public CompilerManagerAdapter(ApplicationAdaptee application, ProjectAdapter project) {
-        this.application = application;
+    public CompilerManagerAdapter(ProjectAdapter project) {
         this.project = project;
     }
 

@@ -41,6 +41,9 @@ import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.search.searches.AllClassesSearch;
 import com.intellij.refactoring.listeners.RefactoringListenerManager;
 import com.intellij.util.Query;
+import com.intellij.peer.PeerFactory;
+import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentFactory;
 import com.thoughtworks.fireworks.adapters.compatibility.CompileStatusNotificationAdapter;
 import com.thoughtworks.fireworks.adapters.document.MarkupAdapter;
 import com.thoughtworks.fireworks.adapters.psi.PsiClassAdapter;
@@ -71,8 +74,10 @@ public class ProjectAdapter {
     }
 
     public void registerToolWindow(String id, String title, JComponent component, Icon icon) {
-        ToolWindow toolWindow = getToolWindowManager().registerToolWindow(id, component, ToolWindowAnchor.BOTTOM);
-        toolWindow.setTitle(title);
+        ToolWindow toolWindow = getToolWindowManager().registerToolWindow(id, true, ToolWindowAnchor.BOTTOM);
+        ContentFactory contentFactory = toolWindow.getContentManager().getFactory();
+        Content content = contentFactory.createContent(component, title, true);
+        toolWindow.getContentManager().addContent(content);
         toolWindow.setIcon(icon);
     }
 
@@ -144,7 +149,6 @@ public class ProjectAdapter {
                         try {
                             Thread.sleep(5000);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
                         }
                         CompilerWorkspaceConfiguration.getInstance(project).AUTO_SHOW_ERRORS_IN_EDITOR = autoShowErrorsInEditor;
                         CompilerWorkspaceConfiguration.getInstance(project).COMPILE_IN_BACKGROUND = compileInBackground;

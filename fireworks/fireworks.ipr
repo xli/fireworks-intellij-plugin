@@ -74,7 +74,7 @@
     <option name="autoRunTestsDelayTime" value="1000" />
     <option name="jvmArgs" value="" />
     <option name="clearLogConsole" value="true" />
-    <option name="autoShowErrorsInEditorAfterCompile" value="true" />
+    <option name="autoShowErrorsInEditorAfterCompile" value="false" />
   </component>
   <component name="IdProvider" IDEtalkID="B4CD3FA6B986306CE1AD72D96A28F5C2" />
   <component name="InspectionProjectProfileManager">
