@@ -61,17 +61,15 @@
 
     <change-notes>
         <![CDATA[
-        <ul>
-            <u><b>Version 1.40 changes</b></u>
-            <li>Run tests sliently. All tests running including compiling will be running at background now.</li>
-            <li>fixed file encoding always be set as system default encoding bug, now fireworks will get file encoding from IDE configuration</li>
-            <li>Changed auto running tests default delay time from 4 sec to 1 sec</li>
-            <li>Fixed matching test regex with full class name bug, now /BT.+/ should match com.xxx.BTxxx.java. (Thanks Florian Hehlen for feedback)</li>
-        </ul>
-        <ul>
-            <u><b>Version 1.30 changes</b></u>
-            <li>Works with IntelliJ IDEA8.1</li>
-        </ul>
+<ul>
+    <u><b>Version 1.40 changes</b></u>
+    <li>Run tests sliently. All tests running including compiling will be running at background now.</li>
+    <li>fixed file encoding always be set as system default encoding bug, now fireworks will get file encoding from IDE configuration</li>
+    <li>Changed auto running tests default delay time from 4 sec to 1 sec</li>
+    <li>Fixed matching test regex with full class name bug, now regex "BT.+" should match com.xxx.BTxxx.java. Thanks Florian Hehlen for feedback</li>
+    <u><b>Version 1.30 changes</b></u>
+    <li>Works with IntelliJ IDEA8.1</li>
+</ul>
         The complete change-notes is available <a href="http://swing1979.googlepages.com/fireworkschangenotes">here</a>
         ]]>
     </change-notes>
