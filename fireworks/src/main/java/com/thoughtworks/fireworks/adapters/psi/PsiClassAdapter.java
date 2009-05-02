@@ -39,7 +39,7 @@ public class PsiClassAdapter {
     }
 
     public boolean isJUnitTestCase(ProjectAdapter project) {
-        if (psiClass == null || !project.matchesExpectedTestCaseNameRegex(psiClass.getQualifiedName())) {
+        if (psiClass == null || !project.matchesExpectedTestCaseNameRegex(psiClass.getName())) {
             return false;
         }
 
